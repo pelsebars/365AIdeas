@@ -18,7 +18,7 @@ Kør `npm run dev` og åbn http://localhost:3000. Python 3 kræves til den lokal
 1. Vælg en idé fra backloggen.
 2. Brug prompten som brief og byg appen i `apps/<slug>/`.
 3. Afprøv appen på mobil og desktop; tjek konsollen, tastatur, touch og nulstilling.
-4. Vis den faktiske prompt, teknologien og eventuelle efterfølgende rettelser under appen. Angiv begrænsninger ærligt.
+4. Vis den faktiske prompt, AI-værktøj, model, teknologien og eventuelle efterfølgende rettelser under appen. Angiv kun indsatsniveau, når det er kendt. Angiv begrænsninger ærligt.
 5. Flyt idéen fra backloggen til hovedsidens udgivne apps, og opdatér tæller og fremdrift. Det er manuelt i denne første version.
 6. Kør `npm run check`, commit og push til produktionsbranchen.
 
