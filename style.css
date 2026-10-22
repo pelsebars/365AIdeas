@@ -4,3 +4,5 @@
 .model-info{font-size:12px;line-height:1.8;padding:12px 15px;background:#e9ecdf;border-radius:5px;color:var(--ink)}.model-info span{margin:0 6px}
 
 .chaos-art{background:#132620;color:#a8e9be;background-image:radial-gradient(#79b49a18 1px,transparent 1px)}.chaos-art svg{width:100%;max-height:235px;filter:drop-shadow(0 0 9px #89dfa640)}.concept-prompt{white-space:pre-wrap;border-left:2px solid #b4c391;padding-left:16px;font-size:12px}
+
+.download-link{font-size:13px;font-weight:600;text-decoration:underline;text-underline-offset:4px}.download-help{display:block;font-size:11px;color:#73796b;margin-top:8px;line-height:1.7}

@@ -42,3 +42,7 @@ Websitet bruger Google Fonts som valgfri typografiforbedring med lokale fallback
 `npm run check` finder automatisk apps og deres JavaScript og lokale HTML-links, validerer en variabel backlogstørrelse, tæller og fremdrift samt de guidede periodiske eksempler og en positiv numerisk Lyapunov-eksponent ved r = 3,9. Den numeriske kontrol supplerer primærkilderne i appen; den er ikke et generelt kaosbevis. Konceptet fandtes ikke i backloggen, så ingen backlogidé er fjernet.
 
 Seneste browserafprøvning (22. oktober 2026): desktop 1280×720 og mobilviewport 390×844. Alle seks stop, markering, scrollzoom, zoomknapper, tilbage/nulstilling, tastatur, præcis r, x₀ = 0, tidsseriens to faser, sammenligning og navigation til/fra oversigten er afprøvet. Ingen observerede konsolfejl eller vandret overløb. Mobiltesten er udført i en browserviewport, ikke på en fysisk telefon.
+
+## HTML-download
+
+Hver udgivet app kan tilbydes som en selvstændig HTML-fil. Kør `npm run build` efter ændringer i apps eller CSS for at opdatere HTML-downloads i hver apps mappe. Filen indeholder CSS og JavaScript og kræver ingen server eller netværksforbindelse. Den genererede fil skal med i commit.

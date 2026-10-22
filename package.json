@@ -1,1 +1,10 @@
-{"name":"365aideas","version":"1.0.0","private":true,"scripts":{"dev":"python3 -m http.server 3000","check":"node scripts/check.mjs"}}
+{
+  "name": "365aideas",
+  "version": "1.0.0",
+  "private": true,
+  "scripts": {
+    "dev": "python3 -m http.server 3000",
+    "check": "node scripts/check.mjs",
+    "build": "node scripts/build-downloads.mjs"
+  }
+}
