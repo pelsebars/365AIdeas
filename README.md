@@ -46,3 +46,7 @@ Seneste browserafprøvning (22. oktober 2026): desktop 1280×720 og mobilviewpor
 ## HTML-download
 
 Hver udgivet app kan tilbydes som en selvstændig HTML-fil. Kør `npm run build` efter ændringer i apps eller CSS for at opdatere HTML-downloads i hver apps mappe. Filen indeholder CSS og JavaScript og kræver ingen server eller netværksforbindelse. Den genererede fil skal med i commit.
+
+## Idéformular
+
+`ide.html` sender forslag via FormSubmit til jacobhansennymail@gmail.com. Mailadresse er valgfri. FormSubmit bruger som standard CAPTCHA; et skjult honeypot-felt supplerer spamkontrollen. Ved første indsendelse sender tjenesten en aktiveringsmail til modtageren: aktivér formularen, og indsend derefter et nyt testforslag for at kontrollere levering. Der er ikke sendt nogen testhenvendelse fra udviklingen. Besøgende kan også bruge mailto-linket. Formularen afhænger af FormSubmits tilgængelighed og er endnu ikke verificeret med levering til indbakken.
