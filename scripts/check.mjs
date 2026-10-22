@@ -1,7 +1,7 @@
 import {readFileSync,existsSync} from 'node:fs';
 import {execFileSync} from 'node:child_process';
 import {dirname,resolve} from 'node:path';
-for(const file of ['app.js','apps/space-invaders/game.js'])execFileSync(process.execPath,['--check',file]);
+for(const file of ['apps/space-invaders/game.js'])execFileSync(process.execPath,['--check',file]);
 const ideas=JSON.parse(readFileSync('backlog.json','utf8'));
 if(ideas.length!==36||new Set(ideas.map(x=>x.day)).size!==ideas.length)throw Error('Ugyldig backlog');
 for(const item of ideas)for(const key of ['title','category','description','prompt'])if(!item[key])throw Error(`Mangler ${key}`);

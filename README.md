@@ -8,9 +8,9 @@ Kør `npm run dev` og åbn http://localhost:3000. Python 3 kræves til den lokal
 
 ## Indhold
 
-- `index.html`, `style.css`, `app.js`: hovedside med søgning og kategorier.
+- `index.html`, `style.css`: hovedside med udgivne apps og deres byggeforklaringer.
 - `apps/space-invaders/`: første spil, med point, liv, bølger, pause og touch.
-- `backlog.json`: 36 idéer med byggeprompts. Tallene er forslag til rækkefølge, ikke udgivelsesdatoer.
+- `backlog.json`: intern backlog med 36 idéer og byggeprompts; vises ikke på hjemmesiden. Tallene er forslag til rækkefølge, ikke udgivelsesdatoer.
 - `scripts/seed-backlog.py`: oprindelig seed. Kør den ikke igen efter manuelle ændringer i backloggen; den overskriver filen.
 
 ## Daglig arbejdsgang
