@@ -1,0 +1,171 @@
+<!-- 365 AIdeas · Selvstændig HTML med CSS og JavaScript. Åbn i din browser eller redigér i en teksteditor. -->
+<!doctype html>
+<html lang="da"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>Perspektivretter — 365 AIdeas</title><style>:root{color-scheme:dark;--bg:#131916;--panel:#1b231f;--line:#35423b;--text:#e8eee8;--muted:#a5b2a8;--accent:#d9ec9a;--v:#eeaf72;--h:#7fd7d0}*{box-sizing:border-box}body{margin:0;background:var(--bg);color:var(--text);font:14px/1.5 system-ui,sans-serif}header{max-width:1600px;margin:auto;padding:22px 36px;border-bottom:1px solid var(--line);display:flex;justify-content:space-between;gap:16px;font-size:12px;letter-spacing:1px}a{color:inherit;text-decoration:none}button,label.primary{cursor:pointer}button,input,select{font:inherit}button,select,input[type=number]{background:#26312b;color:var(--text);border:1px solid #46564b;border-radius:6px;padding:9px 12px}button:hover{background:#38483c}button:disabled{opacity:.4;cursor:default}button:focus-visible,a:focus-visible,input:focus-visible,select:focus-visible,label.primary:focus-within{outline:2px solid var(--accent);outline-offset:3px}input[type=checkbox],input[type=range]{accent-color:var(--accent)}.primary{display:inline-block;background:var(--accent);border:0;color:#20291d;font-weight:700;padding:13px 24px;border-radius:6px}.primary:hover{background:#edf8bd}.privacy{color:var(--accent)}main{max-width:1600px;margin:auto;padding:0 36px}.intro{display:flex;justify-content:space-between;align-items:center;padding:38px 0 28px;gap:24px}.eyebrow{font-size:11px;letter-spacing:2px;font-weight:600;color:var(--accent)}h1{font-size:clamp(32px,4vw,57px);line-height:1.15;letter-spacing:-2px;margin:12px 0 18px;font-weight:550}h1>span:first-child{color:var(--accent)}.symbol{margin-left:22px;color:var(--accent)}.intro p:not(.eyebrow){color:var(--muted);font-size:15px}.upload{display:flex;flex-direction:column;gap:9px;min-width:235px;text-align:center}.upload small{color:var(--muted);font-size:11px}#file{width:235px;font-size:11px}.steps{display:flex;gap:40px;padding:16px 0;border-top:1px solid var(--line);color:var(--accent);font-size:12px}.steps b{font-weight:500;color:var(--muted);padding-left:9px}#status{padding:12px 16px;background:#253127;border:1px solid #465841;border-radius:6px;margin:6px 0 20px;min-height:46px}#status.error{background:#422b27;border-color:#a7725d;color:#ffd9c2}.workspace{display:grid;grid-template-columns:1fr 1fr;gap:20px}.panel{border:1px solid var(--line);border-radius:10px;overflow:hidden;background:var(--panel);min-width:0}.panel-head{display:flex;align-items:center;justify-content:space-between;gap:8px;padding:14px 16px;min-height:66px}h2{font-size:16px;margin:0 0 14px;font-weight:600}.panel h2{margin:0}.panel h2 small{display:block;font-size:9px;color:var(--muted);letter-spacing:1px;font-weight:400}.zoom{display:flex;gap:5px;align-items:center}.zoom button{padding:6px 10px}.zoom output{font-size:11px;min-width:40px;text-align:center}.stage,.result-stage{height:400px;background-color:#101512;background-image:linear-gradient(45deg,#18201b 25%,transparent 25%),linear-gradient(-45deg,#18201b 25%,transparent 25%),linear-gradient(45deg,transparent 75%,#18201b 75%),linear-gradient(-45deg,transparent 75%,#18201b 75%);background-size:24px 24px;background-position:0 0,0 12px,12px -12px,-12px 0}.stage{position:relative;overflow:hidden;touch-action:none}.stage canvas,.stage svg{position:absolute;inset:0;width:100%;height:100%}.stage svg{overflow:hidden}#empty{position:absolute;inset:0;display:flex;align-items:center;justify-content:center;flex-direction:column;color:#91a08e;font-size:64px;pointer-events:none}#empty p{font-size:16px;margin:0}#empty small{font-size:12px;margin-top:6px}.result-stage{display:flex;align-items:center;justify-content:center;padding:24px;position:relative}#result-wrap{position:relative;display:none;max-width:100%;max-height:100%;line-height:0}#result{max-width:100%;max-height:352px;object-fit:contain;display:block}#grid-overlay{position:absolute;inset:0;pointer-events:none;background-image:linear-gradient(#fff5 1px,transparent 1px),linear-gradient(90deg,#fff5 1px,transparent 1px);background-size:10% 10%}#result-empty{color:var(--muted)}.tools,.result-caption{padding:12px 16px;display:flex;align-items:center;gap:10px;min-height:61px}.tools label{margin-right:auto}.result-caption{justify-content:space-between;font-size:11px;color:var(--muted)}.hint{font-size:12px;color:var(--muted);line-height:1.7}.panel>.hint{padding:0 16px;margin:0 0 16px}.settings{display:grid;grid-template-columns:1fr 1fr 1fr;margin-top:26px;border:1px solid var(--line);border-radius:10px;background:var(--panel)}.settings article{padding:22px;min-width:0}.settings article+article{border-left:1px solid var(--line)}label{font-size:12px}select,input[type=number]{width:100%;display:block;margin:7px 0 12px}input[type=range]{width:100%;margin:12px 0}.pair{display:grid;grid-template-columns:1fr 1fr;gap:12px}.line-controls{display:grid;grid-template-columns:1fr 1fr;gap:8px}.line-controls button{font-size:12px;border-left:3px solid var(--v)}.line-controls button:nth-child(n+3){border-left-color:var(--h)}.line-controls button.active{background:#44503d;color:#fff;border-top-color:var(--accent)}#step-help{font-size:13px;min-height:40px}.export-note{font-size:11px;color:var(--muted);display:flex;justify-content:space-between;align-items:center;margin-bottom:12px}.export-note button{font-size:10px;padding:4px 6px}#save{width:100%;margin-top:4px}#ratio-label{float:right}footer{margin:30px 0;padding:22px 0;border-top:1px solid var(--line);color:var(--muted);font-size:12px}footer strong{color:var(--text)}footer a{display:block;margin-top:12px;color:var(--accent)}svg circle{cursor:grab;stroke:#101512;stroke-width:2}svg circle:focus{outline:none;stroke:white;stroke-width:3}svg text{pointer-events:none;font:bold 11px system-ui;fill:#fff;paint-order:stroke;stroke:#18201b;stroke-width:3px}@media(min-width:1450px){.stage,.result-stage{height:480px}#result{max-height:432px}}@media(max-width:900px){main{padding:0 18px}header{padding:18px}.settings{grid-template-columns:1fr}.settings article+article{border-left:0;border-top:1px solid var(--line)}.symbol{display:none}.stage,.result-stage{height:330px}#result{max-height:282px}.panel-head{padding:10px}.zoom{gap:2px}.zoom button{padding:6px}.privacy{display:none}}@media(max-width:650px){.intro{display:block;padding-top:22px}.upload{margin-top:22px;align-items:stretch}.upload input{width:100%}.workspace{grid-template-columns:1fr}.steps{gap:12px;justify-content:space-between;font-size:10px}.steps b{padding-left:3px}h1{font-size:38px}.stage,.result-stage{height:340px}#result{max-height:292px}.intro p:not(.eyebrow){font-size:14px}header{font-size:10px}.result-caption{flex-wrap:wrap}}
+</style></head>
+<body><header><a href="https://365aideas.vercel.app/">← 365 AIdeas</a><span>003 / BILLEDEVÆRKTØJ</span><span class="privacy">● Kun på din computer</span></header>
+<main><section class="intro"><div><p class="eyebrow">FRA FOTO TIL FLAD TEKSTUR</p><h1>Perspektiv<span>retter</span><span class="symbol">⌗</span></h1><p>Fire linjer. Ét nyt perspektiv.<br>Ret en facade, en plakat eller en anden plan flade op til Blender.</p></div><div class="upload"><label class="primary" for="file">↥ Vælg billede</label><input id="file" type="file" accept="image/*"><button id="demo">Prøv med testgitter ↗</button><small>Dit billede forlader aldrig browseren.</small></div></section>
+<div class="steps"><span>01 <b>Vælg billede</b></span><span>02 <b>Markér fire linjer</b></span><span>03 <b>Kontrollér & gem</b></span></div>
+<div id="status" role="status">Vælg et billede, eller prøv testgitteret for at lære værktøjet at kende.</div>
+<section class="workspace"><article class="panel"><div class="panel-head"><h2>Original <small id="source-size">INGEN FIL VALGT</small></h2><div class="zoom"><button id="minus" aria-label="Zoom ud">−</button><output id="zoom">100%</output><button id="plus" aria-label="Zoom ind">+</button><button id="fit">Tilpas</button></div></div><div id="stage" class="stage"><canvas id="source"></canvas><svg id="overlay" aria-label="Billedmarkeringer"></svg><div id="empty">⌗<p>Plads til et nyt perspektiv</p><small>Vælg et foto for at begynde</small></div></div><div class="tools"><label><input type="checkbox" id="pan"> Panorér</label><button id="undo" disabled>↶ Fortryd</button><button id="reset" disabled>Start forfra</button></div><p class="hint">Træk punkter · Scroll eller +/− zoomer · Træk baggrunden for at panorere.<br>Tab vælger punkt · Piletaster flytter 1 pixel, Shift flytter 10.</p></article>
+<article class="panel"><div class="panel-head"><h2>Oprettet <small>LIVE FORHÅNDSVISNING</small></h2><label><input type="checkbox" id="grid" checked> Gitter</label></div><div class="result-stage"><div id="result-wrap"><canvas id="result"></canvas><div id="grid-overlay"></div></div><p id="result-empty">Din færdige flade vises her</p></div><div class="result-caption"><span id="preview-info">Rektanglet mellem linjerne bliver dit udsnit.</span><span>↗ PNG / JPEG</span></div><p class="hint">Gitteret er kun en hjælp og kommer ikke med i eksporten.<br>Områder uden for originalen er transparente i PNG og hvide i JPEG.</p></article></section>
+<section class="settings"><article><p class="eyebrow">01 / MARKERINGER</p><h2>Følg fladens linjer</h2><div class="line-controls" id="line-controls"></div><p id="step-help">Start med de to lodrette kanter. Endepunkterne behøver ikke mødes.</p><p class="hint">Vælg en linje og tryk “Tegn valgt linje”. Træk derefter på billedet. Du kan altid flytte dens to punkter.</p><button id="draw" disabled>Tegn valgt linje</button></article>
+<article><p class="eyebrow">02 / PROPORTIONER</p><h2>Giv fladen de rette mål</h2><label>Metode<select id="ratio-mode"><option value="auto">Estimer fra billedet</option><option value="manual">Kendt bredde / højde</option></select></label><div class="pair"><label>Bredde / forhold<input id="real-width" type="number" min="0.001" step="any" value="1" disabled></label><label>Højde<input id="real-height" type="number" min="0.001" step="any" value="1" disabled></label></div><label>Finjustér proportioner <output id="ratio-label">1,00×</output><input id="stretch" type="range" min="-1" max="1" value="0" step="0.01"></label><p class="hint">Fire linjer fastlægger perspektivet, men ikke fladens faktiske proportioner. Standardforholdet er et estimat. Kendte mål skal bruge samme enhed.</p></article>
+<article><p class="eyebrow">03 / EKSPORT</p><h2>Klar til din tekstur</h2><div class="pair"><label>Bredde, px<input id="out-width" type="number" min="1" max="16384" step="1" value="1600"></label><label>Højde, px<input id="out-height" type="number" min="1" max="16384" step="1" value="1200"></label></div><div class="export-note">🔒 Låst aspektforhold <button id="suggest">Brug foreslåede mål</button></div><div class="pair"><label>Format<select id="format"><option value="png">PNG · tabsfri</option><option value="jpeg">JPEG · hvid baggrund</option></select></label><label>JPEG-kvalitet<select id="quality" disabled><option value="0.95">95 % · høj</option><option value="0.85">85 % · mindre fil</option><option value="1">100 % · maksimal</option></select></label></div><button class="primary" id="save" disabled>↓ Gem tekstur</button><p class="hint">Eksport beregnes fra originalen, aldrig fra forhåndsvisningen. Opretning fordeler eksisterende pixels; den genskaber ikke manglende detaljer.</p></article></section>
+<footer><strong>Én plan flade ad gangen.</strong> Linseforvrængning og facader i forskellige planer kræver anden eller separat behandling.<a href="https://365aideas.vercel.app/">Tilbage til alle apps ↗</a></footer></main><script>/* Geometry is independent of the UI; coordinates always refer to the original image. */
+const Perspective = (() => {
+ const distance=(a,b)=>Math.hypot(a.x-b.x,a.y-b.y);
+ function intersection(a,b,c,d){
+  const ux=b.x-a.x,uy=b.y-a.y,vx=d.x-c.x,vy=d.y-c.y,det=ux*vy-uy*vx;
+  if(distance(a,b)<2||distance(c,d)<2||Math.abs(det)<1e-5*Math.hypot(ux,uy)*Math.hypot(vx,vy))throw Error('To linjer er sammenfaldende eller næsten parallelle på tværs af retningerne. Flyt punkterne.');
+  const t=((c.x-a.x)*vy-(c.y-a.y)*vx)/det;return {x:a.x+t*ux,y:a.y+t*uy};
+ }
+ function quad(lines,w,h){
+  const cross=(i,j)=>intersection(...lines[i],...lines[j]);
+  const q=[cross(0,2),cross(1,2),cross(1,3),cross(0,3)];
+  if(q.some(p=>!Number.isFinite(p.x+p.y)||p.x < -2*w||p.x>3*w||p.y< -2*h||p.y>3*h))throw Error('Skæringspunkterne ligger for langt uden for billedet. Flyt linjerne tættere på fladen.');
+  let sign=0,area=0;
+  for(let i=0;i<4;i++){
+   const a=q[i],b=q[(i+1)%4],c=q[(i+2)%4],z=(b.x-a.x)*(c.y-b.y)-(b.y-a.y)*(c.x-b.x);
+   if(distance(a,b)<4||Math.abs(z)<w*h*1e-5||(sign&&Math.sign(z)!==sign))throw Error('Linjerne danner en kollapset eller krydset firkant. Hold venstre/højre og top/bund i rækkefølge.');
+   sign=Math.sign(z);area+=a.x*b.y-a.y*b.x;
+  }
+  if(sign<0||Math.abs(area)<w*h*.0002)throw Error('Fladen er for lille eller vendt på hovedet. Kontrollér linjernes rækkefølge.');
+  return q;
+ }
+ // Unit rectangle -> arbitrary quadrilateral, avoiding a poorly scaled 8x8 solve.
+ function homography(q){
+  const [a,b,c,d]=q,dx1=b.x-c.x,dx2=d.x-c.x,dx3=a.x-b.x+c.x-d.x,dy1=b.y-c.y,dy2=d.y-c.y,dy3=a.y-b.y+c.y-d.y;
+  const det=dx1*dy2-dx2*dy1;
+  if(Math.abs(det)<1e-10)throw Error('Fladen er numerisk ustabil.');
+  const g=(dx3*dy2-dx2*dy3)/det,h=(dx1*dy3-dx3*dy1)/det;
+  if(Math.min(1,1+g,1+h,1+g+h)<1e-5)throw Error('Perspektivet er for ekstremt. Vælg en mere stabil flade.');
+  return [b.x-a.x+g*b.x,d.x-a.x+h*d.x,a.x,b.y-a.y+g*b.y,d.y-a.y+h*d.y,a.y,g,h];
+ }
+ function map(m,u,v){const z=m[6]*u+m[7]*v+1;return {x:(m[0]*u+m[1]*v+m[2])/z,y:(m[3]*u+m[4]*v+m[5])/z};}
+ function dimensions(q,ratio){const w=Math.max(distance(q[0],q[1]),distance(q[3],q[2])),h=Math.max(distance(q[0],q[3]),distance(q[1],q[2]));return {width:Math.ceil(Math.max(w,h*ratio)),height:Math.ceil(Math.max(h,w/ratio))};}
+ function estimate(q){return (distance(q[0],q[1])+distance(q[3],q[2]))/(distance(q[0],q[3])+distance(q[1],q[2]));}
+ function renderRows(src,dst,m,start,end,offsetY=0){
+  const sw=src.width,sh=src.height,s=src.data,o=dst.data;
+  for(let y=start;y<end;y++)for(let x=0;x<dst.width;x++){
+   const p=map(m,(x+.5)/dst.width,(y+.5)/dst.height),px=p.x-.5,py=p.y-.5,i=((y-offsetY)*dst.width+x)*4;
+   if(px<-.5||py<-.5||px>sw-.5||py>sh-.5)continue;
+   const cx=Math.max(0,Math.min(sw-1,px)),cy=Math.max(0,Math.min(sh-1,py)),ix=Math.floor(cx),iy=Math.floor(cy),fx=cx-ix,fy=cy-iy;
+   const ids=[(iy*sw+ix)*4,(iy*sw+Math.min(ix+1,sw-1))*4,(Math.min(iy+1,sh-1)*sw+ix)*4,(Math.min(iy+1,sh-1)*sw+Math.min(ix+1,sw-1))*4],weights=[(1-fx)*(1-fy),fx*(1-fy),(1-fx)*fy,fx*fy];
+   let alpha=0;for(let k=0;k<4;k++)alpha+=s[ids[k]+3]*weights[k];o[i+3]=alpha;
+   if(alpha)for(let ch=0;ch<3;ch++){let value=0;for(let k=0;k<4;k++)value+=s[ids[k]+ch]*s[ids[k]+3]*weights[k];o[i+ch]=value/alpha;}
+  }
+ }
+ return {quad,homography,map,dimensions,estimate,renderRows};
+})();
+if(typeof module!=='undefined')module.exports=Perspective;
+</script><script>'use strict';
+const $=id=>document.getElementById(id),P=Perspective;
+const stage=$('stage'),canvas=$('source'),ctx=canvas.getContext('2d'),svg=$('overlay'),result=$('result');
+const names=['L1 · Venstre','L2 · Højre','V1 · Top','V2 · Bund'],colors=['#eeaf72','#eeaf72','#7fd7d0','#7fd7d0'];
+let original=null,sourcePixels=null,lines=[],history=[],selected=0,activePoint=null,view={scale:1,x:0,y:0},baseScale=1,drag=null,drawing=false,valid=false,ratio=1,quad=null,matrix=null,customSize=false,previewRevision=0,busy=false,loadRevision=0,filename='tekstur';
+function status(message,error=false){$('status').textContent=message;$('status').classList.toggle('error',error);}
+function snapshot(){history.push(JSON.parse(JSON.stringify(lines)));if(history.length>80)history.shift();$('undo').disabled=false;}
+function defaultLines(w,h){return [[{x:w*.18,y:h*.22},{x:w*.18,y:h*.78}],[{x:w*.82,y:h*.22},{x:w*.82,y:h*.78}],[{x:w*.26,y:h*.18},{x:w*.74,y:h*.18}],[{x:w*.26,y:h*.82},{x:w*.74,y:h*.82}]];}
+function selectLine(i){selected=i;document.querySelectorAll('.line-controls button').forEach((b,j)=>b.classList.toggle('active',j===i));$('step-help').textContent=i<2?'Lodret '+(i+1)+' af 2: følg en fysisk lodret kant på fladen.':'Vandret '+(i-1)+' af 2: følg en fysisk vandret kant på samme flade.';}
+names.forEach((name,i)=>{const button=document.createElement('button');button.textContent=name;button.onclick=()=>selectLine(i);$('line-controls').append(button);});selectLine(0);
+function fit(){if(!original)return;baseScale=Math.min(stage.clientWidth/original.width,stage.clientHeight/original.height)*.88;view={scale:baseScale,x:(stage.clientWidth-original.width*baseScale)/2,y:(stage.clientHeight-original.height*baseScale)/2};paint();}
+function screen(p){return {x:p.x*view.scale+view.x,y:p.y*view.scale+view.y};}
+function imagePoint(p){return {x:(p.x-view.x)/view.scale,y:(p.y-view.y)/view.scale};}
+function local(e){const r=stage.getBoundingClientRect();return {x:e.clientX-r.left,y:e.clientY-r.top};}
+function paint(){
+ const w=stage.clientWidth,h=stage.clientHeight,dpr=window.devicePixelRatio||1;canvas.width=Math.round(w*dpr);canvas.height=Math.round(h*dpr);ctx.setTransform(dpr,0,0,dpr,0,0);ctx.clearRect(0,0,w,h);
+ if(!original)return;ctx.drawImage(original,view.x,view.y,original.width*view.scale,original.height*view.scale);svg.setAttribute('viewBox',`0 0 ${w} ${h}`);
+ // Preserve focused SVG handles across drawing updates.
+ const focus=document.activeElement?.dataset?.point;svg.replaceChildren();
+ function element(type,attrs){const el=document.createElementNS('http://www.w3.org/2000/svg',type);for(const [key,value]of Object.entries(attrs))el.setAttribute(key,value);svg.append(el);return el;}
+ if(valid&&quad){const points=quad.map(p=>{const s=screen(p);return `${s.x},${s.y}`;}).join(' ');element('polygon',{points,fill:'#d9ec9a12',stroke:'#d9ec9a77','stroke-width':1});}
+ lines.forEach((line,i)=>{const [a,b]=line.map(screen),dx=b.x-a.x,dy=b.y-a.y,len=Math.hypot(dx,dy)||1,extent=2*(w+h);element('line',{x1:a.x-dx/len*extent,y1:a.y-dy/len*extent,x2:b.x+dx/len*extent,y2:b.y+dy/len*extent,stroke:colors[i],'stroke-width':1,'stroke-dasharray':'5 5',opacity:.8});element('line',{x1:a.x,y1:a.y,x2:b.x,y2:b.y,stroke:colors[i],'stroke-width':2.5});
+  [a,b].forEach((p,j)=>{const el=element('circle',{cx:p.x,cy:p.y,r:8,fill:colors[i],tabindex:0,role:'button','aria-label':`${names[i]}, punkt ${j+1}. Brug piletaster for at flytte.`, 'data-point':`${i}-${j}`});el.addEventListener('focus',()=>{activePoint=[i,j];selectLine(i);});});
+  const label=element('text',{x:a.x+12,y:a.y-12});label.textContent=names[i].split(' · ')[0];
+ });
+ if(focus)svg.querySelector(`[data-point="${focus}"]`)?.focus({preventScroll:true});$('zoom').textContent=Math.round(view.scale/baseScale*100)+'%';
+}
+function outputSize(){return {width:Number($('out-width').value),height:Number($('out-height').value)};}
+function setSize(width){const height=Math.max(1,Math.round(width/ratio));$('out-width').value=Math.max(1,Math.round(width));$('out-height').value=height;}
+function suggest(){if(quad){const size=P.dimensions(quad,ratio);setSize(size.width);}}
+function validateSize(){const {width,height}=outputSize();if(!Number.isInteger(width)||!Number.isInteger(height)||width<1||height<1)throw Error('Angiv hele, positive pixelmål.');if(width>16384||height>16384||width*height>40000000)throw Error('Output er for stort til denne apps sikre canvasgrænse (40 megapixel og 16.384 px pr. side). Vælg selv mindre pixelmål.');return {width,height};}
+function update(){
+ if(!original)return;valid=false;
+ try{
+  quad=P.quad(lines,original.width,original.height);matrix=P.homography(quad);
+  const manual=$('ratio-mode').value==='manual',rw=Number($('real-width').value),rh=Number($('real-height').value);
+  if(manual&&(!(rw>0)||!(rh>0)))throw Error('Indtast en positiv bredde og højde for de kendte mål.');
+  ratio=(manual?rw/rh:P.estimate(quad))*2**Number($('stretch').value);
+  if(!Number.isFinite(ratio)||ratio<.02||ratio>50)throw Error('Vælg et bredde/højde-forhold mellem 1:50 og 50:1.');
+  $('ratio-label').textContent=ratio.toLocaleString('da-DK',{maximumFractionDigits:3})+' : 1';
+  if(!customSize)suggest();else setSize(Number($('out-width').value)||1);
+  valid=true;status((manual?'Kendte proportioner':'Estimerede proportioner')+' · '+ratio.toLocaleString('da-DK',{maximumFractionDigits:3})+' : 1. Flyt punkterne, og kontrollér resultatet med gitteret.');
+  try{validateSize();}catch(error){status(error.message,true);}
+ }catch(error){status(error.message,true);}
+ $('save').disabled=!valid||busy;$('reset').disabled=false;$('draw').disabled=false;
+ if(!valid){previewRevision++;$('result-wrap').style.display='none';$('result-empty').hidden=false;$('result-empty').textContent='Ret markeringerne for at se resultatet';}
+ else schedulePreview();paint();
+}
+async function schedulePreview(){
+ const revision=++previewRevision;await new Promise(requestAnimationFrame);if(revision!==previewRevision||!valid)return;
+ const width=Math.max(1,Math.round(Math.min(640,640*ratio))),height=Math.max(1,Math.round(width/ratio)),dst=new ImageData(width,height),m=matrix.slice(),src=sourcePixels;
+ P.renderRows(src,dst,m,0,height);
+ result.width=width;result.height=height;result.getContext('2d').putImageData(dst,0,0);$('result-wrap').style.display='block';$('result-empty').hidden=true;$('preview-info').textContent=`Forhåndsvisning ${width} × ${height} · eksport bruger originalen`;
+}
+function installImage(image,name,demoLines=null){
+ const w=image.width||image.naturalWidth,h=image.height||image.naturalHeight;
+ if(!w||!h||w>20000||h>20000||w*h>50000000)throw Error('Billedet overskrider grænsen på 50 megapixel eller 20.000 px pr. side. Gem selv en mindre kopi, og vælg den. Originalen ændres ikke.');
+ const next=document.createElement('canvas');next.width=w;next.height=h;const c=next.getContext('2d',{willReadFrequently:true});c.drawImage(image,0,0);const pixels=c.getImageData(0,0,w,h);
+ original=next;sourcePixels=pixels;filename=name.replace(/\.[^.]+$/,'')||'tekstur';lines=demoLines||defaultLines(w,h);history=[];activePoint=null;drawing=false;drag=null;customSize=false;$('undo').disabled=true;$('empty').hidden=true;$('empty').style.display='none';$('source-size').textContent=`${w} × ${h} PX`;$('ratio-mode').value='auto';$('real-width').disabled=$('real-height').disabled=true;$('stretch').value=0;selectLine(0);fit();update();
+}
+$('file').addEventListener('change',async e=>{
+ const file=e.target.files[0];if(!file)return;const revision=++loadRevision;status('Indlæser originalen og anvender billedets orientering …');let bitmap;
+ try{bitmap=await createImageBitmap(file,{imageOrientation:'from-image'});if(revision!==loadRevision)return;installImage(bitmap,file.name);}catch(error){if(revision===loadRevision)status('Billedet kunne ikke indlæses. '+(error.message.includes('grænsen')?error.message:'Prøv PNG, JPEG eller WebP. Ved store filer kan browserens hukommelse kræve en mindre kopi.'),true);}finally{bitmap?.close();e.target.value='';}
+});
+$('demo').onclick=()=>{
+ loadRevision++;const c=document.createElement('canvas');c.width=1400;c.height=1050;const g=c.getContext('2d');g.fillStyle='#c9c5ae';g.fillRect(0,0,c.width,c.height);
+ const q=[{x:330,y:130},{x:1120,y:250},{x:1280,y:900},{x:140,y:850}],m=P.homography(q);g.fillStyle='#e9e4cc';g.beginPath();q.forEach((p,i)=>i?g.lineTo(p.x,p.y):g.moveTo(p.x,p.y));g.closePath();g.fill();
+ for(let i=0;i<=10;i++){for(const vertical of [true,false]){const a=P.map(m,vertical?i/10:0,vertical?0:i/10),b=P.map(m,vertical?i/10:1,vertical?1:i/10);g.beginPath();g.moveTo(a.x,a.y);g.lineTo(b.x,b.y);g.strokeStyle=i%5===0?'#304e46':'#698078';g.lineWidth=i%5===0?7:3;g.stroke();}}
+ const demoLines=[[P.map(m,0,.16),P.map(m,0,.69)],[P.map(m,1,.3),P.map(m,1,.87)],[P.map(m,.18,0),P.map(m,.72,0)],[P.map(m,.28,1),P.map(m,.88,1)]];installImage(c,'testgitter',demoLines);
+};
+function zoomBy(factor,p={x:stage.clientWidth/2,y:stage.clientHeight/2}){if(!original)return;const old=view.scale,next=Math.max(baseScale*.25,Math.min(baseScale*24,old*factor));view.x=p.x-(p.x-view.x)*next/old;view.y=p.y-(p.y-view.y)*next/old;view.scale=next;paint();}
+$('plus').onclick=()=>zoomBy(1.3);$('minus').onclick=()=>zoomBy(1/1.3);$('fit').onclick=fit;
+stage.addEventListener('wheel',e=>{if(!original)return;e.preventDefault();zoomBy(Math.exp(-e.deltaY*.0015),local(e));},{passive:false});
+stage.addEventListener('pointerdown',e=>{
+ if(!original||e.button>0||drag)return;e.preventDefault();const p=local(e),ip=imagePoint(p);stage.setPointerCapture(e.pointerId);
+ if(drawing){snapshot();lines[selected]=[{...ip},{...ip}];drag={type:'draw',pointer:e.pointerId,line:selected};drawing=false;update();}
+ else{
+  let nearest=null,min=23;lines.forEach((l,i)=>l.forEach((pt,j)=>{const s=screen(pt),d=Math.hypot(s.x-p.x,s.y-p.y);if(d<min){min=d;nearest=[i,j];}}));
+  if(nearest&&!$('pan').checked){snapshot();activePoint=nearest;selectLine(nearest[0]);drag={type:'point',pointer:e.pointerId,line:nearest[0],point:nearest[1]};svg.querySelector(`[data-point="${nearest.join('-')}"]`)?.focus({preventScroll:true});}
+  else drag={type:'pan',pointer:e.pointerId,start:p,x:view.x,y:view.y};
+ }
+});
+stage.addEventListener('pointermove',e=>{if(!drag||drag.pointer!==e.pointerId)return;const p=local(e);if(drag.type==='pan'){view.x=drag.x+p.x-drag.start.x;view.y=drag.y+p.y-drag.start.y;paint();}else{const ip=imagePoint(p);ip.x=Math.max(-original.width*2,Math.min(original.width*3,ip.x));ip.y=Math.max(-original.height*2,Math.min(original.height*3,ip.y));lines[drag.line][drag.type==='draw'?1:drag.point]=ip;update();}});
+function endDrag(){if(drag?.type==='draw'){selectLine(Math.min(3,drag.line+1));}drag=null;}
+stage.addEventListener('pointerup',endDrag);stage.addEventListener('pointercancel',endDrag);
+svg.addEventListener('keydown',e=>{if(!activePoint||!['ArrowLeft','ArrowRight','ArrowUp','ArrowDown'].includes(e.key))return;e.preventDefault();snapshot();const p=lines[activePoint[0]][activePoint[1]],d=e.shiftKey?10:1;p.x+=e.key==='ArrowLeft'?-d:e.key==='ArrowRight'?d:0;p.y+=e.key==='ArrowUp'?-d:e.key==='ArrowDown'?d:0;update();});
+$('draw').onclick=()=>{drawing=!drawing;status(drawing?`Tegn ${names[selected]}: træk fra første til andet punkt på billedet.`:'Tegning annulleret.');};
+$('undo').onclick=()=>{if(history.length){lines=history.pop();$('undo').disabled=!history.length;drawing=false;update();}};
+$('reset').onclick=()=>{snapshot();lines=defaultLines(original.width,original.height);drawing=false;selectLine(0);fit();update();};
+document.addEventListener('keydown',e=>{if(e.key==='Escape'){drawing=false;drag=null;}if((e.ctrlKey||e.metaKey)&&e.key==='z'&&!['INPUT','SELECT'].includes(e.target.tagName)){e.preventDefault();$('undo').click();}});
+$('ratio-mode').onchange=()=>{const manual=$('ratio-mode').value==='manual';$('real-width').disabled=$('real-height').disabled=!manual;if(manual&&quad){$('real-width').value=P.estimate(quad).toFixed(4);$('real-height').value=1;}$('stretch').value=0;customSize=false;update();};
+for(const id of ['real-width','real-height','stretch'])$(id).addEventListener('input',()=>{customSize=false;update();});
+$('out-width').oninput=()=>{customSize=true;const w=Number($('out-width').value);if(w>0)setSize(w);else status('Angiv en positiv bredde.',true);};
+$('out-height').oninput=()=>{customSize=true;const h=Number($('out-height').value);if(h>0){$('out-height').value=Math.round(h);$('out-width').value=Math.max(1,Math.round(h*ratio));}else status('Angiv en positiv højde.',true);};
+$('suggest').onclick=()=>{customSize=false;update();};$('grid').onchange=()=>{$('grid-overlay').hidden=!$('grid').checked;};$('format').onchange=()=>{$('quality').disabled=$('format').value!=='jpeg';};
+$('save').onclick=async()=>{
+ if(!valid||busy)return;let out;
+ try{
+  const {width,height}=validateSize(),m=matrix.slice(),src=sourcePixels,format=$('format').value,quality=Number($('quality').value),name=filename;busy=true;$('save').disabled=true;
+  out=document.createElement('canvas');out.width=width;out.height=height;const c=out.getContext('2d');if(!c)throw Error('Canvas kunne ikke oprettes.');
+  // Bounded row buffers avoid allocating another full-size RGBA image.
+  for(let y=0;y<height;y+=32){const rows=Math.min(32,height-y),strip=c.createImageData(width,rows);const proxy={width,height,data:strip.data};
+   P.renderRows(src,proxy,m,y,y+rows,y);c.putImageData(strip,0,y);status(`Beregner eksport fra originalen … ${Math.round((y+rows)/height*100)} %`);await new Promise(resolve=>setTimeout(resolve,0));
+  }
+  if(format==='jpeg'){c.globalCompositeOperation='destination-over';c.fillStyle='#fff';c.fillRect(0,0,width,height);}
+  const blob=await new Promise(resolve=>out.toBlob(resolve,'image/'+format,quality));if(!blob)throw Error('Browserens canvas- eller hukommelsesgrænse er nået.');
+  const url=URL.createObjectURL(blob),a=document.createElement('a');a.href=url;a.download=`${name}-oprettet-${width}x${height}.${format==='jpeg'?'jpg':'png'}`;a.click();setTimeout(()=>URL.revokeObjectURL(url),60000);status(`Gemt: ${width} × ${height} pixels · ${format.toUpperCase()}. Beregnet direkte fra originalbilledet.`);
+ }catch(error){status('Eksport kunne ikke gennemføres. '+error.message+' Prøv mindre outputdimensioner; kvaliteten ændres ikke automatisk.',true);}finally{busy=false;$('save').disabled=!valid;if(out){out.width=1;out.height=1;}}
+};
+new ResizeObserver(()=>{if(original)fit();}).observe(stage);
+</script></body></html>

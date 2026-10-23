@@ -1,0 +1,65 @@
+Byg en billededitor med navnet “Perspektivretter”.
+
+Formål:
+Jeg tager et billede af eksempelvis en bygningsfacade og vil bruge det som tekstur i Blender. Appen skal rette perspektivet, så den valgte plane flade fremstår set lige forfra.
+
+Arbejdsgang:
+1. Vælg et billede fra computeren.
+2. Tegn to linjer, der følger to fysisk lodrette linjer på fladen, fx kanterne på en facade.
+3. Tegn to linjer, der følger to fysisk vandrette linjer på samme flade, fx vindueskanter eller gesimser.
+4. Ret billedet op, og vis resultatet.
+5. Gem det færdige billede i høj opløsning.
+
+Markering:
+- Hver linje defineres med to punkter, der frit kan flyttes.
+- Linjerne må placeres på forskellige steder på fladen; deres endepunkter behøver ikke mødes.
+- Behandl dem matematisk som uendelige linjer. Deres fire skæringspunkter definerer den firkant, som rettes op til et rektangel.
+- Brug tydelige farver til de to lodrette og de to vandrette linjer.
+- Vis hjælpetekst for det aktuelle trin.
+- Understøt zoom og panorering, så markeringerne kan placeres præcist.
+- Gør det muligt at ændre markeringerne, fortryde og starte forfra.
+- Tilbyd fornuftige startmarkeringer, som brugeren kan flytte.
+
+Perspektivkorrektion:
+- Beregn en projektiv transformation, en homografi, fra den markerede firkant til et rektangel.
+- De valgte lodrette linjer skal blive parallelle med billedets y-akse, og de valgte vandrette linjer skal blive parallelle med x-aksen.
+- Transformationen skal også rette andre linjer i de samme retninger på den plane flade.
+- Kontrollér ugyldige eller ustabile markeringer, fx sammenfaldende linjer, en næsten kollapset firkant eller skæringspunkter ekstremt langt uden for billedet. Giv en forståelig besked.
+
+Proportioner:
+De fire linjer kan bestemme opretningen, men kan ikke alene afsløre fladens faktiske bredde/højde-forhold.
+- Brug et fornuftigt estimat som standard, og forklar kort, at proportionerne er estimeret.
+- Lad brugeren indtaste et præcist bredde/højde-forhold eller kendte mål.
+- Tilføj en enkel kontrol til at justere proportionerne med det samme i forhåndsvisningen.
+
+Forhåndsvisning:
+- Vis originalen med markeringer og det oprettede resultat ved siden af hinanden på desktop.
+- Tilpas visningen til mindre skærme.
+- Opdatér resultatet løbende, mens markeringerne flyttes, eventuelt i reduceret opløsning for at bevare en flydende oplevelse.
+- Tilbyd et gitter oven på resultatet, så man kan kontrollere opretningen.
+- Standardbeskæringen er rektanglet mellem de fire valgte linjer.
+
+Opløsning og eksport:
+- Bevar det originale billede som kilde gennem hele arbejdsgangen.
+- Beregn eksporten direkte fra originalen og markeringernes koordinater i originalbilledet; eksportér aldrig blot forhåndsvisningen.
+- Foreslå outputdimensioner ud fra den valgte flades pixeludstrækning i originalen og det valgte bredde/højde-forhold. Undgå unødvendig nedskalering.
+- Vis outputdimensionerne, og lad brugeren ændre dem med låst aspektforhold.
+- Forklar diskret, at perspektivkorrektion fordeler eksisterende pixels og ikke kan genskabe detaljer, som fotoet ikke indeholder.
+- Brug inverse mapping med mindst bilineær interpolation, så resultatet ikke får huller.
+- Eksportér som PNG og JPEG; tilbyd kvalitetsvalg for JPEG.
+- Håndtér store billeder med en tydelig besked, hvis browserens hukommelse eller canvasgrænser kræver mindre output. Reducér ikke kvaliteten i stilhed.
+- Håndtér billedets orientering korrekt ved indlæsning.
+
+Design og teknik:
+- Lav et enkelt, gennemarbejdet værktøj med billedet som centrum.
+- Brug dansk i brugerfladen.
+- Al billedbehandling skal foregå lokalt i browseren.
+- Brug almindelig HTML, CSS og JavaScript. Tilføj kun et bibliotek, hvis det giver en konkret fordel.
+- Forklar kort, at værktøjet retter perspektiv på én plan flade. Linseforvrængning og flere facader i forskellige planer kræver anden eller separat behandling.
+
+Afprøvning:
+- Afprøv med et syntetisk perspektivforvrænget gitter, så det kan kontrolleres, at begge linjeretninger bliver rettet korrekt.
+- Kontrollér også et allerede retvinklet billede, manuelle proportioner, ugyldige markeringer og eksportens faktiske pixelmål.
+- Afprøv upload, flytning af punkter, zoom, panorering og download i browseren.
+
+Prioritér en færdig og præcis arbejdsgang: vælg billede → markér fire linjer → kontrollér resultat → gem tekstur.

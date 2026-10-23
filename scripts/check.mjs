@@ -1,3 +1,4 @@
+import './check-perspective.mjs';
 import {readFileSync,existsSync,readdirSync} from 'node:fs';
 import {execFileSync} from 'node:child_process';
 import {dirname,resolve,extname} from 'node:path';

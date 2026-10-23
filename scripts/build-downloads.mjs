@@ -4,9 +4,9 @@ for(const slug of readdirSync('apps')){
  const folder=`apps/${slug}`;
  let scripts=[];
  let html=readFileSync(`${folder}/index.html`,'utf8')
-  .replace(/<link rel="stylesheet" href="([^"]+)">/g,(_,file)=>`<style>${readFileSync(resolve(folder,file),'utf8').replace(/@import\s+url\([^;]+;/g,'')}</style>`)
+  .replace(/<link rel="stylesheet" href="([^"]+)">/g,(_,file)=>`<style>${readFileSync(resolve(folder,file),'utf8').replace(/@import\s+url\([^)]*\)\s*;/g,'')}</style>`)
   .replace(/<script src="([^"]+)"[^>]*><\/script>/g,(_,file)=>{scripts.push(readFileSync(resolve(folder,file),'utf8'));return ''})
-  .replace('href="../../"','href="https://365aideas.vercel.app/"')
+  .replaceAll('href="../../"','href="https://365aideas.vercel.app/"')
   .replace(/<p class="download-block">.*?<\/p>/gs,'');
  const inline=scripts.map(js=>`<script>${js.replace(/<\/script/gi,'<\\/script')}</script>`).join('');
  html=html.includes('</body>')?html.replace('</body>',()=>inline+'</body>'):html.replace('</html>',()=>inline+'</html>');

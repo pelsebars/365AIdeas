@@ -50,3 +50,17 @@ Hver udgivet app kan tilbydes som en selvstændig HTML-fil. Kør `npm run build`
 ## Idéformular
 
 `ide.html` sender forslag via FormSubmit til jacobhansennymail@gmail.com. Mailadresse er valgfri. FormSubmit bruger som standard CAPTCHA; et skjult honeypot-felt supplerer spamkontrollen. Ved første indsendelse sender tjenesten en aktiveringsmail til modtageren: aktivér formularen, og indsend derefter et nyt testforslag for at kontrollere levering. Der er ikke sendt nogen testhenvendelse fra udviklingen. Besøgende kan også bruge mailto-linket. Formularen afhænger af FormSubmits tilgængelighed og er endnu ikke verificeret med levering til indbakken.
+
+## Perspektivretter
+
+Åbn `/apps/perspektivretter/`. Vælg et billede, tilpas to lodrette og to vandrette linjer, kontrollér resultatet og gem en PNG eller JPEG. Et indbygget syntetisk testgitter gør det muligt at prøve værktøjet uden egne billeder. Linjerne behandles som uendelige; deres skæringspunkter er standardbeskæringen. Alle koordinater og eksportberegninger bruger originalens orienterede pixels.
+
+Træk punkterne med mus eller touch. Zoom med scroll eller +/−, og panorér ved at trække baggrunden; “Panorér” tillader også træk oven på punkterne. Tab vælger et punkt, og piletaster flytter det 1 pixel (Shift: 10). “Tegn valgt linje” lader dig tegne linjen igen, og “Fortryd”/Ctrl+Z eller Cmd+Z gendanner tidligere markeringer. “Start forfra” nulstiller markeringer og udsnit. Proportioner kan estimeres, angives som kendt bredde/højde og finjusteres med skyderen. Eksportmål har låst aspektforhold, afrundet til hele pixels.
+
+Teknik: almindelig HTML, CSS og JavaScript; SVG-markeringer og Canvas 2D. Invers homografi med bilineær, alfa-korrekt interpolation. Forhåndsvisningen har højst 640 px på længste side; eksporten beregnes separat fra originalen i 32-pixels-rækker med pauser til browseren. EXIF-orientering anvendes ved indlæsning via `createImageBitmap`. Ingen billeder sendes til en server. PNG bevarer transparens; JPEG får hvid baggrund. Ingen eksterne biblioteker eller netværksafhængigheder. Downloadudgaven indeholder hele appen i én HTML-fil.
+
+Grænser: 50 megapixel/20.000 px pr. side ved indlæsning og 40 megapixel/16.384 px pr. side ved eksport. Enhedens hukommelse kan sætte en lavere grænse; fejl meddeles uden automatisk nedskalering. Én plan flade ad gangen; linseforvrængning korrigeres ikke, og fire linjer bestemmer ikke alene korrekte fysiske proportioner.
+
+Afprøvet 23. oktober 2026: `npm run check` omfatter nu en uafhængig projektiv testfigur med gitter i begge retninger, retvinklet identitet (pixelbevarelse), manuelle proportioner, rækkevis eksport og ugyldige/ekstreme markeringer. Browserprøver ved 1280×900 og 390×844 omfatter upload, EXIF-rotation 6, punkttræk, tastatur, linjetegning, fortryd, nulstilling, scrollzoom, zoomknapper, panorering, gitter, proportionsskyder, 2:1-mål, ugyldig geometri, for stort output og navigation til/fra oversigten. PNG og JPEG blev downloadet og filernes faktiske mål verificeret til 1600×800. Ingen observerede konsolfejl eller vandret overløb i mobilviewporten. Mobil er afprøvet i browserviewport, ikke på en fysisk telefon.
+
+Konceptprompten er bevaret i `apps/perspektivretter/concept.txt` og under opslaget på forsiden, adskilt fra projektbriefet. Perspektivretter fandtes ikke i backloggen; ingen anden idé er fjernet. Kontrolscriptet accepterer fortsat en variabel backlogstørrelse.
