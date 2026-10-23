@@ -1,4 +1,4 @@
-# 365 AIdeas
+# 365AIIdeer
 
 Et års eksperiment: en ny, lille AI-genereret webapp hver dag. Ét samlet website med selvstændige apps, prompts og byggeforklaringer.
 
