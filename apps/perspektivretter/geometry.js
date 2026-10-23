@@ -31,17 +31,30 @@ const Perspective = (() => {
  function map(m,u,v){const z=m[6]*u+m[7]*v+1;return {x:(m[0]*u+m[1]*v+m[2])/z,y:(m[3]*u+m[4]*v+m[5])/z};}
  function dimensions(q,ratio){const w=Math.max(distance(q[0],q[1]),distance(q[3],q[2])),h=Math.max(distance(q[0],q[3]),distance(q[1],q[2]));return {width:Math.ceil(Math.max(w,h*ratio)),height:Math.ceil(Math.max(h,w/ratio))};}
  function estimate(q){return (distance(q[0],q[1])+distance(q[3],q[2]))/(distance(q[0],q[3])+distance(q[1],q[2]));}
- function renderRows(src,dst,m,start,end,offsetY=0){
+ // Bounds in rectified reference coordinates. Reject a projective horizon crossing
+ // the source: no finite canvas can contain that transformed image.
+ function imageBounds(m,w,h){
+  const [a,b,c,d,e,f,g,k]=m;
+  const inverse=[e-f*k,c*k-b,b*f-c*e,f*g-d,a-c*g,c*d-a*f,d*k-e*g,b*g-a*k,a*e-b*d];
+  const corners=[[0,0],[w,0],[w,h],[0,h]],den=corners.map(([x,y])=>inverse[6]*x+inverse[7]*y+inverse[8]);
+  const largest=Math.max(...den.map(Math.abs));
+  if(!largest||den.some(z=>!Number.isFinite(z)||Math.sign(z)!==Math.sign(den[0])||Math.abs(z)<largest*1e-5))throw Error('Hele billedet kan ikke rettes op til et endeligt, stabilt udsnit med disse linjer. Vælg “Mellem linjerne”, eller flyt referencelinjerne.');
+  const points=corners.map(([x,y],i)=>({x:(inverse[0]*x+inverse[1]*y+inverse[2])/den[i],y:(inverse[3]*x+inverse[4]*y+inverse[5])/den[i]}));
+  const x0=Math.min(...points.map(p=>p.x)),y0=Math.min(...points.map(p=>p.y)),x1=Math.max(...points.map(p=>p.x)),y1=Math.max(...points.map(p=>p.y));
+  if(!Number.isFinite(x0+y0+x1+y1)||x1<=x0||y1<=y0)throw Error('Billedets oprettede udstrækning er ustabil. Flyt referencelinjerne.');
+  return {x0,y0,x1,y1};
+ }
+ function renderRows(src,dst,m,start,end,offsetY=0,bounds={x0:0,y0:0,x1:1,y1:1}){
   const sw=src.width,sh=src.height,s=src.data,o=dst.data;
   for(let y=start;y<end;y++)for(let x=0;x<dst.width;x++){
-   const p=map(m,(x+.5)/dst.width,(y+.5)/dst.height),px=p.x-.5,py=p.y-.5,i=((y-offsetY)*dst.width+x)*4;
-   if(px<-.5||py<-.5||px>sw-.5||py>sh-.5)continue;
+   const p=map(m,bounds.x0+(x+.5)/dst.width*(bounds.x1-bounds.x0),bounds.y0+(y+.5)/dst.height*(bounds.y1-bounds.y0)),px=p.x-.5,py=p.y-.5,i=((y-offsetY)*dst.width+x)*4;
+   if(!Number.isFinite(px+py)||px<-.5||py<-.5||px>sw-.5||py>sh-.5)continue;
    const cx=Math.max(0,Math.min(sw-1,px)),cy=Math.max(0,Math.min(sh-1,py)),ix=Math.floor(cx),iy=Math.floor(cy),fx=cx-ix,fy=cy-iy;
    const ids=[(iy*sw+ix)*4,(iy*sw+Math.min(ix+1,sw-1))*4,(Math.min(iy+1,sh-1)*sw+ix)*4,(Math.min(iy+1,sh-1)*sw+Math.min(ix+1,sw-1))*4],weights=[(1-fx)*(1-fy),fx*(1-fy),(1-fx)*fy,fx*fy];
    let alpha=0;for(let k=0;k<4;k++)alpha+=s[ids[k]+3]*weights[k];o[i+3]=alpha;
    if(alpha)for(let ch=0;ch<3;ch++){let value=0;for(let k=0;k<4;k++)value+=s[ids[k]+ch]*s[ids[k]+3]*weights[k];o[i+ch]=value/alpha;}
   }
  }
- return {quad,homography,map,dimensions,estimate,renderRows};
+ return {quad,homography,map,dimensions,estimate,imageBounds,renderRows};
 })();
 if(typeof module!=='undefined')module.exports=Perspective;

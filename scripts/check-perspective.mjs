@@ -24,3 +24,14 @@ const strip={width:200,height:100,data:new Uint8ClampedArray(200*10*4)};P.render
 for(const bad of [ [rect[0],rect[0],rect[2],rect[3]], [rect[0],rect[1],rect[0],rect[3]], [[point(0,0),point(0,0)],...rect.slice(1)], [[point(0,0),point(1,100)],[point(0,1),point(1,101)],rect[2],rect[3]], [rect[1],rect[0],rect[2],rect[3]] ])assert.throws(()=>P.quad(bad,200,100));
 const far=structuredClone(rect);far[0]=[point(-1000,0),point(-1000,100)];assert.throws(()=>P.quad(far,200,100));
 console.log('OK: homografi, uafhængigt perspektivgitter i begge retninger, identitet, proportioner, rækkeeksport og ugyldige markeringer.');
+// Interior reference lines must not crop the source when whole-image mode is selected.
+const interior=[point(40,20),point(160,20),point(160,80),point(40,80)],im=P.homography(interior),ib=P.imageBounds(im,200,100);
+assert.ok(Math.abs(ib.x0+1/3)<1e-12);assert.ok(Math.abs(ib.x1-4/3)<1e-12);
+const full={width:200,height:100,data:new Uint8ClampedArray(identity.data.length)};
+P.renderRows(identity,full,im,0,100,0,ib);assert.deepEqual(full.data,identity.data,'Interior references preserve ALL pixels in whole-image mode');
+const pb=P.imageBounds(h,1400,1050);
+// Independently inverted source boundary must be wholly contained by the output bounds.
+for(let y=0;y<=1050;y+=35)for(let x=0;x<=1400;x+=35){const p=unproject(x,y);assert.ok(p.u>=pb.x0-1e-10&&p.u<=pb.x1+1e-10&&p.v>=pb.y0-1e-10&&p.v<=pb.y1+1e-10);}
+assert.throws(()=>P.imageBounds([100,0,0,0,100,0,1,0],200,100),/endeligt/,'A horizon crossing the source cannot have finite full-image bounds');
+const wholeStrip={width:200,height:100,data:new Uint8ClampedArray(200*10*4)};P.renderRows(identity,wholeStrip,im,20,30,20,ib);assert.deepEqual(wholeStrip.data,identity.data.slice(200*20*4,200*30*4));
+console.log('OK: hele billedet med indre referencelinjer, projektive billedgrænser, rækkeeksport og horisontkontrol.');

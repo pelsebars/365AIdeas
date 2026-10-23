@@ -7,10 +7,10 @@
 <div class="steps"><span>01 <b>Vælg billede</b></span><span>02 <b>Markér fire linjer</b></span><span>03 <b>Kontrollér & gem</b></span></div>
 <div id="status" role="status">Vælg et billede, eller prøv testgitteret for at lære værktøjet at kende.</div>
 <section class="workspace"><article class="panel"><div class="panel-head"><h2>Original <small id="source-size">INGEN FIL VALGT</small></h2><div class="zoom"><button id="minus" aria-label="Zoom ud">−</button><output id="zoom">100%</output><button id="plus" aria-label="Zoom ind">+</button><button id="fit">Tilpas</button></div></div><div id="stage" class="stage"><canvas id="source"></canvas><svg id="overlay" aria-label="Billedmarkeringer"></svg><div id="empty">⌗<p>Plads til et nyt perspektiv</p><small>Vælg et foto for at begynde</small></div></div><div class="tools"><label><input type="checkbox" id="pan"> Panorér</label><button id="undo" disabled>↶ Fortryd</button><button id="reset" disabled>Start forfra</button></div><p class="hint">Træk punkter · Scroll eller +/− zoomer · Træk baggrunden for at panorere.<br>Tab vælger punkt · Piletaster flytter 1 pixel, Shift flytter 10.</p></article>
-<article class="panel"><div class="panel-head"><h2>Oprettet <small>LIVE FORHÅNDSVISNING</small></h2><label><input type="checkbox" id="grid" checked> Gitter</label></div><div class="result-stage"><div id="result-wrap"><canvas id="result"></canvas><div id="grid-overlay"></div></div><p id="result-empty">Din færdige flade vises her</p></div><div class="result-caption"><span id="preview-info">Rektanglet mellem linjerne bliver dit udsnit.</span><span>↗ PNG / JPEG</span></div><p class="hint">Gitteret er kun en hjælp og kommer ikke med i eksporten.<br>Områder uden for originalen er transparente i PNG og hvide i JPEG.</p></article></section>
+<article class="panel"><div class="panel-head"><h2>Oprettet <small>LIVE FORHÅNDSVISNING</small></h2><label><input type="checkbox" id="grid" checked> Gitter</label></div><div class="result-stage"><div id="result-wrap"><canvas id="result"></canvas><div id="grid-overlay"></div></div><p id="result-empty">Din færdige flade vises her</p></div><div class="result-caption"><span id="preview-info">Vælg hele billedet eller udsnittet mellem linjerne.</span><span>↗ PNG / JPEG</span></div><p class="hint">Gitteret er kun en hjælp og kommer ikke med i eksporten.<br>Områder uden for originalen er transparente i PNG og hvide i JPEG.</p></article></section>
 <section class="settings"><article><p class="eyebrow">01 / MARKERINGER</p><h2>Følg fladens linjer</h2><div class="line-controls" id="line-controls"></div><p id="step-help">Start med de to lodrette kanter. Endepunkterne behøver ikke mødes.</p><p class="hint">Vælg en linje og tryk “Tegn valgt linje”. Træk derefter på billedet. Du kan altid flytte dens to punkter.</p><button id="draw" disabled>Tegn valgt linje</button></article>
-<article><p class="eyebrow">02 / PROPORTIONER</p><h2>Giv fladen de rette mål</h2><label>Metode<select id="ratio-mode"><option value="auto">Estimer fra billedet</option><option value="manual">Kendt bredde / højde</option></select></label><div class="pair"><label>Bredde / forhold<input id="real-width" type="number" min="0.001" step="any" value="1" disabled></label><label>Højde<input id="real-height" type="number" min="0.001" step="any" value="1" disabled></label></div><label>Finjustér proportioner <output id="ratio-label">1,00×</output><input id="stretch" type="range" min="-1" max="1" value="0" step="0.01"></label><p class="hint">Fire linjer fastlægger perspektivet, men ikke fladens faktiske proportioner. Standardforholdet er et estimat. Kendte mål skal bruge samme enhed.</p></article>
-<article><p class="eyebrow">03 / EKSPORT</p><h2>Klar til din tekstur</h2><div class="pair"><label>Bredde, px<input id="out-width" type="number" min="1" max="16384" step="1" value="1600"></label><label>Højde, px<input id="out-height" type="number" min="1" max="16384" step="1" value="1200"></label></div><div class="export-note">🔒 Låst aspektforhold <button id="suggest">Brug foreslåede mål</button></div><div class="pair"><label>Format<select id="format"><option value="png">PNG · tabsfri</option><option value="jpeg">JPEG · hvid baggrund</option></select></label><label>JPEG-kvalitet<select id="quality" disabled><option value="0.95">95 % · høj</option><option value="0.85">85 % · mindre fil</option><option value="1">100 % · maksimal</option></select></label></div><button class="primary" id="save" disabled>↓ Gem tekstur</button><p class="hint">Eksport beregnes fra originalen, aldrig fra forhåndsvisningen. Opretning fordeler eksisterende pixels; den genskaber ikke manglende detaljer.</p></article></section>
+<article><p class="eyebrow">02 / PROPORTIONER</p><h2>Giv fladen de rette mål</h2><label>Metode<select id="ratio-mode"><option value="auto">Estimer fra billedet</option><option value="manual">Kendt bredde / højde</option></select></label><div class="pair"><label>Bredde / forhold<input id="real-width" type="number" min="0.001" step="any" value="1" disabled></label><label>Højde<input id="real-height" type="number" min="0.001" step="any" value="1" disabled></label></div><label>Finjustér proportioner <output id="ratio-label">1,00×</output><input id="stretch" type="range" min="-1" max="1" value="0" step="0.01"></label><p class="hint">Fire linjer fastlægger perspektivet, men ikke fladens faktiske proportioner. Standardforholdet er et estimat. Kendte mål skal bruge samme enhed og gælder altid området mellem referencelinjerne — også når hele billedet eksporteres.</p></article>
+<article><p class="eyebrow">03 / EKSPORT</p><h2>Klar til din tekstur</h2><label>Udsnit<select id="crop-mode"><option value="whole">Hele billedet</option><option value="lines">Mellem linjerne</option></select></label><p class="hint" id="crop-help">Hele originalen bevares. Tomme kanter er transparente i PNG og hvide i JPEG.</p><div class="pair"><label>Bredde, px<input id="out-width" type="number" min="1" max="16384" step="1" value="1600"></label><label>Højde, px<input id="out-height" type="number" min="1" max="16384" step="1" value="1200"></label></div><div class="export-note">🔒 Låst aspektforhold <button id="suggest">Brug foreslåede mål</button></div><div class="pair"><label>Format<select id="format"><option value="png">PNG · tabsfri</option><option value="jpeg">JPEG · hvid baggrund</option></select></label><label>JPEG-kvalitet<select id="quality" disabled><option value="0.95">95 % · høj</option><option value="0.85">85 % · mindre fil</option><option value="1">100 % · maksimal</option></select></label></div><button class="primary" id="save" disabled>↓ Gem tekstur</button><p class="hint">Eksport beregnes fra originalen, aldrig fra forhåndsvisningen. Opretning fordeler eksisterende pixels; den genskaber ikke manglende detaljer.</p></article></section>
 <footer><strong>Én plan flade ad gangen.</strong> Linseforvrængning og facader i forskellige planer kræver anden eller separat behandling.<a href="https://365aideas.vercel.app/">Tilbage til alle apps ↗</a></footer></main><script>/* Geometry is independent of the UI; coordinates always refer to the original image. */
 const Perspective = (() => {
  const distance=(a,b)=>Math.hypot(a.x-b.x,a.y-b.y);
@@ -44,18 +44,31 @@ const Perspective = (() => {
  function map(m,u,v){const z=m[6]*u+m[7]*v+1;return {x:(m[0]*u+m[1]*v+m[2])/z,y:(m[3]*u+m[4]*v+m[5])/z};}
  function dimensions(q,ratio){const w=Math.max(distance(q[0],q[1]),distance(q[3],q[2])),h=Math.max(distance(q[0],q[3]),distance(q[1],q[2]));return {width:Math.ceil(Math.max(w,h*ratio)),height:Math.ceil(Math.max(h,w/ratio))};}
  function estimate(q){return (distance(q[0],q[1])+distance(q[3],q[2]))/(distance(q[0],q[3])+distance(q[1],q[2]));}
- function renderRows(src,dst,m,start,end,offsetY=0){
+ // Bounds in rectified reference coordinates. Reject a projective horizon crossing
+ // the source: no finite canvas can contain that transformed image.
+ function imageBounds(m,w,h){
+  const [a,b,c,d,e,f,g,k]=m;
+  const inverse=[e-f*k,c*k-b,b*f-c*e,f*g-d,a-c*g,c*d-a*f,d*k-e*g,b*g-a*k,a*e-b*d];
+  const corners=[[0,0],[w,0],[w,h],[0,h]],den=corners.map(([x,y])=>inverse[6]*x+inverse[7]*y+inverse[8]);
+  const largest=Math.max(...den.map(Math.abs));
+  if(!largest||den.some(z=>!Number.isFinite(z)||Math.sign(z)!==Math.sign(den[0])||Math.abs(z)<largest*1e-5))throw Error('Hele billedet kan ikke rettes op til et endeligt, stabilt udsnit med disse linjer. Vælg “Mellem linjerne”, eller flyt referencelinjerne.');
+  const points=corners.map(([x,y],i)=>({x:(inverse[0]*x+inverse[1]*y+inverse[2])/den[i],y:(inverse[3]*x+inverse[4]*y+inverse[5])/den[i]}));
+  const x0=Math.min(...points.map(p=>p.x)),y0=Math.min(...points.map(p=>p.y)),x1=Math.max(...points.map(p=>p.x)),y1=Math.max(...points.map(p=>p.y));
+  if(!Number.isFinite(x0+y0+x1+y1)||x1<=x0||y1<=y0)throw Error('Billedets oprettede udstrækning er ustabil. Flyt referencelinjerne.');
+  return {x0,y0,x1,y1};
+ }
+ function renderRows(src,dst,m,start,end,offsetY=0,bounds={x0:0,y0:0,x1:1,y1:1}){
   const sw=src.width,sh=src.height,s=src.data,o=dst.data;
   for(let y=start;y<end;y++)for(let x=0;x<dst.width;x++){
-   const p=map(m,(x+.5)/dst.width,(y+.5)/dst.height),px=p.x-.5,py=p.y-.5,i=((y-offsetY)*dst.width+x)*4;
-   if(px<-.5||py<-.5||px>sw-.5||py>sh-.5)continue;
+   const p=map(m,bounds.x0+(x+.5)/dst.width*(bounds.x1-bounds.x0),bounds.y0+(y+.5)/dst.height*(bounds.y1-bounds.y0)),px=p.x-.5,py=p.y-.5,i=((y-offsetY)*dst.width+x)*4;
+   if(!Number.isFinite(px+py)||px<-.5||py<-.5||px>sw-.5||py>sh-.5)continue;
    const cx=Math.max(0,Math.min(sw-1,px)),cy=Math.max(0,Math.min(sh-1,py)),ix=Math.floor(cx),iy=Math.floor(cy),fx=cx-ix,fy=cy-iy;
    const ids=[(iy*sw+ix)*4,(iy*sw+Math.min(ix+1,sw-1))*4,(Math.min(iy+1,sh-1)*sw+ix)*4,(Math.min(iy+1,sh-1)*sw+Math.min(ix+1,sw-1))*4],weights=[(1-fx)*(1-fy),fx*(1-fy),(1-fx)*fy,fx*fy];
    let alpha=0;for(let k=0;k<4;k++)alpha+=s[ids[k]+3]*weights[k];o[i+3]=alpha;
    if(alpha)for(let ch=0;ch<3;ch++){let value=0;for(let k=0;k<4;k++)value+=s[ids[k]+ch]*s[ids[k]+3]*weights[k];o[i+ch]=value/alpha;}
   }
  }
- return {quad,homography,map,dimensions,estimate,renderRows};
+ return {quad,homography,map,dimensions,estimate,imageBounds,renderRows};
 })();
 if(typeof module!=='undefined')module.exports=Perspective;
 </script><script>'use strict';
@@ -63,6 +76,7 @@ const $=id=>document.getElementById(id),P=Perspective;
 const stage=$('stage'),canvas=$('source'),ctx=canvas.getContext('2d'),svg=$('overlay'),result=$('result');
 const names=['L1 · Venstre','L2 · Højre','V1 · Top','V2 · Bund'],colors=['#eeaf72','#eeaf72','#7fd7d0','#7fd7d0'];
 let original=null,sourcePixels=null,lines=[],history=[],selected=0,activePoint=null,view={scale:1,x:0,y:0},baseScale=1,drag=null,drawing=false,valid=false,ratio=1,quad=null,matrix=null,customSize=false,previewRevision=0,busy=false,loadRevision=0,filename='tekstur';
+let bounds={x0:0,y0:0,x1:1,y1:1},outputRatio=1;
 function status(message,error=false){$('status').textContent=message;$('status').classList.toggle('error',error);}
 function snapshot(){history.push(JSON.parse(JSON.stringify(lines)));if(history.length>80)history.shift();$('undo').disabled=false;}
 function defaultLines(w,h){return [[{x:w*.18,y:h*.22},{x:w*.18,y:h*.78}],[{x:w*.82,y:h*.22},{x:w*.82,y:h*.78}],[{x:w*.26,y:h*.18},{x:w*.74,y:h*.18}],[{x:w*.26,y:h*.82},{x:w*.74,y:h*.82}]];}
@@ -86,8 +100,8 @@ function paint(){
  if(focus)svg.querySelector(`[data-point="${focus}"]`)?.focus({preventScroll:true});$('zoom').textContent=Math.round(view.scale/baseScale*100)+'%';
 }
 function outputSize(){return {width:Number($('out-width').value),height:Number($('out-height').value)};}
-function setSize(width){const height=Math.max(1,Math.round(width/ratio));$('out-width').value=Math.max(1,Math.round(width));$('out-height').value=height;}
-function suggest(){if(quad){const size=P.dimensions(quad,ratio);setSize(size.width);}}
+function setSize(width){const height=Math.max(1,Math.round(width/outputRatio));$('out-width').value=Math.max(1,Math.round(width));$('out-height').value=height;}
+function suggest(){if(quad){const size=P.dimensions(quad,ratio);setSize(Math.ceil(size.width*(bounds.x1-bounds.x0)));}}
 function validateSize(){const {width,height}=outputSize();if(!Number.isInteger(width)||!Number.isInteger(height)||width<1||height<1)throw Error('Angiv hele, positive pixelmål.');if(width>16384||height>16384||width*height>40000000)throw Error('Output er for stort til denne apps sikre canvasgrænse (40 megapixel og 16.384 px pr. side). Vælg selv mindre pixelmål.');return {width,height};}
 function update(){
  if(!original)return;valid=false;
@@ -97,9 +111,12 @@ function update(){
   if(manual&&(!(rw>0)||!(rh>0)))throw Error('Indtast en positiv bredde og højde for de kendte mål.');
   ratio=(manual?rw/rh:P.estimate(quad))*2**Number($('stretch').value);
   if(!Number.isFinite(ratio)||ratio<.02||ratio>50)throw Error('Vælg et bredde/højde-forhold mellem 1:50 og 50:1.');
+  bounds=$('crop-mode').value==='whole'?P.imageBounds(matrix,original.width,original.height):{x0:0,y0:0,x1:1,y1:1};
+  outputRatio=ratio*(bounds.x1-bounds.x0)/(bounds.y1-bounds.y0);
+  $('crop-help').textContent=$('crop-mode').value==='whole'?'Hele originalen bevares. Tomme kanter er transparente i PNG og hvide i JPEG.':'Kun rektanglet mellem de fire referencelinjer eksporteres.';
   $('ratio-label').textContent=ratio.toLocaleString('da-DK',{maximumFractionDigits:3})+' : 1';
   if(!customSize)suggest();else setSize(Number($('out-width').value)||1);
-  valid=true;status((manual?'Kendte proportioner':'Estimerede proportioner')+' · '+ratio.toLocaleString('da-DK',{maximumFractionDigits:3})+' : 1. Flyt punkterne, og kontrollér resultatet med gitteret.');
+  valid=true;status((manual?'Kendte proportioner':'Estimerede proportioner')+' · '+ratio.toLocaleString('da-DK',{maximumFractionDigits:3})+' : 1 mellem linjerne. '+($('crop-mode').value==='whole'?'Hele billedet bevares.':'Udsnittet beskæres mellem linjerne.'));
   try{validateSize();}catch(error){status(error.message,true);}
  }catch(error){status(error.message,true);}
  $('save').disabled=!valid||busy;$('reset').disabled=false;$('draw').disabled=false;
@@ -108,8 +125,8 @@ function update(){
 }
 async function schedulePreview(){
  const revision=++previewRevision;await new Promise(requestAnimationFrame);if(revision!==previewRevision||!valid)return;
- const width=Math.max(1,Math.round(Math.min(640,640*ratio))),height=Math.max(1,Math.round(width/ratio)),dst=new ImageData(width,height),m=matrix.slice(),src=sourcePixels;
- P.renderRows(src,dst,m,0,height);
+ const width=Math.max(1,Math.round(Math.min(640,640*outputRatio))),height=Math.max(1,Math.round(Math.min(640,640/outputRatio))),dst=new ImageData(width,height),m=matrix.slice(),src=sourcePixels;
+ P.renderRows(src,dst,m,0,height,0,bounds);
  result.width=width;result.height=height;result.getContext('2d').putImageData(dst,0,0);$('result-wrap').style.display='block';$('result-empty').hidden=true;$('preview-info').textContent=`Forhåndsvisning ${width} × ${height} · eksport bruger originalen`;
 }
 function installImage(image,name,demoLines=null){
@@ -151,16 +168,17 @@ document.addEventListener('keydown',e=>{if(e.key==='Escape'){drawing=false;drag=
 $('ratio-mode').onchange=()=>{const manual=$('ratio-mode').value==='manual';$('real-width').disabled=$('real-height').disabled=!manual;if(manual&&quad){$('real-width').value=P.estimate(quad).toFixed(4);$('real-height').value=1;}$('stretch').value=0;customSize=false;update();};
 for(const id of ['real-width','real-height','stretch'])$(id).addEventListener('input',()=>{customSize=false;update();});
 $('out-width').oninput=()=>{customSize=true;const w=Number($('out-width').value);if(w>0)setSize(w);else status('Angiv en positiv bredde.',true);};
-$('out-height').oninput=()=>{customSize=true;const h=Number($('out-height').value);if(h>0){$('out-height').value=Math.round(h);$('out-width').value=Math.max(1,Math.round(h*ratio));}else status('Angiv en positiv højde.',true);};
+$('out-height').oninput=()=>{customSize=true;const h=Number($('out-height').value);if(h>0){$('out-height').value=Math.round(h);$('out-width').value=Math.max(1,Math.round(h*outputRatio));}else status('Angiv en positiv højde.',true);};
+$('crop-mode').onchange=()=>{customSize=false;update();};
 $('suggest').onclick=()=>{customSize=false;update();};$('grid').onchange=()=>{$('grid-overlay').hidden=!$('grid').checked;};$('format').onchange=()=>{$('quality').disabled=$('format').value!=='jpeg';};
 $('save').onclick=async()=>{
  if(!valid||busy)return;let out;
  try{
-  const {width,height}=validateSize(),m=matrix.slice(),src=sourcePixels,format=$('format').value,quality=Number($('quality').value),name=filename;busy=true;$('save').disabled=true;
+  const {width,height}=validateSize(),m=matrix.slice(),src=sourcePixels,format=$('format').value,quality=Number($('quality').value),name=filename,exportBounds={...bounds};busy=true;$('save').disabled=true;
   out=document.createElement('canvas');out.width=width;out.height=height;const c=out.getContext('2d');if(!c)throw Error('Canvas kunne ikke oprettes.');
   // Bounded row buffers avoid allocating another full-size RGBA image.
   for(let y=0;y<height;y+=32){const rows=Math.min(32,height-y),strip=c.createImageData(width,rows);const proxy={width,height,data:strip.data};
-   P.renderRows(src,proxy,m,y,y+rows,y);c.putImageData(strip,0,y);status(`Beregner eksport fra originalen … ${Math.round((y+rows)/height*100)} %`);await new Promise(resolve=>setTimeout(resolve,0));
+   P.renderRows(src,proxy,m,y,y+rows,y,exportBounds);c.putImageData(strip,0,y);status(`Beregner eksport fra originalen … ${Math.round((y+rows)/height*100)} %`);await new Promise(resolve=>setTimeout(resolve,0));
   }
   if(format==='jpeg'){c.globalCompositeOperation='destination-over';c.fillStyle='#fff';c.fillRect(0,0,width,height);}
   const blob=await new Promise(resolve=>out.toBlob(resolve,'image/'+format,quality));if(!blob)throw Error('Browserens canvas- eller hukommelsesgrænse er nået.');

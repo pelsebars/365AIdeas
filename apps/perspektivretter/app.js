@@ -3,6 +3,7 @@ const $=id=>document.getElementById(id),P=Perspective;
 const stage=$('stage'),canvas=$('source'),ctx=canvas.getContext('2d'),svg=$('overlay'),result=$('result');
 const names=['L1 · Venstre','L2 · Højre','V1 · Top','V2 · Bund'],colors=['#eeaf72','#eeaf72','#7fd7d0','#7fd7d0'];
 let original=null,sourcePixels=null,lines=[],history=[],selected=0,activePoint=null,view={scale:1,x:0,y:0},baseScale=1,drag=null,drawing=false,valid=false,ratio=1,quad=null,matrix=null,customSize=false,previewRevision=0,busy=false,loadRevision=0,filename='tekstur';
+let bounds={x0:0,y0:0,x1:1,y1:1},outputRatio=1;
 function status(message,error=false){$('status').textContent=message;$('status').classList.toggle('error',error);}
 function snapshot(){history.push(JSON.parse(JSON.stringify(lines)));if(history.length>80)history.shift();$('undo').disabled=false;}
 function defaultLines(w,h){return [[{x:w*.18,y:h*.22},{x:w*.18,y:h*.78}],[{x:w*.82,y:h*.22},{x:w*.82,y:h*.78}],[{x:w*.26,y:h*.18},{x:w*.74,y:h*.18}],[{x:w*.26,y:h*.82},{x:w*.74,y:h*.82}]];}
@@ -26,8 +27,8 @@ function paint(){
  if(focus)svg.querySelector(`[data-point="${focus}"]`)?.focus({preventScroll:true});$('zoom').textContent=Math.round(view.scale/baseScale*100)+'%';
 }
 function outputSize(){return {width:Number($('out-width').value),height:Number($('out-height').value)};}
-function setSize(width){const height=Math.max(1,Math.round(width/ratio));$('out-width').value=Math.max(1,Math.round(width));$('out-height').value=height;}
-function suggest(){if(quad){const size=P.dimensions(quad,ratio);setSize(size.width);}}
+function setSize(width){const height=Math.max(1,Math.round(width/outputRatio));$('out-width').value=Math.max(1,Math.round(width));$('out-height').value=height;}
+function suggest(){if(quad){const size=P.dimensions(quad,ratio);setSize(Math.ceil(size.width*(bounds.x1-bounds.x0)));}}
 function validateSize(){const {width,height}=outputSize();if(!Number.isInteger(width)||!Number.isInteger(height)||width<1||height<1)throw Error('Angiv hele, positive pixelmål.');if(width>16384||height>16384||width*height>40000000)throw Error('Output er for stort til denne apps sikre canvasgrænse (40 megapixel og 16.384 px pr. side). Vælg selv mindre pixelmål.');return {width,height};}
 function update(){
  if(!original)return;valid=false;
@@ -37,9 +38,12 @@ function update(){
   if(manual&&(!(rw>0)||!(rh>0)))throw Error('Indtast en positiv bredde og højde for de kendte mål.');
   ratio=(manual?rw/rh:P.estimate(quad))*2**Number($('stretch').value);
   if(!Number.isFinite(ratio)||ratio<.02||ratio>50)throw Error('Vælg et bredde/højde-forhold mellem 1:50 og 50:1.');
+  bounds=$('crop-mode').value==='whole'?P.imageBounds(matrix,original.width,original.height):{x0:0,y0:0,x1:1,y1:1};
+  outputRatio=ratio*(bounds.x1-bounds.x0)/(bounds.y1-bounds.y0);
+  $('crop-help').textContent=$('crop-mode').value==='whole'?'Hele originalen bevares. Tomme kanter er transparente i PNG og hvide i JPEG.':'Kun rektanglet mellem de fire referencelinjer eksporteres.';
   $('ratio-label').textContent=ratio.toLocaleString('da-DK',{maximumFractionDigits:3})+' : 1';
   if(!customSize)suggest();else setSize(Number($('out-width').value)||1);
-  valid=true;status((manual?'Kendte proportioner':'Estimerede proportioner')+' · '+ratio.toLocaleString('da-DK',{maximumFractionDigits:3})+' : 1. Flyt punkterne, og kontrollér resultatet med gitteret.');
+  valid=true;status((manual?'Kendte proportioner':'Estimerede proportioner')+' · '+ratio.toLocaleString('da-DK',{maximumFractionDigits:3})+' : 1 mellem linjerne. '+($('crop-mode').value==='whole'?'Hele billedet bevares.':'Udsnittet beskæres mellem linjerne.'));
   try{validateSize();}catch(error){status(error.message,true);}
  }catch(error){status(error.message,true);}
  $('save').disabled=!valid||busy;$('reset').disabled=false;$('draw').disabled=false;
@@ -48,8 +52,8 @@ function update(){
 }
 async function schedulePreview(){
  const revision=++previewRevision;await new Promise(requestAnimationFrame);if(revision!==previewRevision||!valid)return;
- const width=Math.max(1,Math.round(Math.min(640,640*ratio))),height=Math.max(1,Math.round(width/ratio)),dst=new ImageData(width,height),m=matrix.slice(),src=sourcePixels;
- P.renderRows(src,dst,m,0,height);
+ const width=Math.max(1,Math.round(Math.min(640,640*outputRatio))),height=Math.max(1,Math.round(Math.min(640,640/outputRatio))),dst=new ImageData(width,height),m=matrix.slice(),src=sourcePixels;
+ P.renderRows(src,dst,m,0,height,0,bounds);
  result.width=width;result.height=height;result.getContext('2d').putImageData(dst,0,0);$('result-wrap').style.display='block';$('result-empty').hidden=true;$('preview-info').textContent=`Forhåndsvisning ${width} × ${height} · eksport bruger originalen`;
 }
 function installImage(image,name,demoLines=null){
@@ -91,16 +95,17 @@ document.addEventListener('keydown',e=>{if(e.key==='Escape'){drawing=false;drag=
 $('ratio-mode').onchange=()=>{const manual=$('ratio-mode').value==='manual';$('real-width').disabled=$('real-height').disabled=!manual;if(manual&&quad){$('real-width').value=P.estimate(quad).toFixed(4);$('real-height').value=1;}$('stretch').value=0;customSize=false;update();};
 for(const id of ['real-width','real-height','stretch'])$(id).addEventListener('input',()=>{customSize=false;update();});
 $('out-width').oninput=()=>{customSize=true;const w=Number($('out-width').value);if(w>0)setSize(w);else status('Angiv en positiv bredde.',true);};
-$('out-height').oninput=()=>{customSize=true;const h=Number($('out-height').value);if(h>0){$('out-height').value=Math.round(h);$('out-width').value=Math.max(1,Math.round(h*ratio));}else status('Angiv en positiv højde.',true);};
+$('out-height').oninput=()=>{customSize=true;const h=Number($('out-height').value);if(h>0){$('out-height').value=Math.round(h);$('out-width').value=Math.max(1,Math.round(h*outputRatio));}else status('Angiv en positiv højde.',true);};
+$('crop-mode').onchange=()=>{customSize=false;update();};
 $('suggest').onclick=()=>{customSize=false;update();};$('grid').onchange=()=>{$('grid-overlay').hidden=!$('grid').checked;};$('format').onchange=()=>{$('quality').disabled=$('format').value!=='jpeg';};
 $('save').onclick=async()=>{
  if(!valid||busy)return;let out;
  try{
-  const {width,height}=validateSize(),m=matrix.slice(),src=sourcePixels,format=$('format').value,quality=Number($('quality').value),name=filename;busy=true;$('save').disabled=true;
+  const {width,height}=validateSize(),m=matrix.slice(),src=sourcePixels,format=$('format').value,quality=Number($('quality').value),name=filename,exportBounds={...bounds};busy=true;$('save').disabled=true;
   out=document.createElement('canvas');out.width=width;out.height=height;const c=out.getContext('2d');if(!c)throw Error('Canvas kunne ikke oprettes.');
   // Bounded row buffers avoid allocating another full-size RGBA image.
   for(let y=0;y<height;y+=32){const rows=Math.min(32,height-y),strip=c.createImageData(width,rows);const proxy={width,height,data:strip.data};
-   P.renderRows(src,proxy,m,y,y+rows,y);c.putImageData(strip,0,y);status(`Beregner eksport fra originalen … ${Math.round((y+rows)/height*100)} %`);await new Promise(resolve=>setTimeout(resolve,0));
+   P.renderRows(src,proxy,m,y,y+rows,y,exportBounds);c.putImageData(strip,0,y);status(`Beregner eksport fra originalen … ${Math.round((y+rows)/height*100)} %`);await new Promise(resolve=>setTimeout(resolve,0));
   }
   if(format==='jpeg'){c.globalCompositeOperation='destination-over';c.fillStyle='#fff';c.fillRect(0,0,width,height);}
   const blob=await new Promise(resolve=>out.toBlob(resolve,'image/'+format,quality));if(!blob)throw Error('Browserens canvas- eller hukommelsesgrænse er nået.');
