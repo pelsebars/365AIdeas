@@ -1,0 +1,476 @@
+<!-- 365AIIdeer · Selvstændig HTML med CSS og JavaScript. Åbn i din browser eller redigér i en teksteditor. -->
+<!doctype html>
+<html lang="da">
+<head>
+  <meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+  <meta name="theme-color" content="#080f1c">
+  <meta name="description" content="Hvorfor går tiden hurtigere i en GPS-satellit? Syv interaktive eksperimenter med Einstein, bevægelse, tyngdekraft og tiden selv.">
+  <title>Hvorfor går tiden hurtigere i en GPS-satellit? · 365AIIdeer</title>
+  <style>:root{color-scheme:dark;--bg:#080f1c;--text:#e7edf4;--muted:#9baabe;--line:#263345;--aqua:#78e2d0;--blue:#87b9fa;--orange:#f1ab7d;--surface:#101c2d;font-family:Inter,"Helvetica Neue",Arial,sans-serif;font-synthesis:none}*{box-sizing:border-box}body{margin:0;background:var(--bg);color:var(--text);font-size:15px}a{color:inherit;text-decoration:none}button,input,select{font:inherit}button,select{color:var(--text);background:#142235;border:1px solid #35455b;border-radius:6px;padding:11px 15px}button,select,summary{cursor:pointer}button:hover{border-color:var(--aqua);background:#1b3042}button:disabled{opacity:.35;cursor:default}button.primary{background:var(--aqua);color:#092322;border-color:var(--aqua);font-weight:650}a:focus-visible,button:focus-visible,select:focus-visible,summary:focus-visible,input:focus-visible,[tabindex="0"]:focus-visible{outline:3px solid var(--aqua);outline-offset:5px}h1:focus{outline:none}main,.site-header,.site-footer{max-width:1360px;margin:auto;padding-left:48px;padding-right:48px}.site-header{height:95px;display:flex;align-items:center;justify-content:space-between;border-bottom:1px solid var(--line)}.brand{font-size:25px;font-weight:750;letter-spacing:-1.3px}.brand>span:first-child{color:var(--aqua)}.brand .home-label{margin-left:16px;color:var(--muted);font-size:11px;font-weight:400;letter-spacing:0}.edition{font-size:10px;letter-spacing:1.5px;color:var(--muted);display:flex;gap:12px;align-items:center}.edition i{height:4px;width:4px;border-radius:50%;background:var(--aqua)}.experience-bar{display:flex;justify-content:space-between;align-items:center;gap:20px;margin:30px 0 23px}.experience-bar>span{font-size:10px;letter-spacing:1.8px;color:var(--muted)}.experience-bar label{font-size:11px;color:var(--muted)}select{margin-left:12px;font-size:12px;padding:8px 10px}.chapters{display:grid;grid-template-columns:repeat(7,1fr);gap:12px}.chapters button{text-align:left;border:0;border-radius:0;border-top:2px solid var(--line);background:none;padding:14px 0;color:var(--muted);font-size:11px;white-space:nowrap}.chapters button span{display:inline-block;margin-right:8px;color:#697c96;font-family:monospace}.chapters button[aria-current="step"]{color:var(--text);border-color:var(--aqua)}.chapters button[aria-current="step"] span{color:var(--aqua)}.chapter-intro{padding:38px 0 28px}.eyebrow{font-size:10px;letter-spacing:2.5px;color:var(--aqua);font-weight:600;margin:0 0 21px}h1{font-size:clamp(38px,4.7vw,67px);line-height:1.07;letter-spacing:-2.8px;font-weight:500;margin:0 0 20px}h1 em{font-style:normal;color:var(--aqua)}.chapter-intro>p:last-child{color:var(--muted);max-width:620px;font-size:15px;line-height:1.8;margin:0}.experiment{border:1px solid var(--line);border-radius:12px;overflow:hidden;background:linear-gradient(125deg,#0f1c2c,#0b1524)}.stage-grid{display:grid;grid-template-columns:1.45fr 1fr;min-height:420px}.cosmos{position:relative;min-width:0;background:radial-gradient(ellipse at 30% 70%,#18345155,transparent 65%);overflow:hidden}.cosmos svg{display:block;width:100%;height:100%;min-height:330px}.scene-stamp{position:absolute;top:24px;left:26px;font-size:10px;color:var(--muted);letter-spacing:1.5px}.scene-foot{position:absolute;bottom:20px;left:26px;font-size:10px;color:var(--muted)}.instrument{padding:32px 34px;border-left:1px solid var(--line);display:flex;flex-direction:column;justify-content:center;min-width:0}.instrument .eyebrow{margin-bottom:18px}.readout{font-size:clamp(32px,4vw,50px);line-height:1.1;font-variant-numeric:tabular-nums;letter-spacing:-1.8px;margin:3px 0 5px;font-weight:450}.readout small{font-size:18px;letter-spacing:0}.unit-label{font-size:11px;color:var(--muted);line-height:1.6}.aqua{color:var(--aqua)}.orange{color:var(--orange)}.blue{color:var(--blue)}.clock{padding:18px 0;border-bottom:1px solid var(--line)}.clock>span{display:flex;justify-content:space-between;font-size:11px;color:var(--muted)}.clock time{display:block;font:24px/1.5 ui-monospace,SFMono-Regular,Consolas,monospace;font-variant-numeric:tabular-nums;margin-top:7px}.clock time small{font-size:15px;color:var(--aqua)}.clock-detail{display:block;font-size:11px;margin-top:3px}.instrument .controls{margin-top:22px}.controls label,.range-label{display:flex;align-items:baseline;justify-content:space-between;gap:12px;font-size:12px;color:var(--muted);margin:18px 0 8px}.controls output,.range-label output{color:var(--text);font-variant-numeric:tabular-nums}.controls input[type=range],input[type=range]{width:100%;accent-color:var(--aqua);cursor:pointer;margin:8px 0 12px;min-height:24px}.control-buttons{display:flex;gap:10px;flex-wrap:wrap}.control-buttons button{font-size:12px}.hint{font-size:11px;color:var(--muted);line-height:1.7}.stage-caption{border-top:1px solid var(--line);padding:13px 25px;display:flex;justify-content:space-between;gap:15px;font-size:11px;color:var(--muted);line-height:1.6}.stage-caption b{font-weight:500;color:var(--aqua)}.understanding{display:grid;grid-template-columns:1fr 1.25fr;gap:80px;padding:42px 0 35px}.understanding .eyebrow{margin:4px 0 14px}.understanding h2{font-size:23px;font-weight:450;line-height:1.5;letter-spacing:-.5px;margin:0;max-width:470px}.understanding p:not(.eyebrow):not(.depth-label){color:var(--muted);line-height:1.9;font-size:13px;margin:0}.depth-label{font-size:10px;letter-spacing:1.2px;color:var(--blue);margin:5px 0 12px}.understanding details{margin-top:20px}.understanding details div{font:13px/1.9 ui-monospace,monospace;padding-top:15px;white-space:pre-line;color:var(--muted)}summary{font-size:12px;text-decoration:underline;text-underline-offset:4px}.chapter-footer{display:flex;justify-content:space-between;align-items:center;gap:14px;padding:22px 0;border-top:1px solid var(--line);border-bottom:1px solid var(--line)}.chapter-footer button{font-size:12px}.chapter-footer>span{font-size:11px;color:var(--muted)}.method{margin-top:30px;max-width:900px}.method p{font-size:12px;color:var(--muted);line-height:1.9}.method a{text-decoration:underline;text-underline-offset:3px}.download-block{margin:25px 0 40px;font-size:12px}.download-block>a{text-decoration:underline;text-underline-offset:5px}.download-block small{display:block;color:var(--muted);font-size:10px;margin-top:10px}.site-footer{border-top:1px solid var(--line);display:flex;justify-content:space-between;align-items:center;gap:20px;min-height:95px;font-size:11px;color:var(--muted)}.site-footer button{background:none;font-size:11px}.light-visual{padding:26px 20px}.light-visual svg{width:100%;display:block;height:auto}.visual-title{font-size:13px;fill:var(--text)}.svg-label{font-size:11px;fill:var(--muted)}.svg-number{font-size:16px;fill:var(--aqua);font-family:monospace}.metric-row{display:flex;justify-content:space-between;align-items:center;gap:12px;padding:14px 0;border-bottom:1px solid var(--line);font-size:12px;color:var(--muted)}.metric-row strong{font-weight:500;color:var(--text);font-variant-numeric:tabular-nums;white-space:nowrap}.metric-row strong.aqua{color:var(--aqua)}.metric-row strong.orange{color:var(--orange)}.toggle{display:flex;align-items:center;gap:12px;font-size:13px;margin:16px 0;cursor:pointer}.toggle input{width:18px;height:18px;accent-color:var(--aqua)}.balance-visual{padding:36px 32px}.balance-visual svg{width:100%;display:block;margin-top:15px}.balance-visual .legend{display:flex;gap:24px;font-size:11px;color:var(--muted)}.legend i{display:inline-block;width:8px;height:8px;margin-right:7px;border-radius:50%;background:var(--aqua)}.legend i.motion{background:var(--orange)}.distance-visual{padding:30px}.distance-visual svg{width:100%;height:auto;display:block;margin:28px 0 12px}.distance-visual h2{font-size:24px;font-weight:400;line-height:1.5;max-width:350px}.distance-visual .readout{font-size:62px}.map-visual{padding:20px 12px}.map-visual svg{width:100%;height:auto;display:block;touch-action:none}.signal-table{width:100%;border-collapse:collapse;margin-top:20px;font-size:11px;font-variant-numeric:tabular-nums}.signal-table th{text-align:right;font-weight:400;color:var(--muted);font-size:10px;padding:9px 0}.signal-table th:first-child,.signal-table td:first-child{text-align:left}.signal-table td{text-align:right;padding:9px 0;border-top:1px solid var(--line)}.lab-chart{padding:25px 26px 12px;min-width:0}.lab-chart svg{display:block;width:100%;height:auto;touch-action:pan-y}.lab-header{display:flex;justify-content:space-between;align-items:baseline;gap:14px;font-size:11px;color:var(--muted);flex-wrap:wrap}.lab-legend{display:flex;gap:16px;flex-wrap:wrap;font-size:10px;margin:6px 0 15px;color:var(--muted)}.lab-legend span:before{content:"";display:inline-block;width:12px;height:2px;margin:0 6px 3px 0;background:var(--aqua)}.lab-legend .motion:before{background:var(--orange)}.lab-legend .net:before{background:var(--blue)}.lab-chart .readout{margin-top:18px}.presets{display:flex;gap:7px;flex-wrap:wrap;margin:8px 0}.presets button{font-size:10px;padding:7px 9px}.two-toggles{display:flex;gap:20px;flex-wrap:wrap}.two-toggles .toggle{font-size:11px;margin:12px 0 4px}.sr-only{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0,0,0,0)}[hidden]{display:none!important}@media(min-width:1500px){.stage-grid{min-height:450px}}@media(max-width:1000px){main,.site-header,.site-footer{padding-left:28px;padding-right:28px}.chapters{gap:7px}.chapters button{font-size:10px}.chapters button span{margin-right:5px}.instrument{padding:24px}.stage-grid{grid-template-columns:1.2fr 1fr}.understanding{gap:35px}.edition{font-size:9px}.home-label{display:none!important}.readout{font-size:36px}}@media(max-width:700px){main,.site-header,.site-footer{padding-left:20px;padding-right:20px}.site-header{height:75px}.edition{letter-spacing:.8px;font-size:8px;gap:7px}.brand{font-size:23px}.experience-bar{align-items:flex-start;margin:22px 0 18px;flex-direction:column;gap:15px}.experience-bar>span{font-size:9px}.experience-bar label{display:flex;width:100%;justify-content:space-between;align-items:center}.chapters{gap:6px}.chapters button{font-size:0;padding:13px 0;text-align:center}.chapters button span{font-size:12px;margin:0}.chapter-intro{padding:23px 0 26px}h1{font-size:39px;letter-spacing:-1.7px}.chapter-intro>p:last-child{font-size:13px}.eyebrow{font-size:9px;letter-spacing:1.8px}.stage-grid{grid-template-columns:1fr}.cosmos svg{min-height:300px;max-height:390px}.instrument{border-left:0;border-top:1px solid var(--line);padding:25px}.clock time{font-size:25px}.instrument .readout{font-size:45px}.stage-caption{flex-direction:column;gap:3px;padding:13px 22px}.understanding{grid-template-columns:1fr;gap:20px;padding:29px 0}.understanding h2{font-size:22px}.understanding p:not(.eyebrow):not(.depth-label){font-size:13px}.chapter-footer button{font-size:11px;padding:10px}.chapter-footer>span{font-size:10px}.site-footer{flex-wrap:wrap;padding-top:22px;padding-bottom:22px}.site-footer>span{display:none}.balance-visual{padding:24px 16px}.distance-visual{padding:24px}.distance-visual .readout{font-size:53px}.lab-chart{padding:23px 13px 10px}.signal-table{font-size:11px}.light-visual{padding:22px 8px}.scene-stamp{top:20px;left:22px;font-size:9px}.scene-foot{left:22px;font-size:9px}.two-toggles{gap:14px}}@media(prefers-reduced-motion:reduce){*{scroll-behavior:auto!important;animation:none!important;transition:none!important}}
+
+@media(max-width:700px){.lab-chart .svg-label,.balance-visual .svg-label{font-size:20px}.balance-visual .svg-number{font-size:23px}.light-visual .svg-label{font-size:19px}.light-visual .svg-number{font-size:23px}.light-visual .visual-title{font-size:22px}.clock time{font-size:clamp(17px,5.2vw,23px)}}
+</style>
+  
+</head>
+<body>
+  <header class="site-header"><a class="brand" href="https://365aideas.vercel.app/">365<span>AI</span>Ideer <span class="home-label">/ Alle eksperimenter ↗</span></a><span class="edition">EKSPERIMENT 004 <i></i> FYSIK</span></header>
+  <main>
+    <div class="experience-bar"><span>Hvorfor går tiden hurtigere i en GPS-satellit?</span><label for="level">Forklaringsniveau <select id="level"><option value="1">Intuitivt</option><option value="2">Gymnasium</option><option value="3">Avanceret</option></select></label></div>
+    <nav id="chapters" class="chapters" aria-label="Kapitler"></nav>
+    <section class="chapter-intro" aria-labelledby="chapter-title"><p class="eyebrow" id="kicker"></p><h1 id="chapter-title" tabindex="-1"></h1><p id="chapter-intro"></p></section>
+    <section id="experiment" class="experiment" aria-label="Interaktivt eksperiment"></section>
+    <section class="understanding" aria-labelledby="insight-title"><div><p class="eyebrow">DET, DU TAGER MED</p><h2 id="insight-title"></h2></div><div><p class="depth-label" id="depth-label"></p><p id="explanation"></p><details id="mathematics" hidden><summary>Se regnestykket</summary><div id="math-content"></div></details></div></section>
+    <div class="chapter-footer"><button id="previous">← Forrige kapitel</button><span id="chapter-count" role="status"></span><button id="next" class="primary">Næste kapitel →</button></div>
+    <details class="method"><summary>Om modellen, kilder og tilgængelighed</summary><p>Et interaktivt eksperiment med Einstein, tyngdekraft og tiden selv. Alle syv kapitler beregner med samme fysikmotor. Plus betyder, at satellituret kommer foran et idealiseret jordur. Tal er afrundede, og tegninger er skematiske. En mikrosekund (µs) er en milliontedel sekund.</p><p>Modellen bruger en kugleformet, ikke-roterende Jord og cirkulære baner: R = 6.371 km, GM = 3,986004418 · 10¹⁴ m³/s² og c = 299.792.458 m/s (eksakt). Jordens rotation, excentricitet, Sagnac-effekt og andre operationelle GPS-korrektioner indgår ikke. Standardtallene +45,7, −7,2 og +38,5 µs/døgn er omtrentlige undervisningstal ved 20.200 km.</p><p>Faglige kilder: <a href="https://galileo.phys.virginia.edu/classes/152.mf1i.spring02/Ashbyarticle.pdf" target="_blank" rel="noopener">Neil Ashby: Relativistic Effects in the Global Positioning System (2006) ↗</a> · <a href="https://tsapps.nist.gov/publication/get_pdf.cfm?pub_id=105125" target="_blank" rel="noopener">Weiss & Ashby, NIST: GPS Receivers and Relativity (1999) ↗</a> · <a href="https://www.nist.gov/how-do-you-measure-it/how-do-you-measure-your-location-using-gps" target="_blank" rel="noopener">NIST: How Do You Measure Your Location Using GPS? ↗</a>.</p><p>Brug Tab til kontrollerne og piletaster på skyderne. Når fokus ikke er i en kontrol, skifter ← og → kapitel. Satellitten i kapitel 3 og modtageren i kapitel 6 kan trækkes eller flyttes med piletaster, når de har fokus. Ved reduceret bevægelse er animationerne stille; tal og kontroller virker stadig. Din kapitelposition og dit forklaringsniveau gemmes i URL'en. Ingen cookies eller analyseværktøjer.</p></details>
+    
+    <noscript>Denne oplevelse kræver JavaScript til beregninger og interaktion.</noscript>
+  </main>
+  <footer class="site-footer"><a href="https://365aideas.vercel.app/">← Flere eksperimenter hos 365AIIdeer</a><button id="restart">Start forfra ↺</button><span>Syv kapitler. To ure. Én virkelighed.</span></footer>
+<script>/* Pure calculations; SI internally, labelled units at the boundary. */
+(function (root) {
+  'use strict';
+  const C = 299792458;
+  const GM = 3.986004418e14; // Earth's standard gravitational parameter, m³/s².
+  const R = 6371000; // Mean spherical Earth, m.
+  const DAY = 86400;
+  const GPS_HEIGHT = 20200;
+  function orbit(heightKm) {
+    if (!Number.isFinite(heightKm) || heightKm < 0) throw new RangeError('Højden skal være et endeligt, positivt tal.');
+    const r = R + heightKm * 1000;
+    const velocity = Math.sqrt(GM / r);
+    const gravity = DAY * 1e6 * GM / (C * C) * (1 / R - 1 / r);
+    const motion = -DAY * 1e6 * GM / (2 * r * C * C);
+    return {r, velocity, gravity, motion, net: gravity + motion, potential: -GM / r, acceleration: GM / (r * r)};
+  }
+  function experiment(heightKm, days, gravityOn = true, motionOn = true) {
+    if (!Number.isFinite(days) || days < 0) throw new RangeError('Tiden skal være positiv og endelig.');
+    const result = orbit(heightKm);
+    const rate = (gravityOn ? result.gravity : 0) + (motionOn ? result.motion : 0);
+    const microseconds = rate * days;
+    return {...result, rate, microseconds, distance: microseconds * 1e-6 * C};
+  }
+  function gamma(beta) {
+    if (!Number.isFinite(beta) || beta < 0 || beta >= 1) throw new RangeError('Kræver 0 ≤ v/c < 1.');
+    return 1 / Math.sqrt(1 - beta * beta);
+  }
+  function lightDistance(microseconds) { return microseconds * 1e-6 * C; }
+  const SATELLITES = [{x: 65, y: 60}, {x: 710, y: 75}, {x: 730, y: 430}, {x: 55, y: 420}];
+  const MAP_KM = 40; // One SVG unit = 40 km. Flat toy geometry, not Earth's surface.
+  function signals(x, y, biasUs = 0) {
+    return SATELLITES.map((sat, i) => {
+      const distance = Math.hypot(sat.x - x, sat.y - y) * MAP_KM;
+      return {id: i + 1, distance, travelMs: distance * 1000 / C * 1000,
+        pseudoKm: distance + lightDistance(biasUs) / 1000};
+    });
+  }
+  // Least-squares Gauss–Newton solution of rho_i = |s_i - p| + b, in km.
+  // Four ranges constrain the three unknowns x, y and receiver clock bias in 2D.
+  function locate(pseudoranges) {
+    let p = [400 * MAP_KM, 250 * MAP_KM, 0];
+    for (let iteration = 0; iteration < 30; iteration++) {
+      const a = Array.from({length: 3}, () => [0, 0, 0, 0]);
+      SATELLITES.forEach((sat, i) => {
+        const dx = p[0] - sat.x * MAP_KM, dy = p[1] - sat.y * MAP_KM;
+        const d = Math.max(1e-9, Math.hypot(dx, dy));
+        const j = [dx / d, dy / d, 1], residual = pseudoranges[i] - d - p[2];
+        for (let k = 0; k < 3; k++) {
+          for (let l = 0; l < 3; l++) a[k][l] += j[k] * j[l];
+          a[k][3] += j[k] * residual;
+        }
+      });
+      for (let k = 0; k < 3; k++) {
+        let pivot = k;
+        for (let j = k + 1; j < 3; j++) if (Math.abs(a[j][k]) > Math.abs(a[pivot][k])) pivot = j;
+        [a[k], a[pivot]] = [a[pivot], a[k]];
+        const divisor = a[k][k];
+        if (Math.abs(divisor) < 1e-12) throw new Error('Satellitgeometrien kan ikke løses.');
+        for (let l = k; l < 4; l++) a[k][l] /= divisor;
+        for (let j = 0; j < 3; j++) if (j !== k) {
+          const factor = a[j][k];
+          for (let l = k; l < 4; l++) a[j][l] -= factor * a[k][l];
+        }
+      }
+      const delta = a.map(row => row[3]);
+      p = p.map((v, i) => v + delta[i]);
+      if (Math.hypot(...delta) < 1e-8) break;
+    }
+    return {x: p[0] / MAP_KM, y: p[1] / MAP_KM, biasUs: p[2] * 1000 / C * 1e6};
+  }
+  root.GPSPhysics = Object.freeze({C, GM, R, DAY, GPS_HEIGHT, MAP_KM, SATELLITES,
+    orbit, experiment, gamma, lightDistance, signals, locate, cancellationHeight: R / 2000});
+})(globalThis);
+</script><script>(function (root) {
+  'use strict';
+  const defaults = () => ({chapter: 1, level: 1, days: 0, running: false, speed: 0.2,
+    beta: 0.6, height: 20200, labDays: 1, gravity: true, motion: true,
+    error: 38.5, receiver: {x: 390, y: 270}, bias: 20, rings: true});
+  const state = defaults();
+  function readURL() {
+    const params = new URLSearchParams(location.hash.slice(1));
+    state.chapter = Math.max(1, Math.min(7, Number(params.get('kapitel')) || 1));
+    state.chapter = Math.floor(state.chapter);
+    state.level = Math.max(1, Math.min(3, Math.floor(Number(params.get('niveau')) || 1)));
+  }
+  function saveURL() {
+    const hash = `#kapitel=${state.chapter}&niveau=${state.level}`;
+    try { history.replaceState(null, '', hash); } catch { location.hash = hash; }
+  }
+  function reset() { Object.assign(state, defaults()); saveURL(); }
+  readURL();
+  root.GPSState = {state, readURL, saveURL, reset};
+})(globalThis);
+</script><script>(function (root) {
+  'use strict';
+  root.GPSChapters = [
+    {short: 'To ure', kicker: '01 / OBSERVATIONEN', title: 'Kan to perfekte ure<br>være <em>uenige?</em>',
+      intro: 'Det ene bliver på Jorden. Det andet tager i kredsløb. Start dem samtidig — og se tiden skille dem ad.',
+      result: 'Begge ure går rigtigt. Alligevel kommer satellittens ur foran. Hvorfor?',
+      levels: [
+        'Et atomur tæller meget stabile svingninger i atomer. To ens ure kan måle forskellige tidsrum mellem sammenlignede hændelser. Ved GPS-højde vinder satellituret omkring 38,5 milliontedele sekund i døgnet. Forskellen er lille nok til at være usynlig i hverdagen og stor nok til at betyde noget for GPS.',
+        'Vi sammenligner urenes tidsvisning efter samme tidsrum på referenceuret ved Jorden. 1 µs er 0,000001 sekund. Forskellen beregnes særskilt fra den store, fælles tid, så små tal ikke forsvinder i afrunding. Skyderen vælger antal simulerede døgn pr. virkeligt sekund.',
+        'Egentid er den tid, et ur måler langs sin egen verdenslinje. Sammenligning af adskilte ure kræver et valg af referencesystem og en synkroniseringsprocedure. Her bruges en idealiseret, ikke-roterende Jord med et overfladeur i ro og en cirkulær satellitbane. Diagrammet viser beregnede urforskelle uden signalernes rejsetid.']},
+    {short: 'Bevægelse', kicker: '02 / LYSURET', title: 'Når vejen bliver længere,<br>må tiden <em>følge med.</em>',
+      intro: 'En lyspuls mellem to spejle er et ur. Set udefra bevæger spejlene sig, mens lyset er på vej. Prøv at skrue op for farten.',
+      result: 'Lysets fart er den samme. Den længere vej kræver længere tid set udefra.',
+      levels: [
+        'Til venstre ser du lysuret fra dets eget system. Til højre ses samme lysur fra et system, hvor det bevæger sig mod højre. Vi følger samme udsendelse og modtagelse. I det andet system tager turen længere tid. Skyderen går tæt på lysets fart, så forskellen bliver tydelig. En GPS-satellit bevæger sig kun cirka 3,9 km/s: her er bidraget omtrent −7,2 µs pr. døgn.',
+        'Spejlafstanden er L i begge systemer, da bevægelsen er vinkelret på den. Pythagoras giver (c·Δt)² = L² + (v·Δt)², så Δt = γ·Δτ, hvor γ = 1/√(1 − v²/c²). Δτ = L/c er egentiden for én passage; Δt er koordinattiden i det system, hvor uret bevæger sig.',
+        'Figuren sammenligner samme to hændelser i to inertialsystemer; de sideordnede billeder er ikke en fælles samtidighedsflade. I urets hvilesystem sker begge hændelser samme sted. Inertialbevægelse er symmetrisk: hver inertialobservatør ser den andens ur gå langsommere efter sin synkroniseringskonvention. GPS-sammenligningen er derimod mellem forskellige baner i Jordens rumtid.']},
+    {short: 'Gravitation', kicker: '03 / HØJDEN', title: 'Højere oppe får tiden<br>lidt mere <em>plads.</em>',
+      intro: 'Træk satellitten væk fra Jorden. Her isolerer vi gravitationen, så du kan se ét bidrag ad gangen.',
+      result: 'Det er forskellen i gravitationspotentiale, der bestemmer urenes relative gang.',
+      levels: [
+        'Et ur ved Jordens overflade går langsommere end et ur højere oppe, når vi sammenligner deres gang. Tænk på potentialet som et landskabs højde: det beskriver placeringen i gravitationsfeltet. Tyngdeaccelerationen svarer til landskabets hældning. Højde og hældning er forskellige størrelser. Farven viser potentialet, ikke en fysisk membran.',
+        'For en kugleformet Jord er potentialet Φ = −GM/r, med nul uendeligt langt væk. Urenes relative forskel er Δτ/t ≈ (Φsat − Φjord)/c². Tyngdeaccelerationen er derimod g = GM/r². To størrelser med forskellige enheder: potentiale måles i J/kg, acceleration i m/s².',
+        'Stationære ure i et statisk felt har dτ/dt = √(1 + 2Φ/c²) i svagt-felts-grænsen. Ved at sammenligne to højder og beholde første orden fås Δτ/t ≈ ΔΦ/c². Dette kapitel isolerer stationære ures gravitationelle bidrag. Den illustrerede satellits nødvendige orbitalbevægelse tilføjes i næste kapitel.']},
+    {short: 'Balancen', kicker: '04 / SAMMENHÆNGEN', title: 'To effekter.<br>Én <em>overraskelse.</em>',
+      intro: 'Bevægelsen bremser satellituret. Højden får det til at gå hurtigere. Slå bidragene til og fra, og se hvad der vinder.',
+      result: 'Ved GPS-højde vinder gravitationen. Satellittens ur går samlet hurtigere.',
+      levels: [
+        'Med begge effekter slået til kommer GPS-uret cirka 38,5 µs foran på ét døgn. Kontakterne er et tankeeksperiment: de gør det muligt at skille bidragene ad, selv om de begge findes i virkeligheden. Plus betyder, at satellituret kommer foran jorduret; minus betyder, at det kommer bagud.',
+        'Ved højden 20.200 km giver den fælles model +45,7 µs/døgn fra gravitation og −7,2 µs/døgn fra bevægelse efter afrunding. Vi lægger de små førsteordensbidrag sammen. Netto er cirka +38,5 µs/døgn, og ikke summen af bidragenes absolutte størrelser.',
+        'Referencen er et idealiseret overfladeur i ro i et geocentrisk, ikke-roterende system. Jordens rotation og geoidens form er udeladt. Tallene er derfor undervisningsmodellens omtrentlige GPS-tal, ikke en fuld operationel korrektion. Et virkeligt GPS-system bruger en fast frekvensforskydning samt udsendte urparametre og baneafhængige korrektioner.']},
+    {short: 'Mikrosekunder', kicker: '05 / KONSEKVENSEN', title: 'Et øjeblik for dig.<br><em>Kilometer</em> for lyset.',
+      intro: '“38 mikrosekunder. Det lyder da fuldstændig ligegyldigt?” Lad lyset vise, hvor langt et lille øjeblik rækker.',
+      result: 'Et præcist afstandsmål kræver et præcist tidsmål. Milliontedele sekunder tæller.',
+      levels: [
+        'På ét mikrosekund bevæger lys sig næsten 300 meter. GPS måler på signalers rejsetid, så selv en lille tidsfejl kan give en stor afstandsfejl. De viste kilometer er en afstandsækvivalent. De er ikke automatisk fejlen i den position, din telefon viser.',
+        'Afstandsækvivalenten er Δρ = c·Δt. For 38,5 µs bliver det 299.792.458 m/s · 0,0000385 s ≈ 11,54 km. Animationen er en langsom gengivelse af en impuls fra udsendelsen frem til den valgte tid; den viser ikke lys ved virkelig hastighed.',
+        'En pseudorange indeholder geometrisk afstand og modtagerens og satellittens urafvigelser. Et fælles bidrag i alle pseudorange kan i vidt omfang optages i modtagerens estimerede urfejl. Den faktiske positionsfejl afhænger af satellitgeometri, forskellige urfejl og modtagerens løsning. Derfor kan c·Δt ikke generelt oversættes til en entydig positionsfejl.']},
+    {short: 'Find positionen', kicker: '06 / POSITIONEN', title: 'Din blå prik er<br>et <em>regnestykke.</em>',
+      intro: 'Flyt modtageren i kortet. Fire tidskodede signaler fortæller både, hvor den er, og hvor forkert dens ur går.',
+      result: 'I 3D skal GPS finde fire ukendte: x, y, z og modtagerens urfejl.',
+      levels: [
+        'Hver satellit sender tidspunkt og oplysninger om sin bane. Modtageren sammenholder afsendelse med modtagelse. Rejsetid gange lysets fart giver et afstandsmål. Men modtagerens ur er upræcist, så målet kaldes en pseudorange. Cirklerne viser de korrigerede afstande; de mødes ved modtageren. Kortet er et frit 2D-tankeeksperiment, ikke virkelige satellitbaner.',
+        'I denne 2D-model løses tre ukendte: x, y og urfejl b. Tre velplacerede satellitter kan være nok; den fjerde giver en ekstra måling. I den virkelige 3D-model er der fire ukendte, så der behøves mindst fire uafhængige signaler med egnet geometri. Justér urfejlen: pseudorange ændrer sig, mens den løste position forbliver på stedet.',
+        'Vi genererer ρᵢ = √((x−xᵢ)² + (y−yᵢ)²) + c·b og løser position og b numerisk ved mindste kvadrater, uden at give løsningen modtagerens koordinater. Målingerne er støjfri og satelliturene antages korrigeret. Virkelig GPS inkluderer signalernes sendetidspositioner, atmosfære, relativistiske urkorrektioner og Jordens rotation under signalrejsen.']},
+    {short: 'Laboratoriet', kicker: '07 / DIT EKSPERIMENT', title: 'Kan du få tiden til<br>at gå i <em>balance?</em>',
+      intro: 'Vælg en bane. Giv den tid. Find det sted, hvor bevægelse og gravitation præcis ophæver hinanden i modellen.',
+      result: 'Omkring 3.186 km over overfladen er nettoforskellen nul i denne forenklede model.',
+      levels: [
+        'Højden bestemmer også hastigheden i en cirkulær bane. Lave baner kræver højere fart og kan få satellituret til at gå langsommere end jorduret. Høje baner giver det modsatte. Grafen viser urenes forskel pr. døgn; den valgte simulationstid bestemmer, hvor meget forskellen når at vokse.',
+        'Vi bruger v = √(GM/r), r = R + h og Δτgrav = t·GM/c²·(1/R − 1/r). Bevægelsen bidrager Δτbev = −t·GM/(2rc²). Med begge bidrag bliver netto nul ved r = 3R/2, altså h = R/2 = 3.185,5 km. Klik på grafen eller brug skyderen til at undersøge området.',
+        'Førsteordens, svagt-felts-approksimation i en kuglesymmetrisk, statisk Jordmodel med et referenceur i ro ved middelradius R = 6.371 km. GM = 3,986004418·10¹⁴ m³/s² og c = 299.792.458 m/s. Vi udelader rotation, excentricitet, Sagnac-effekt, atmosfære og operationelle urkorrektioner. Kontakterne isolerer matematiske led; de ændrer ikke orbitalhastigheden.']}
+  ];
+})(globalThis);
+</script><script>(function (root) {
+  'use strict';
+  const P = root.GPSPhysics;
+  const fmt = (n, digits = 1) => n.toLocaleString('da-DK', {minimumFractionDigits: digits, maximumFractionDigits: digits});
+  const signed = (n, digits = 1) => `${n < -0.0000001 ? '−' : '+'}${fmt(Math.abs(n), digits)}`;
+  const satellite = `<path d="M-29-10h18v20h-18zM11-10h18v20H11z" fill="#234d74" stroke="#8fcaed"/><path d="M-23-10v20m6-20v20m18-20v20m6-20v20m6-20v20M-29 0h18m22 0h18" stroke="#6c9bba" stroke-width=".7"/><rect x="-9" y="-9" width="18" height="18" rx="3" fill="#cad9e4"/><path d="M-5-9l-6-9m11 9v-16m-4 0h8" stroke="#9cc6dd" fill="none"/>`;
+  function earthScene(height = 20200, drag = false) {
+    const y = 248 - (height - 500) / 35500 * 150;
+    const stars = Array.from({length: 55}, (_, i) => `<circle cx="${(i * 139 + 17) % 650}" cy="${(i * 73 + 23) % 420}" r="${i % 5 === 0 ? 1.2 : .65}" fill="#92b5db" opacity="${.2 + (i % 4) * .12}"/>`).join('');
+    return `<svg viewBox="0 0 650 430" aria-label="Jorden og en satellit. Diagrammet er ikke målfast." role="group"><defs>
+      <radialGradient id="ocean" cx="30%" cy="25%" r="80%"><stop stop-color="#4385ad"/><stop offset=".42" stop-color="#254d74"/><stop offset=".8" stop-color="#0e233a"/><stop offset="1" stop-color="#08121e"/></radialGradient>
+      <radialGradient id="atmosphere"><stop offset=".77" stop-color="#417cbd" stop-opacity="0"/><stop offset=".87" stop-color="#6cd1f4" stop-opacity=".18"/><stop offset=".9" stop-color="#4b9be0" stop-opacity=".08"/><stop offset="1" stop-color="#4b9be0" stop-opacity="0"/></radialGradient>
+      <radialGradient id="potential" cx="30%" cy="72%" r="80%"><stop stop-color="#1a384e"/><stop offset=".5" stop-color="#204b5a" stop-opacity=".4"/><stop offset="1" stop-color="#78e2d0" stop-opacity=".04"/></radialGradient>
+      <clipPath id="globe-clip"><circle cx="227" cy="274" r="119"/></clipPath>
+    </defs>${drag ? '<rect width="650" height="430" fill="url(#potential)"/>' : ''}${stars}
+    <ellipse cx="280" cy="258" rx="237" ry="102" fill="none" stroke="#304960" stroke-dasharray="3 7" transform="rotate(-27 280 258)"/>
+    <circle cx="227" cy="274" r="139" fill="url(#atmosphere)"/>
+    <circle cx="227" cy="274" r="119" fill="url(#ocean)" stroke="#82c4e7" stroke-opacity=".4"/>
+    <g clip-path="url(#globe-clip)"><g fill="#739c93" opacity=".65"><path d="M119 208l25-20 18 5 12-9 20 10 9 19-12 19-16 5-3 17-15 7-14-17-16-5-11-21zm58 53 18 7 19 21-2 21-12 19-7 26-13 12-7-21 4-21-12-28zM235 165l28 5 13 10-11 16-24-1-17-12zm26 51 22-14 14 8 15-3 26 25-5 26-18-4-15 8-12-17-14 8-16-16zm-3 37 26 7 14 24-6 26-18 21-13-9-9-30-8-13zm58 76 30-10 12 17-18 13-22-5z"/></g><g stroke="#8ebbd1" stroke-opacity=".12" fill="none"><ellipse cx="227" cy="274" rx="60" ry="119"/><ellipse cx="227" cy="274" rx="103" ry="119"/><ellipse cx="227" cy="274" rx="119" ry="46"/><ellipse cx="227" cy="274" rx="119" ry="88"/><path d="M108 274h238M227 155v238"/></g><path d="M268 147c-25 105 10 184 86 229h80V128z" fill="#020913" opacity=".3"/></g>
+    <circle cx="157" cy="178" r="4" fill="#78e2d0"/><path d="M157 178L111 137H63" fill="none" stroke="#78e2d0" stroke-opacity=".65"/><text x="63" y="124" class="svg-label">JORDURET</text>
+    <path id="height-line" d="M342 272L491 ${y}" stroke="#78e2d0" stroke-opacity=".3" stroke-dasharray="4 5"/>
+    <g id="orbit-satellite" transform="translate(491 ${y})" ${drag ? 'tabindex="0" role="slider" aria-label="Satellittens højde i kilometer. Piletaster ændrer højden." aria-valuemin="500" aria-valuemax="36000" aria-valuenow="'+height+'" style="cursor:ns-resize;touch-action:none"' : ''}><circle r="40" fill="transparent"/>${satellite}<circle r="39" fill="none" stroke="#78e2d0" stroke-opacity=".2"/><text x="-37" y="65" class="svg-label">${drag ? 'TRÆK OP / NED' : 'GPS-SATELLIT'}</text></g>
+    <text id="orbit-height" x="430" y="377" class="svg-number">${fmt(height,0)} km</text><text x="430" y="396" class="svg-label">over Jordens overflade</text></svg>`;
+  }
+  function lightClock(beta, phase) {
+    const g = P.gamma(beta), travel = Math.min(142, 200 / (beta * g || 1)), dx = beta * g * travel, progress = phase;
+    return `<svg viewBox="0 0 650 380" role="img" aria-label="Samme lysur set fra to referencesystemer. Ved den valgte fart er gamma ${fmt(g,2)}.">
+    <text x="30" y="30" class="visual-title">Med uret</text><text x="352" y="30" class="visual-title">Uret bevæger sig →</text>
+    <text x="30" y="53" class="svg-label">Urets eget referencesystem</text><text x="352" y="53" class="svg-label">Et andet inertialsystem</text>
+    <path d="M320 20v300" stroke="#263345"/>
+    <path d="M95 ${252-travel}h80M95 252h80" stroke="#a0c7dd" stroke-width="5"/>
+    <path d="M135 252v-${travel}" stroke="#78e2d0" stroke-dasharray="4 5"/>
+    <circle cx="135" cy="${252 - travel * progress}" r="7" fill="#b3fff0"/><circle cx="135" cy="${252 - travel * progress}" r="16" fill="#78e2d0" opacity=".12"/>
+    <path d="M${370 + dx * progress - 30} ${252-travel}h60M${370 + dx * progress - 30} 252h60" stroke="#a0c7dd" stroke-width="5"/>
+    <path d="M370 252L${370 + dx} ${252-travel}" stroke="#f1ab7d" stroke-dasharray="4 5"/>
+    <path d="M370 252h${dx}" stroke="#5f7692" stroke-dasharray="3 5"/>
+    <circle cx="${370 + dx * progress}" cy="${252 - travel * progress}" r="7" fill="#ffd3ae"/><circle cx="${370 + dx * progress}" cy="${252 - travel * progress}" r="16" fill="#f1ab7d" opacity=".12"/>
+    <text x="109" y="295" class="svg-number">Δτ = 1</text><text x="370" y="295" class="svg-number" style="fill:#f1ab7d">Δt = ${fmt(g,2)}</text>
+    <text x="109" y="319" class="svg-label">Nu: τ = ${fmt(progress,2)}</text><text x="370" y="319" class="svg-label">Nu: t = ${fmt(progress*g,2)}</text><text x="30" y="347" class="svg-label">Samme hændelser. Hver sin tidsakse.</text>
+    <text x="30" y="367" class="svg-label">Tid i L/c; synkroniseret efter lysets passage.</text></svg>`;
+  }
+  function balance(gravityOn, motionOn) {
+    const p = P.orbit(P.GPS_HEIGHT), gravity = gravityOn ? p.gravity : 0, motion = motionOn ? p.motion : 0, net = gravity + motion;
+    const x = v => 175 + v * 6;
+    const bar = (v,y,color,label) => `<rect x="${Math.min(x(0),x(v))}" y="${y}" width="${Math.abs(v)*6}" height="30" rx="3" fill="${color}"/><text x="20" y="${y-12}" class="svg-label">${label}</text><text x="${Math.max(x(0),x(v))+12}" y="${y+20}" class="svg-number" style="fill:${color}">${signed(v)} µs</text>`;
+    return `<svg viewBox="0 0 650 325" role="img" aria-label="Bidrag pr. døgn: gravitation ${signed(gravity)}, bevægelse ${signed(motion)}, netto ${signed(net)} mikrosekunder."><path d="M175 15v272" stroke="#66809b" stroke-dasharray="3 5"/>
+    ${bar(gravity,45,'#78e2d0','GRAVITATION')}${bar(motion,127,'#f1ab7d','BEVÆGELSE')}${bar(net,209,'#87b9fa','NETTO')}
+    <path d="M85 280h480" stroke="#33485f"/>${[-10,0,20,40,60].map(v=>`<text x="${x(v)}" y="301" class="svg-label" text-anchor="middle">${v>0?'+':''}${v}</text>`).join('')}<text x="545" y="322" class="svg-label">µs/døgn</text></svg>`;
+  }
+  function distancePulse(error, phase) {
+    const distance = P.lightDistance(error) / 1000, end = 65 + error / 100 * 500;
+    return `<svg viewBox="0 0 650 210" role="img" aria-label="${fmt(error)} mikrosekunder svarer til ${fmt(distance,2)} kilometer lysrejseafstand."><defs><linearGradient id="pulse"><stop stop-color="#78e2d0" stop-opacity="0"/><stop offset="1" stop-color="#78e2d0"/></linearGradient></defs>
+    <path d="M65 100h500" stroke="#344961" stroke-width="2"/><path d="M65 100H${end}" stroke="#78e2d0" stroke-width="3" stroke-opacity=".45"/>
+    <rect x="${65+Math.max(0,(end-65)*phase-45)}" y="96" width="${Math.min(45,(end-65)*phase)}" height="8" fill="url(#pulse)"/><circle cx="${65+(end-65)*phase}" cy="100" r="6" fill="#bbfff3"/>
+    <path d="M65 79v42M${end} 79v42" stroke="#78e2d0"/>
+    ${[0,25,50,75,100].map(t=>`<path d="M${65+t*5} 130v6" stroke="#4e657e"/><text x="${65+t*5}" y="157" text-anchor="middle" class="svg-label">${t} µs</text>`).join('')}
+    <text x="65" y="53" class="svg-label">UDSENDELSE</text><text x="${Math.max(170,end)}" y="53" text-anchor="end" class="svg-number">${fmt(error)} µs</text><text x="65" y="195" class="svg-label">Fast skala: 0–100 µs · bevægelsen er vist i slowmotion</text></svg>`;
+  }
+  function gpsMap(state, phase) {
+    const {x,y} = state.receiver, signals = P.signals(x,y,state.bias);
+    let rings = '', links = '';
+    P.SATELLITES.forEach((sat, i) => {
+      const d = Math.hypot(sat.x-x,sat.y-y), progress = Math.min(1, phase * 100 / signals[i].travelMs);
+      if (state.rings) rings += `<circle cx="${sat.x}" cy="${sat.y}" r="${d}" fill="none" stroke="${['#78e2d0','#87b9fa','#f1ab7d','#c0a5ec'][i]}" opacity=".27" stroke-width="1.5"/>`;
+      links += `<path d="M${sat.x} ${sat.y}L${x} ${y}" stroke="#6b8cac" stroke-dasharray="4 6" stroke-opacity=".5"/><circle class="signal-pulse" cx="${sat.x+(x-sat.x)*progress}" cy="${sat.y+(y-sat.y)*progress}" r="4" fill="#b6fff1"/><g transform="translate(${sat.x} ${sat.y}) scale(.8)">${satellite}</g><text x="${sat.x}" y="${sat.y+32}" text-anchor="middle" class="svg-label">S${i+1}</text>`;
+    });
+    return `<svg id="gps-map" viewBox="0 0 800 500" role="group" aria-label="Todimensionelt GPS-eksperiment med fire satellitter og en flytbar modtager."><defs><pattern id="map-grid" width="40" height="40" patternUnits="userSpaceOnUse"><path d="M40 0H0v40" stroke="#24354a" fill="none" stroke-width=".6"/></pattern><clipPath id="map-clip"><rect x="0" y="0" width="800" height="500"/></clipPath></defs><rect width="800" height="500" fill="url(#map-grid)"/><g clip-path="url(#map-clip)">${rings}${links}</g>
+    <g id="receiver" transform="translate(${x} ${y})" tabindex="0" role="group" aria-label="Flyt modtageren. Brug piletaster, Shift for større trin." style="cursor:move"><circle r="30" fill="transparent"/><circle r="21" fill="#78e2d0" opacity=".12"/><circle r="8" fill="#78e2d0" stroke="#071526" stroke-width="3"/><path d="M-14 0h-10M14 0h10M0-14v-10M0 14v10" stroke="#78e2d0"/><text y="46" text-anchor="middle" class="svg-label">DIN MODTAGER</text></g>
+    <text id="signal-time" x="18" y="480" class="svg-label">Sendt: 0 ms · nu: ${fmt(phase*100,1)} ms · slowmotion</text></svg>`;
+  }
+  function chart(height, gravityOn, motionOn) {
+    const w=680,h=330,left=55,right=645,top=25,bottom=275;
+    const X = v => left+(v-500)/35500*(right-left), Y = v => bottom-(v+35)/95*(bottom-top);
+    const path = key => Array.from({length:241},(_,i)=>{const height=500+i/240*35500,p=P.orbit(height);const v=key==='gravity'?(gravityOn?p.gravity:0):key==='motion'?(motionOn?p.motion:0):(gravityOn?p.gravity:0)+(motionOn?p.motion:0);return `${i?'L':'M'}${X(height).toFixed(2)} ${Y(v).toFixed(2)}`;}).join(' ');
+    const rate = P.experiment(height,1,gravityOn,motionOn).rate;
+    return `<svg id="correction-chart" viewBox="0 0 ${w} ${h}" role="img" aria-label="Urkorrektion i mikrosekunder pr. døgn som funktion af højde fra 500 til 36.000 kilometer. Valgt netto: ${signed(rate,2)}.">
+    ${[-30,-15,0,15,30,45,60].map(v=>`<path d="M${left} ${Y(v)}H${right}" stroke="${v===0?'#718297':'#24344a'}" ${v===0?'':'stroke-dasharray="3 5"'}/><text x="43" y="${Y(v)+4}" text-anchor="end" class="svg-label">${v>0?'+':''}${v}</text>`).join('')}
+    ${[500,10000,20000,30000,36000].map(v=>`<text x="${X(v)}" y="300" text-anchor="middle" class="svg-label">${fmt(v,0)}</text>`).join('')}
+    <text x="${left}" y="14" class="svg-label">µs / døgn</text><text x="${right}" y="323" text-anchor="end" class="svg-label">Højde over overfladen / km</text>
+    <path d="${path('gravity')}" fill="none" stroke="#78e2d0" stroke-width="2"/><path d="${path('motion')}" fill="none" stroke="#f1ab7d" stroke-width="2"/><path d="${path('net')}" fill="none" stroke="#87b9fa" stroke-width="3"/>
+    <path d="M${X(height)} ${top}V${bottom}" stroke="#c1dcf3" stroke-dasharray="4 4" opacity=".6"/><circle cx="${X(height)}" cy="${Y(rate)}" r="6" fill="#87b9fa" stroke="#0b1524" stroke-width="3"/>
+    <rect x="${left}" y="${top}" width="${right-left}" height="${bottom-top}" fill="transparent" style="cursor:crosshair" id="chart-hit"/></svg>`;
+  }
+  root.GPSVisuals = {fmt, signed, earthScene, lightClock, balance, distancePulse, gpsMap, chart};
+})(globalThis);
+</script><script>(function () {
+  'use strict';
+  const P = GPSPhysics, V = GPSVisuals, {state: S} = GPSState, chapters = GPSChapters;
+  const $ = id => document.getElementById(id), fmt = V.fmt, sign = V.signed;
+  const reduced = matchMedia('(prefers-reduced-motion: reduce)');
+  let animation = !reduced.matches, phase = 0.58, drag = null, last = performance.now(), painted = 0;
+  const byId = (id, text) => { const el = $(id); if (el) el.textContent = text; };
+  function range(id, label, min, max, step, value, unit = '') {
+    return `<label for="${id}">${label}<output id="${id}-value" for="${id}">${fmt(value,step<1?1:0)} ${unit}</output></label><input id="${id}" type="range" min="${min}" max="${max}" step="${step}" value="${value}">`;
+  }
+  const toggles = () => `<div class="two-toggles"><label class="toggle"><input id="gravity" type="checkbox" ${S.gravity?'checked':''}> Gravitation</label><label class="toggle"><input id="motion" type="checkbox" ${S.motion?'checked':''}> Bevægelse</label></div>`;
+  const motionButton = () => `<button id="animate" aria-pressed="${animation}" ${reduced.matches?'disabled title="Din enhed er indstillet til reduceret bevægelse."':''}>${reduced.matches?'Reduceret bevægelse':animation?'Pause animation':'Vis animation'}</button>`;
+  const clock = (label,id,color) => `<div class="clock"><span>${label}<span class="${color}">ATOMUR</span></span><time id="${id}"></time></div>`;
+  function showMath() {
+    const p = P.orbit(S.height);
+    const math = {
+      1: 'Δτ = t · (ΔΦ/c² − v²/(2c²))\nVed 20.200 km: Δτ ≈ 38,51 µs pr. døgn.\nReference: idealiseret overfladeur i ro.',
+      2: `β = v/c = ${fmt(S.beta,2)}\nγ = 1/√(1 − β²) = ${fmt(P.gamma(S.beta),4)}\nΔt = γ · Δτ\nGPS: β ≈ 0,0000129, γ − 1 ≈ 8,35 · 10⁻¹¹.`,
+      3: `r = R + h = ${fmt(p.r/1000,0)} km\nΦsat − Φjord = ${fmt((p.potential+P.GM/P.R)/1e6,3)} MJ/kg\nΔτgrav / døgn = ${sign(p.gravity,3)} µs\ngsat = ${fmt(p.acceleration,3)} m/s²`,
+      4: 'Δτnetto = Δτgrav + Δτbev\n≈ (+45,7 − 7,2) µs/døgn\n≈ +38,5 µs/døgn (begge bidrag aktive).',
+      5: `Δρ = c · Δt\n= 299.792.458 m/s · ${fmt(S.error,1)} · 10⁻⁶ s\n= ${fmt(P.lightDistance(S.error),2)} m`,
+      6: 'ρᵢ = |sᵢ − p| + c · b\n2D: p = (x,y), plus modtagerens urfejl b.\n3D: p = (x,y,z), plus b → fire ukendte.\nSatellitternes urfejl antages allerede korrigeret.',
+      7: `v = √(GM/r)\nΔτgrav = t · GM/c² · (1/R − 1/r)\nΔτbev = −t · GM/(2rc²)\nΔτnetto = 0 ⇒ r = 3R/2 ⇒ h = R/2\nR = 6.371.000 m; GM = 3,986004418 · 10¹⁴ m³/s²`
+    };
+    byId('math-content',math[S.chapter]);
+  }
+  function explanation() {
+    const c = chapters[S.chapter-1];
+    byId('explanation',c.levels[S.level-1]);
+    byId('depth-label',['INTUITIVT · BEGYND MED OPLEVELSEN','GYMNASIUM · FORSTÅ SAMMENHÆNGEN','AVANCERET · MODELLEN OG DENS GRÆNSER'][S.level-1]);
+    $('mathematics').hidden = S.chapter === 1 && S.level === 1;
+    $('mathematics').open = S.level === 3;
+    showMath();
+  }
+  function render(focus = false) {
+    S.running = false;
+    const c = chapters[S.chapter-1];
+    $('chapters').innerHTML = chapters.map((ch,i)=>`<button data-chapter="${i+1}" ${S.chapter===i+1?'aria-current="step"':''} aria-label="Kapitel ${i+1}: ${ch.short}"><span>${String(i+1).padStart(2,'0')}</span>${ch.short}</button>`).join('');
+    $('kicker').textContent = c.kicker;
+    $('chapter-title').innerHTML = c.title;
+    $('chapter-intro').textContent = c.intro;
+    $('insight-title').textContent = c.result;
+    $('level').value = S.level;
+    $('previous').disabled = S.chapter===1;
+    $('next').textContent = S.chapter===7?'Tilbage til begyndelsen ↺':'Næste kapitel →';
+    byId('chapter-count',`${S.chapter} / 7`);
+    let content = '';
+    if (S.chapter===1) content = `<div class="stage-grid"><div class="cosmos"><span class="scene-stamp">ET EKSPERIMENT MED TO ATOMURE</span>${V.earthScene()}<span class="scene-foot">Banen er skematisk · højden er virkelig</span></div><div class="instrument"><p class="eyebrow">FORSKELLEN VOKSER</p><div id="clock-difference" class="readout aqua"></div><div class="unit-label">mikrosekunder foran jorduret</div>${clock('På Jordens overflade','earth-clock','blue')}${clock('I GPS-satellitten','space-clock','aqua')}<div class="controls"><div class="control-buttons"><button id="start" class="primary">Start begge ure ▶</button><button id="reset-clocks">Nulstil ↺</button></div>${range('speed','Døgn pr. sekund',.02,2,.02,S.speed)}<p class="hint" id="elapsed"></p><p class="hint">Cifrene efter punktummet er milliontedele sekunder. Ét døgn giver cirka 38,5 µs forskel.</p></div></div></div><div class="stage-caption"><span>Samme atomfysik. Forskellige forløb gennem rumtiden.</span><b>GPS-højde: 20.200 km</b></div>`;
+    if (S.chapter===2) content = `<div class="stage-grid"><div class="light-visual" id="light-view">${V.lightClock(S.beta,phase)}</div><div class="instrument"><p class="eyebrow">EN LÆNGERE VEJ FOR LYSET</p><div id="gamma" class="readout orange"></div><span class="unit-label">så lang koordinattid for samme passage</span><div class="controls">${range('beta','Andel af lysets fart',0,.95,.01,S.beta,'c')}<div class="metric-row"><span>Fart i eksperimentet</span><strong id="light-speed"></strong></div><div class="metric-row"><span>GPS-satellit, til sammenligning</span><strong>3,9 km/s</strong></div><div class="control-buttons" style="margin-top:20px">${motionButton()}</div><p class="hint">Vi følger én passage fra nederste til øverste spejl. Figurens tid er strakt, så du kan følge lyset. γ angiver forholdet mellem de to målte tidsrum.</p></div></div></div><div class="stage-caption"><span>Lys bevæger sig med c i begge inertialsystemer.</span><b>GPS: ca. −7,2 µs/døgn fra bevægelse</b></div>`;
+    if (S.chapter===3) content = `<div class="stage-grid"><div class="cosmos"><span class="scene-stamp">GRAVITATIONSPOTENTIALE · SKEMATISK FARVEFELT</span>${V.earthScene(S.height,true)}<span class="scene-foot">Mørkere: dybere potentiale · lysere: højere potentiale</span></div><div class="instrument"><p class="eyebrow">KUN GRAVITATIONSBIDRAGET</p><div class="readout aqua" id="gravity-rate"></div><span class="unit-label">µs pr. døgn foran jorduret</span><div class="controls">${range('height','Højde over overfladen',500,36000,.5,S.height,'km')}<div class="presets"><button data-height="500">Lav bane</button><button data-height="20200">GPS-højde</button><button data-height="36000">Høj bane</button></div><div class="metric-row"><span>Forskel i potentiale <span title="Energi pr. masse relativt til referenceuret. Enhed: megajoule pr. kilogram.">ⓘ</span></span><strong id="potential-value"></strong></div><div class="metric-row"><span>Tyngdeacceleration ved satellitten</span><strong id="acceleration"></strong></div><p class="hint">Kun gravitation vises her. Bevægelsen kommer med i næste kapitel. Træk satellitten lodret, eller brug skyderen.</p></div></div></div><div class="stage-caption"><span>Højere potentiale → hurtigere ur sammenlignet med jorduret.</span><b>Potentiale er ikke det samme som acceleration.</b></div>`;
+    if (S.chapter===4) content = `<div class="stage-grid"><div class="balance-visual"><p class="eyebrow">ET DØGN I GPS-BANE</p><div id="balance-view">${V.balance(S.gravity,S.motion)}</div><p class="hint">Til venstre for nul: satellituret taber tid. Til højre: det vinder tid.</p></div><div class="instrument"><p class="eyebrow">DET SAMLEDE RESULTAT</p><div class="readout blue" id="balance-net"></div><span class="unit-label">µs pr. døgn relativt til jorduret</span><div class="controls">${toggles()}<div class="metric-row"><span>Gravitation</span><strong class="aqua" id="balance-gravity"></strong></div><div class="metric-row"><span>Bevægelse</span><strong class="orange" id="balance-motion"></strong></div><p class="hint">Højde: 20.200 km. Kontakterne isolerer effekterne i et tankeeksperiment. Banen er den samme.</p></div></div></div><div class="stage-caption"><span>Førsteordensbidragene lægges sammen med fortegn.</span><b>Begge bidrag: ≈ +38,5 µs/døgn</b></div>`;
+    if (S.chapter===5) content = `<div class="stage-grid"><div class="distance-visual"><p class="eyebrow">HVOR LANGT NÅR LYSET?</p><div id="light-distance" class="readout aqua"></div><div class="unit-label">kilometer lysrejseafstand</div><div id="distance-view">${V.distancePulse(S.error,phase)}</div><p class="hint">På bare 1 µs når lyset 299,79 meter.</p></div><div class="instrument"><p class="eyebrow">ET LILLE ØJEBLIK. EN STOR AFSTAND.</p><div class="controls">${range('error','Tidsfejl',0,100,.1,S.error,'µs')}<div class="presets"><button data-error="1">1 µs</button><button data-error="38.5">Et GPS-døgn: 38,5 µs</button></div><div class="metric-row"><span>Afstandsækvivalent</span><strong id="range-error"></strong></div><div class="control-buttons" style="margin-top:20px">${motionButton()}</div><p class="hint"><strong>Afstand er ikke position.</strong> Den faktiske GPS-positionsfejl afhænger også af satellitgeometrien og modtagerens urkorrektion. 11,5 km er ikke en automatisk forskydning af din blå prik.</p></div></div></div><div class="stage-caption"><span>Δρ = c · Δt</span><b>Lys i vakuum: 299.792.458 m/s</b></div>`;
+    if (S.chapter===6) content = `<div class="stage-grid"><div class="map-visual" id="map-view">${V.gpsMap(S,phase)}</div><div class="instrument"><p class="eyebrow">FIRE SIGNALER → POSITION + URFEJL</p><div class="unit-label" id="solved-position"></div><div class="controls">${range('bias','Modtagerens urfejl',-50,50,1,S.bias,'µs')}<label class="toggle"><input id="rings" type="checkbox" ${S.rings?'checked':''}> Vis korrigerede afstandscirkler</label><div class="control-buttons">${motionButton()}<button id="center-receiver">Centrér modtager</button></div><table class="signal-table"><thead><tr><th>Signal</th><th>Rejsetid, ms</th><th>Pseudorange, km</th></tr></thead><tbody id="signals"></tbody></table><p class="hint" id="solved-bias"></p><p class="hint">Cirklerne er afstande efter urkorrektion. Flyt modtageren med træk eller piletaster. Tabellen viser hver signals rejsetid og afstandsmål før modtagerens urkorrektion.</p></div></div></div><div class="stage-caption"><span>2D: x, y og urfejl → tre ukendte. Her bruges fire signaler.</span><b>Virkelig GPS: 3D + urfejl → fire ukendte</b></div>`;
+    if (S.chapter===7) content = `<div class="stage-grid"><div class="lab-chart"><div class="lab-header"><p class="eyebrow">URENES FORSKEL SOM FUNKTION AF HØJDEN</p><span>Vælg også ved at klikke på grafen</span></div><div class="lab-legend"><span>Gravitation</span><span class="motion">Bevægelse</span><span class="net">Netto</span></div><div id="chart-view">${V.chart(S.height,S.gravity,S.motion)}</div><div class="readout blue" id="lab-rate"></div><div class="unit-label">µs pr. døgn · satellitur relativt til jordur</div><p class="hint" id="balance-hint"></p></div><div class="instrument"><p class="eyebrow">DIT RELATIVITETSLABORATORIUM</p><div class="controls">${range('height','Højde over overfladen',500,36000,.5,S.height,'km')}<div class="presets"><button data-height="500">500 km</button><button data-height="20200">GPS</button><button data-height="3185.5">Find balance</button></div>${range('labDays','Simulationstid',0,30,.1,S.labDays,'døgn')}${toggles()}<div class="metric-row"><span>Orbitalhastighed</span><strong id="lab-velocity"></strong></div><div class="metric-row"><span>Gravitation pr. døgn</span><strong class="aqua" id="lab-gravity"></strong></div><div class="metric-row"><span>Bevægelse pr. døgn</span><strong class="orange" id="lab-motion"></strong></div><div class="metric-row"><span>Akkumuleret tidsforskel</span><strong id="lab-accumulated"></strong></div><div class="metric-row"><span>Lysrejseafstand, |c · Δt|</span><strong id="lab-distance"></strong></div><p class="hint">Cirkulær bane: højden bestemmer hastigheden. Afstandsækvivalenten er ikke en beregnet positionsfejl.</p></div></div></div><div class="stage-caption"><span>Samme model i alle kapitler. Ændr én antagelse ad gangen.</span><b>Ideel balance: h = R/2 = 3.185,5 km</b></div>`;
+    $('experiment').innerHTML = content;
+    explanation(); update(); GPSState.saveURL();
+    if (focus) $('chapter-title').focus({preventScroll:true});
+  }
+  function timeString(days,offset) {
+    let microseconds = Math.round(days * P.DAY * 1e6) + Math.round(offset);
+    const day = Math.floor(microseconds / (P.DAY*1e6));
+    microseconds -= day * P.DAY*1e6;
+    const seconds = Math.floor(microseconds / 1e6);
+    const h=String(Math.floor(seconds/3600)).padStart(2,'0'),m=String(Math.floor(seconds/60)%60).padStart(2,'0'),s=String(seconds%60).padStart(2,'0');
+    return `${day?day+'d ':''}${h}:${m}:${s}.${String(microseconds%1e6).padStart(6,'0')}`;
+  }
+  function repaintMap() {
+    const focused = document.activeElement?.id==='receiver';
+    $('map-view').innerHTML = V.gpsMap(S,phase);
+    if (focused) $('receiver').focus({preventScroll:true});
+  }
+  function update() {
+    if (S.chapter===1) {
+      const e=P.experiment(P.GPS_HEIGHT,S.days);
+      byId('clock-difference',sign(e.microseconds,1));
+      byId('earth-clock',timeString(S.days,0)); byId('space-clock',timeString(S.days,e.microseconds));
+      byId('elapsed',`${fmt(S.days,3)} simulerede døgn · cirka ${fmt(S.days*24,2)} timer`);
+      byId('speed-value',`${fmt(S.speed,2)} døgn/s`);
+    }
+    if (S.chapter===2) {
+      byId('gamma',`${fmt(P.gamma(S.beta),2)} ×`); byId('beta-value',`${fmt(S.beta,2)} c`);
+      byId('light-speed',`${fmt(S.beta*P.C/1000,0)} km/s`);
+      $('light-view').innerHTML=V.lightClock(S.beta,phase);
+    }
+    if (S.chapter===3) {
+      const p=P.orbit(S.height), y=248-(S.height-500)/35500*150;
+      byId('height-value',`${fmt(S.height,0)} km`); byId('gravity-rate',sign(p.gravity,2));
+      byId('potential-value',`${sign((p.potential+P.GM/P.R)/1e6,2)} MJ/kg`); byId('acceleration',`${fmt(p.acceleration,3)} m/s²`);
+      $('orbit-satellite').setAttribute('transform',`translate(491 ${y})`); $('orbit-satellite').setAttribute('aria-valuenow',S.height);
+      $('height-line').setAttribute('d',`M342 272L491 ${y}`); byId('orbit-height',`${fmt(S.height,0)} km`);
+    }
+    if (S.chapter===4) {
+      const p=P.experiment(P.GPS_HEIGHT,1,S.gravity,S.motion);
+      byId('balance-net',sign(p.rate,1)); byId('balance-gravity',S.gravity?`${sign(p.gravity)} µs/døgn`:'Slået fra'); byId('balance-motion',S.motion?`${sign(p.motion)} µs/døgn`:'Slået fra');
+      $('balance-view').innerHTML=V.balance(S.gravity,S.motion);
+    }
+    if (S.chapter===5) {
+      byId('error-value',`${fmt(S.error,1)} µs`); byId('light-distance',fmt(P.lightDistance(S.error)/1000,2)); byId('range-error',`${fmt(P.lightDistance(S.error),0)} m`);
+      $('distance-view').innerHTML=V.distancePulse(S.error,phase);
+    }
+    if (S.chapter===6) {
+      const signals=P.signals(S.receiver.x,S.receiver.y,S.bias), solution=P.locate(signals.map(x=>x.pseudoKm));
+      byId('bias-value',`${sign(S.bias,0)} µs`);
+      byId('solved-position',`Beregnet position: x = ${fmt(solution.x*P.MAP_KM,0)} km · y = ${fmt(solution.y*P.MAP_KM,0)} km`);
+      const predicted=P.signals(solution.x,solution.y,solution.biasUs);
+      const residual=Math.max(...signals.map((s,i)=>Math.abs(s.pseudoKm-predicted[i].pseudoKm)))*1000;
+      byId('solved-bias',`Beregnet urfejl: ${sign(solution.biasUs,2)} µs · største residual ${fmt(residual,2)} m.`);
+      $('signals').innerHTML=signals.map(s=>`<tr><td>S${s.id}</td><td>${fmt(s.travelMs,3)}</td><td>${fmt(s.pseudoKm,2)}</td></tr>`).join('');
+    }
+    if (S.chapter===7) {
+      const p=P.experiment(S.height,S.labDays,S.gravity,S.motion);
+      byId('height-value',`${fmt(S.height,S.height%1?1:0)} km`); byId('labDays-value',`${fmt(S.labDays,1)} døgn`);
+      byId('lab-rate',sign(p.rate,2)); byId('lab-velocity',`${fmt(p.velocity/1000,3)} km/s`);
+      byId('lab-gravity',S.gravity?`${sign(p.gravity,2)} µs`:'Slået fra'); byId('lab-motion',S.motion?`${sign(p.motion,2)} µs`:'Slået fra');
+      byId('lab-accumulated',`${sign(p.microseconds,2)} µs`); byId('lab-distance',`${fmt(Math.abs(p.distance)/1000,3)} km`);
+      byId('balance-hint',S.gravity&&S.motion?(Math.abs(p.rate)<.1?'Du har fundet balancen: urene følges næsten ad.':p.rate>0?'Satellituret kommer foran. Prøv en lavere bane.':'Satellituret kommer bagud. Prøv en højere bane.'):'Slå begge bidrag til for at lede efter en højde, hvor de ophæver hinanden.');
+      $('chart-view').innerHTML=V.chart(S.height,S.gravity,S.motion);
+    }
+    showMath();
+  }
+  function go(chapter) { drag=null; S.chapter=chapter; render(true); $('chapters').scrollIntoView({block:'start',behavior:'instant'}); }
+  function setHeight(height) {
+    S.height=Math.max(500,Math.min(36000,height));
+    if ($('height')) $('height').value=S.height;
+    update();
+  }
+  $('chapters').addEventListener('click',event=>{const b=event.target.closest('[data-chapter]');if(b)go(Number(b.dataset.chapter));});
+  $('previous').addEventListener('click',()=>{if(S.chapter>1)go(S.chapter-1);});
+  $('next').addEventListener('click',()=>go(S.chapter===7?1:S.chapter+1));
+  $('level').addEventListener('change',()=>{S.level=Number($('level').value);explanation();GPSState.saveURL();});
+  $('restart').addEventListener('click',()=>{GPSState.reset();phase=.58;render(true);window.scrollTo({top:0,behavior:reduced.matches?'instant':'smooth'});});
+  window.addEventListener('hashchange',()=>{GPSState.readURL();render();});
+  $('experiment').addEventListener('input',event=>{
+    const {id,value,checked}=event.target;
+    if (['speed','beta','height','error','labDays','bias'].includes(id)) S[id]=Number(value);
+    if (['gravity','motion','rings'].includes(id)) S[id]=checked;
+    if (S.chapter===6 && ['bias','rings'].includes(id)) repaintMap();
+    update();
+  });
+  $('experiment').addEventListener('click',event=>{
+    const button=event.target.closest('button');
+    if (button) {
+      if (button.id==='start') {S.running=!S.running;button.textContent=S.running?'Pause urene Ⅱ':'Fortsæt ▶';}
+      if (button.id==='reset-clocks') {S.days=0;S.running=false;byId('start','Start begge ure ▶');}
+      if (button.id==='animate') {animation=!animation;button.textContent=animation?'Pause animation':'Vis animation';button.setAttribute('aria-pressed',animation);}
+      if (button.id==='center-receiver') {S.receiver={x:390,y:270};repaintMap();}
+      if (button.dataset.height) setHeight(Number(button.dataset.height));
+      if (button.dataset.error) {S.error=Number(button.dataset.error);$('error').value=S.error;}
+      update();
+    }
+    if (event.target.id==='chart-hit') {
+      const point=svgPoint($('correction-chart'),event);
+      setHeight(Math.round(500+(point.x-55)/(645-55)*35500));
+    }
+  });
+  function svgPoint(svg,event) {
+    const point=svg.createSVGPoint(); point.x=event.clientX;point.y=event.clientY;
+    return point.matrixTransform(svg.getScreenCTM().inverse());
+  }
+  $('experiment').addEventListener('pointerdown',event=>{
+    if (event.button!==0) return;
+    const target=event.target.closest('#receiver, #orbit-satellite');
+    if (!target) return;
+    event.preventDefault();
+    target.focus({preventScroll:true});
+    drag={type:target.id, pointer:event.pointerId};
+    $('experiment').setPointerCapture(event.pointerId);
+  });
+  $('experiment').addEventListener('pointermove',event=>{
+    if (!drag || drag.pointer!==event.pointerId) return;
+    if (drag.type==='receiver') {
+      const point=svgPoint($('gps-map'),event);
+      S.receiver={x:Math.max(120,Math.min(670,point.x)),y:Math.max(120,Math.min(380,point.y))};
+      repaintMap();update();
+    } else {
+      const svg=$('orbit-satellite').ownerSVGElement,point=svgPoint(svg,event);
+      setHeight(Math.round(500+(248-point.y)/150*35500));
+    }
+  });
+  for (const type of ['pointerup','pointercancel','lostpointercapture']) $('experiment').addEventListener(type,()=>{drag=null;});
+  document.addEventListener('keydown',event=>{
+    const id=event.target.id, arrows=['ArrowLeft','ArrowRight','ArrowUp','ArrowDown'];
+    if (id==='orbit-satellite' && arrows.includes(event.key)) {
+      event.preventDefault();setHeight(S.height+(event.key==='ArrowUp'||event.key==='ArrowRight'?1:-1)*(event.shiftKey?1000:100));return;
+    }
+    if (id==='receiver' && arrows.includes(event.key)) {
+      event.preventDefault();const d=event.shiftKey?20:5;
+      S.receiver.x=Math.max(120,Math.min(670,S.receiver.x+(event.key==='ArrowLeft'?-d:event.key==='ArrowRight'?d:0)));
+      S.receiver.y=Math.max(120,Math.min(380,S.receiver.y+(event.key==='ArrowUp'?-d:event.key==='ArrowDown'?d:0)));
+      repaintMap();update();return;
+    }
+    if (event.target.closest('input,select,textarea,button,summary,[tabindex="0"]') || event.ctrlKey || event.metaKey || event.altKey) return;
+    if (event.key==='ArrowRight' && S.chapter<7) {event.preventDefault();go(S.chapter+1);}
+    if (event.key==='ArrowLeft' && S.chapter>1) {event.preventDefault();go(S.chapter-1);}
+  });
+  reduced.addEventListener('change',event=>{if(event.matches)animation=false;const button=$('animate');if(button){button.disabled=event.matches;button.textContent=event.matches?'Reduceret bevægelse':animation?'Pause animation':'Vis animation';button.setAttribute('aria-pressed',String(animation));}});
+  function frame(now) {
+    const dt=Math.min(.15,Math.max(0,(now-last)/1000));last=now;
+    if (!document.hidden) {
+      if (S.running && S.chapter===1) {S.days=Math.min(3650,S.days+dt*S.speed);if(S.days===3650){S.running=false;byId('start','Fortsæt ▶');}}
+      if (animation && !reduced.matches) phase=(phase+dt*.34)%1;
+      if (now-painted>80) {
+        if(S.running&&S.chapter===1) update();
+        if(animation&&!reduced.matches) {
+          if(S.chapter===2) $('light-view').innerHTML=V.lightClock(S.beta,phase);
+          if(S.chapter===5) $('distance-view').innerHTML=V.distancePulse(S.error,phase);
+          if(S.chapter===6) {byId('signal-time',`Sendt: 0 ms · nu: ${fmt(phase*100,1)} ms · slowmotion`); document.querySelectorAll('.signal-pulse').forEach((dot,i)=>{const sat=P.SATELLITES[i], travelMs=Math.hypot(sat.x-S.receiver.x,sat.y-S.receiver.y)*P.MAP_KM*1e6/P.C, progress=Math.min(1,phase*100/travelMs);dot.setAttribute('cx',sat.x+(S.receiver.x-sat.x)*progress);dot.setAttribute('cy',sat.y+(S.receiver.y-sat.y)*progress);});}
+        }
+        painted=now;
+      }
+    }
+    requestAnimationFrame(frame);
+  }
+  render();requestAnimationFrame(frame);
+})();
+</script></body></html>

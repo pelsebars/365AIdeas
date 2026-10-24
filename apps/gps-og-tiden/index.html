@@ -1,0 +1,25 @@
+<!doctype html>
+<html lang="da">
+<head>
+  <meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+  <meta name="theme-color" content="#080f1c">
+  <meta name="description" content="Hvorfor går tiden hurtigere i en GPS-satellit? Syv interaktive eksperimenter med Einstein, bevægelse, tyngdekraft og tiden selv.">
+  <title>Hvorfor går tiden hurtigere i en GPS-satellit? · 365AIIdeer</title>
+  <link rel="stylesheet" href="style.css">
+  <script src="physics.js" defer></script><script src="state.js" defer></script><script src="chapters.js" defer></script><script src="visuals.js" defer></script><script src="app.js" defer></script>
+</head>
+<body>
+  <header class="site-header"><a class="brand" href="../../">365<span>AI</span>Ideer <span class="home-label">/ Alle eksperimenter ↗</span></a><span class="edition">EKSPERIMENT 004 <i></i> FYSIK</span></header>
+  <main>
+    <div class="experience-bar"><span>Hvorfor går tiden hurtigere i en GPS-satellit?</span><label for="level">Forklaringsniveau <select id="level"><option value="1">Intuitivt</option><option value="2">Gymnasium</option><option value="3">Avanceret</option></select></label></div>
+    <nav id="chapters" class="chapters" aria-label="Kapitler"></nav>
+    <section class="chapter-intro" aria-labelledby="chapter-title"><p class="eyebrow" id="kicker"></p><h1 id="chapter-title" tabindex="-1"></h1><p id="chapter-intro"></p></section>
+    <section id="experiment" class="experiment" aria-label="Interaktivt eksperiment"></section>
+    <section class="understanding" aria-labelledby="insight-title"><div><p class="eyebrow">DET, DU TAGER MED</p><h2 id="insight-title"></h2></div><div><p class="depth-label" id="depth-label"></p><p id="explanation"></p><details id="mathematics" hidden><summary>Se regnestykket</summary><div id="math-content"></div></details></div></section>
+    <div class="chapter-footer"><button id="previous">← Forrige kapitel</button><span id="chapter-count" role="status"></span><button id="next" class="primary">Næste kapitel →</button></div>
+    <details class="method"><summary>Om modellen, kilder og tilgængelighed</summary><p>Et interaktivt eksperiment med Einstein, tyngdekraft og tiden selv. Alle syv kapitler beregner med samme fysikmotor. Plus betyder, at satellituret kommer foran et idealiseret jordur. Tal er afrundede, og tegninger er skematiske. En mikrosekund (µs) er en milliontedel sekund.</p><p>Modellen bruger en kugleformet, ikke-roterende Jord og cirkulære baner: R = 6.371 km, GM = 3,986004418 · 10¹⁴ m³/s² og c = 299.792.458 m/s (eksakt). Jordens rotation, excentricitet, Sagnac-effekt og andre operationelle GPS-korrektioner indgår ikke. Standardtallene +45,7, −7,2 og +38,5 µs/døgn er omtrentlige undervisningstal ved 20.200 km.</p><p>Faglige kilder: <a href="https://galileo.phys.virginia.edu/classes/152.mf1i.spring02/Ashbyarticle.pdf" target="_blank" rel="noopener">Neil Ashby: Relativistic Effects in the Global Positioning System (2006) ↗</a> · <a href="https://tsapps.nist.gov/publication/get_pdf.cfm?pub_id=105125" target="_blank" rel="noopener">Weiss & Ashby, NIST: GPS Receivers and Relativity (1999) ↗</a> · <a href="https://www.nist.gov/how-do-you-measure-it/how-do-you-measure-your-location-using-gps" target="_blank" rel="noopener">NIST: How Do You Measure Your Location Using GPS? ↗</a>.</p><p>Brug Tab til kontrollerne og piletaster på skyderne. Når fokus ikke er i en kontrol, skifter ← og → kapitel. Satellitten i kapitel 3 og modtageren i kapitel 6 kan trækkes eller flyttes med piletaster, når de har fokus. Ved reduceret bevægelse er animationerne stille; tal og kontroller virker stadig. Din kapitelposition og dit forklaringsniveau gemmes i URL'en. Ingen cookies eller analyseværktøjer.</p></details>
+    <p class="download-block"><a href="gps-og-tiden.html" download="gps-og-tiden.html">↓ Download hele oplevelsen som HTML</a><small>Én fil. Ingen installation eller netværksafhængigheder.</small></p>
+    <noscript>Denne oplevelse kræver JavaScript til beregninger og interaktion.</noscript>
+  </main>
+  <footer class="site-footer"><a href="../../">← Flere eksperimenter hos 365AIIdeer</a><button id="restart">Start forfra ↺</button><span>Syv kapitler. To ure. Én virkelighed.</span></footer>
+</body></html>

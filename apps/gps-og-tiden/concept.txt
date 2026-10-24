@@ -1,0 +1,384 @@
+# MASTERPROMPT — 365AIideas: GPS, Einstein og tidens mysterium
+
+## Rolle og opgave
+
+Du er en kombination af:
+
+- Senior frontend-udvikler og softwarearkitekt
+- Ekspert i interaktiv videnskabsformidling
+- Fysiker med speciale i relativitetsteori
+- UX/UI-designer med fokus på moderne, visuelt engagerende læringsoplevelser
+
+**Din opgave er at bygge en komplet, interaktiv HTML-baseret læringsapp til 365AIideas.**
+
+Appens titel:
+
+**"Hvorfor går tiden hurtigere i en GPS-satellit?"**
+
+Undertitel:
+
+*"Et interaktivt eksperiment med Einstein, tyngdekraft og tiden selv."*
+
+Appen skal være på dansk og kunne bruges af nysgerrige mennesker uden særlige forudsætninger i fysik.
+
+Den skal være fagligt korrekt, visuelt imponerende og overraskende let at forstå.
+
+VIGTIGT: Implementér den fungerende applikation. Lever ikke blot en designbeskrivelse, mockup eller projektplan.
+
+---
+
+## 1. Grundlæggende koncept
+
+Byg en interaktiv videnskabelig fortælling, der er opdelt i syv kapitler.
+
+Brugeren skal kunne bladre frem og tilbage mellem kapitlerne og gradvist opbygge forståelsen for, hvorfor tiden går forskelligt på Jordens overflade og ombord på en GPS-satellit.
+
+Fremstillingen skal følge dette princip:
+
+**Observation → Eksperiment → Intuition → Forklaring → Matematik**
+
+Begynd aldrig med komplicerede ligninger.
+
+Lad brugeren først opleve et fænomen, derefter eksperimentere med det og til sidst forstå de fysiske love bag.
+
+Hvert kapitel skal have mindst én meningsfuld interaktiv visualisering. Undgå dekorative animationer uden læringsmæssig værdi.
+
+---
+
+## 2. Kapitelstruktur
+
+### Kapitel 1 — To identiske ure
+
+**Spørgsmål:** Hvad sker der, hvis vi placerer to identiske atomure forskellige steder?
+
+Vis Jorden og en GPS-satellit i kredsløb.
+
+Placér et digitalt atomur på Jordens overflade og et i satellitten.
+
+Interaktioner:
+
+- Start begge ure synkront.
+- Lad tiden gå.
+- Accelerér simulationstiden.
+- Vis den akkumulerede tidsforskel.
+- Lad brugeren nulstille eksperimentet.
+
+Forklar, at urene går med forskellige hastigheder, selvom begge fungerer korrekt.
+
+Brug en tydelig visualisering af, at tidsforskellen er ekstremt lille, men målelig.
+
+### Kapitel 2 — Bevægelse gør tiden langsommere
+
+Introducér speciel relativitetsteori.
+
+Visualisér et lysur med to spejle og en lysimpuls, der bevæger sig mellem dem.
+
+Vis to perspektiver:
+
+1. Uret set fra sit eget referencesystem.
+2. Det samme ur observeret fra et referencesystem, hvor det bevæger sig.
+
+Visualisér, hvordan lysets bane bliver længere i det andet perspektiv.
+
+Interaktioner:
+
+- Justér hastigheden.
+- Se lysets bevægelse.
+- Sammenlign tidsforløbet.
+- Aktivér en matematisk forklaring.
+
+Brug hastigheder tæt på lysets for at gøre effekten synlig, men forklar tydeligt, at GPS-satellitter bevæger sig langt langsommere.
+
+Ved en typisk GPS-højde er satellittens hastighed cirka 3,9 km/s.
+
+Den sædvanlige GPS-korrektion fra bevægelsen er omtrent −7,2 mikrosekunder pr. døgn.
+
+Vær omhyggelig med at forklare referencesystemer og forskellen mellem egentid og koordinattid.
+
+### Kapitel 3 — Tyngdekraft ændrer tiden
+
+Introducér generel relativitetsteori.
+
+Forklar, at ure dybere i et gravitationsfelt går langsommere sammenlignet med ure højere oppe.
+
+Visualisér:
+
+- Jorden.
+- Et ur ved Jordens overflade.
+- Et ur i satellitten.
+- Gravitationspotentiale som en farvekodet visualisering.
+
+Interaktioner:
+
+- Træk satellitten højere op.
+- Se den gravitationelle tidsforskel ændre sig.
+- Sammenlign urene.
+
+Forklar forskellen mellem gravitationspotentiale og tyngdeacceleration. Brug ikke alene formuleringen "der er mindre tyngdekraft" som den fysiske forklaring.
+
+Ved GPS-højde er det gravitationelle bidrag cirka +45,7 mikrosekunder pr. døgn.
+
+### Kapitel 4 — To effekter kæmper mod hinanden
+
+Kombinér speciel og generel relativitetsteori.
+
+Vis to store, levende indikatorer:
+
+**Bevægelse:** cirka −7,2 µs/døgn
+
+**Gravitation:** cirka +45,7 µs/døgn
+
+Vis det samlede resultat:
+
+**Netto: cirka +38,5 µs/døgn**
+
+Brug en animeret balance, vektorgrafik eller søjlediagram.
+
+Brugeren skal kunne aktivere og deaktivere hvert bidrag for at forstå sammenhængen.
+
+Den centrale erkendelse er:
+
+**Satellittens ur går samlet set hurtigere end et tilsvarende ur på Jordens overflade.**
+
+### Kapitel 5 — Hvor meget betyder 38 mikrosekunder?
+
+Begynd med spørgsmålet:
+
+*"38 mikrosekunder. Det lyder da fuldstændig ligegyldigt?"*
+
+Vis en lysimpuls, der bevæger sig næsten 300 meter på ét mikrosekund.
+
+Lad brugeren eksperimentere med tidsfejl.
+
+Vis løbende:
+
+- Tidsfejl i mikrosekunder.
+- Tilsvarende lysrejseafstand.
+- Hvordan fejl i signalernes rejsetid påvirker GPS-målinger.
+
+Ved 38,5 mikrosekunder svarer lysrejseafstanden til cirka 11,5 km.
+
+VIGTIGT: Forklar, at de 11,5 km er en afstandsækvivalent, ikke automatisk en entydig GPS-positionsfejl. Den faktiske positionsfejl afhænger blandt andet af satellitgeometri og modtagerens urkorrektion.
+
+### Kapitel 6 — Hvordan finder GPS din position?
+
+Byg en interaktiv forklaring af GPS-positionering.
+
+Vis mindst fire satellitter, der udsender tidskodede signaler.
+
+Forklar:
+
+- Hvordan signalernes rejsetid måles.
+- Hvordan rejsetid omsættes til pseudorange.
+- Hvordan flere satellitter begrænser mulige positioner.
+- Hvorfor modtageren også skal bestemme sin egen urfejl.
+- Hvordan relativistiske korrektioner indgår i GPS-systemet.
+
+Start gerne med en todimensionel forenkling, og gå derefter til det tredimensionelle princip.
+
+Brugeren skal kunne flytte en GPS-modtager og se de beregnede afstande og positionen opdateret.
+
+### Kapitel 7 — Dit eget relativitetslaboratorium
+
+Dette er appens vigtigste eksperimentelle kapitel.
+
+Brugeren skal kunne ændre:
+
+- Satellittens højde fra 500 til 36.000 km.
+- Simulationstid.
+- Bevægelsesbidrag til/fra.
+- Gravitationsbidrag til/fra.
+
+Vis i realtid:
+
+- Orbitalhastighed for cirkulær bane.
+- Gravitationel tidskorrektion.
+- Hastighedsbetinget tidskorrektion.
+- Samlet korrektion pr. døgn.
+- Akkumuleret tidsforskel.
+- Ækvivalent lysrejseafstand.
+
+Lav en graf, som viser tidskorrektionen som funktion af højden.
+
+Brugeren skal kunne finde området, hvor de to effekter ophæver hinanden i den forenklede model.
+
+**Ekstra vigtig detalje:** I et almindeligt cirkulært satellitkredsløb bestemmes orbitalhastigheden af banehøjden. Man må derfor ikke tilbyde højde og hastighed som to uafhængige parametre uden at forklare, at man forlader modellen for cirkulære baner.
+
+Hvis du tilføjer en avanceret tilstand, hvor hastigheden kan ændres uafhængigt, skal det klart fremgå, at der er tale om en separat idealiseret model.
+
+---
+
+## 3. Fysisk og matematisk korrekthed
+
+Brug reelle fysiske konstanter og beregnede resultater.
+
+Som en første tilnærmelse kan følgende anvendes:
+
+Gravitationelt bidrag:
+
+Δt_grav ≈ t · GM/c² · (1/R − 1/r)
+
+Hastighedsbidrag for en cirkulær bane, relativt til et idealiseret ur i ro ved Jordens overflade:
+
+Δt_velocity ≈ −t · GM/(2rc²)
+
+Hvor:
+
+- G = gravitationskonstanten
+- M = Jordens masse
+- c = lysets hastighed
+- R = Jordens radius
+- r = afstanden fra Jordens centrum til satellitten
+- t = observationstiden
+
+Bemærk, at dette er en førsteordens, svagt-felts-approksimation, og at modellen ser bort fra Jordens rotation, banernes excentricitet, Sagnac-effekten og andre operationelle GPS-korrektioner.
+
+I den pædagogiske hovedfortælling skal du anvende GPS-standardtallene på cirka +45,7 og −7,2 mikrosekunder pr. døgn og tydeligt forklare, hvilke antagelser der ligger bag.
+
+Undgå at præsentere forenklede tal som eksakte operationelle GPS-korrektioner.
+
+Kvalitetssikr beregningerne med automatiserede tests.
+
+---
+
+## 4. Design og visuel identitet
+
+Udtrykket skal ligge et sted mellem:
+
+- En moderne videnskabelig museumsinstallation.
+- Apple-lignende produktfortælling.
+- En avanceret interaktiv artikel fra en førende videnskabspublikation.
+
+Designprincipper:
+
+- Mørk marineblå eller næsten sort baggrund.
+- Smukke visualiseringer af Jorden og satellitter.
+- Lyseblå og turkise detaljer.
+- Varm orange til bevægelsesbidrag.
+- Turkis/grøn til gravitationsbidrag.
+- Rene sans-serif fonte.
+- Meget lidt visuel støj.
+- Store letlæselige overskrifter.
+- Elegant animation, der understøtter forståelsen.
+
+Undgå et typisk dashboard med mange tilfældige bokse.
+
+Det skal føles som en sammenhængende videnskabelig oplevelse.
+
+Brug gerne Canvas, SVG, WebGL eller Three.js, hvis det giver en reel fordel.
+
+En god todimensionel fysikvisualisering er dog bedre end en tung 3D-scene uden pædagogisk funktion.
+
+---
+
+## 5. Navigation og interaktion
+
+Implementér:
+
+- Frem/tilbage mellem kapitler.
+- Kapitelindikator.
+- Mulighed for at starte forfra.
+- Gem aktuel kapitelposition i URL eller lokal browsertilstand.
+- Små forklarende tooltips.
+- Tastaturnavigation.
+- Mobilvenligt responsivt design.
+- Respekt for brugerens indstilling til reduceret animation.
+
+Tilføj desuden tre forklaringsniveauer:
+
+**Niveau 1: Intuitivt**
+
+Ingen matematiske forudsætninger.
+
+**Niveau 2: Gymnasium**
+
+Grundlæggende fysik, formler og forklaring af størrelserne.
+
+**Niveau 3: Avanceret**
+
+Relativitetsteori, referencesystemer, egentid, approksimationer og antagelser.
+
+Alle tre niveauer skal bruge den samme interaktive simulation, men variere dybden af forklaringerne.
+
+---
+
+## 6. Arkitektur og integration i 365AIideas
+
+Appen skal bygges modulært, så den kan indgå i en større samling af interaktive AI-genererede læringsoplevelser.
+
+Adskil:
+
+1. Fysikberegninger.
+2. Simulationstilstand.
+3. Visualiseringskomponenter.
+4. Kapitelindhold.
+5. Navigation.
+6. Design/theme.
+7. Integration til 365AIideas.
+
+Gør det muligt at tilføje nye kapitler eller udskifte visualiseringer uden at omskrive fysikmotoren.
+
+Fysikberegningerne skal være rene, testbare funktioner uden afhængighed af UI.
+
+Undersøg først det eksisterende 365AIideas-projekts struktur, komponenter, conventions og routing.
+
+Genbrug eksisterende teknologi, hvor det er hensigtsmæssigt.
+
+Ødelæg ikke eksisterende funktioner.
+
+Hvis projektet bruger en frontend-framework, skal appen passe ind i den. Hvis den eksisterende løsning baseres på selvstændige HTML-apps, skal du levere et kompatibelt selvstændigt modul.
+
+Appen skal kunne åbnes direkte via en dedikeret route eller som en selvstændig HTML-oplevelse.
+
+---
+
+## 7. Tekst og formidling
+
+Skriv i et levende, nysgerrigt og intelligent dansk.
+
+Brug korte forklaringer i selve visualiseringerne og længere forklaringer efter behov.
+
+Fang brugerens interesse med spørgsmål som:
+
+- "Kan to perfekte ure være uenige?"
+- "Kan man rejse ind i fremtiden ved at bevæge sig?"
+- "Hvorfor får mindre gravitation tiden til at gå hurtigere?"
+- "Hvordan kan 38 mikrosekunder blive til kilometer?"
+- "Kan du finde en bane, hvor effekterne ophæver hinanden?"
+
+Undgå tør lærebogsstil og overflødige superlativer.
+
+Hvert kapitel skal slutte med en tydelig erkendelse, som naturligt fører til næste kapitel.
+
+---
+
+## 8. Acceptkriterier
+
+Opgaven er først færdig, når:
+
+- Alle syv kapitler er implementeret.
+- Hvert kapitel har en fungerende og relevant interaktion.
+- Fysikberegningerne er kontrolleret.
+- Simulationerne viser konsistente resultater.
+- Navigationsflowet virker.
+- Appen fungerer på desktop og mobil.
+- Appen kan genindlæses uden fejl.
+- UI følger 365AIideas' eksisterende designmæssige og tekniske konventioner, hvor de findes.
+- Eventuelle eksterne afhængigheder er dokumenteret.
+- Der findes en kort README med arkitektur og integrationsvejledning.
+
+Test appen i browseren, ret identificerede problemer, og kontrollér især at grafer, animationer, simulationstid og brugerinteraktioner fungerer.
+
+---
+
+## 9. Ekstra ambition
+
+Målet er ikke blot at lære brugeren noget om GPS.
+
+Målet er at demonstrere en ny måde at formidle kompliceret viden på:
+
+**Man læser ikke blot om fysikken. Man eksperimenterer med den.**
+
+Dette skal være en af 365AIideas' signaturoplevelser.
+
+Byg en reel, sammenhængende og færdig første version nu. Prioritér fungerende, korrekt fysik og meningsfulde interaktioner over pynt og unødvendig kompleksitet.

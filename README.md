@@ -11,6 +11,7 @@ Kør `npm run dev` og åbn http://localhost:3000. Python 3 kræves til den lokal
 - `index.html`, `style.css`: hovedside med udgivne apps og deres byggeforklaringer.
 - `apps/space-invaders/`: første spil, med point, liv, bølger, pause og touch.
 - `apps/paa-kanten-af-kaos/`: interaktiv logistisk afbildning med worker, zoom, guidede stop og tidsserier.
+- `apps/gps-og-tiden/`: syv interaktive kapitler om GPS og relativitet med tre forklaringsniveauer og eget laboratorium.
 - `backlog.json`: intern backlog med 36 idéer og byggeprompts; vises ikke på hjemmesiden. Tallene er forslag til rækkefølge, ikke udgivelsesdatoer.
 - `scripts/seed-backlog.py`: oprindelig seed. Kør den ikke igen efter manuelle ændringer i backloggen; den overskriver filen.
 
@@ -66,3 +67,9 @@ Afprøvet 23. oktober 2026: `npm run check` omfatter nu en uafhængig projektiv 
 Konceptprompten er bevaret i `apps/perspektivretter/concept.txt` og under opslaget på forsiden, adskilt fra projektbriefet. Perspektivretter fandtes ikke i backloggen; ingen anden idé er fjernet. Kontrolscriptet accepterer fortsat en variabel backlogstørrelse.
 
 Opdatering: Referencelinjer og beskæring er nu adskilt. Hele billedets transformerede hjørner bestemmer outputrammen. Tomme kanter bevares transparente i PNG og hvide i JPEG. Hvis en projektiv horisont krydser originalen, kan hele billedet ikke rummes på et endeligt lærred; appen beder om andre linjer eller udsnittet mellem linjerne. Kontrolscriptet tester pixelbevarelse med indre referencer, projektive billedgrænser og denne fejltilstand.
+
+## GPS og tiden
+
+Åbn `/apps/gps-og-tiden/`. Eksperiment 004 følger to atomure gennem bevægelse, gravitation, mikrosekunder og positionering frem til et relativitetslaboratorium. Ændr højde, tid og bidrag; hastigheden følger højden i en cirkulær bane. Kapitel 6 løser position og urfejl numerisk fra fire signaler i en forenklet 2D-model. Alle kapitler deler en ren, testbar fysikmotor. Kapitel og forklaringsniveau gemmes i URL'en. Downloadudgaven virker uden server og netværk.
+
+`npm run check` omfatter nu GPS-tal, fortegn, balancehøjde, lysur, tidsakkumulering og 60 positioner med urfejl. Browserafprøvet 24. oktober 2026 ved 1280×720 og 390×844. Detaljer om arkitektur, kontroller og modellens afgrænsning findes i `apps/gps-og-tiden/README.md`. Menneskets oprindelige idé er bevaret ordret i appens `original-prompt.txt`, og den AI-udbyggede byggeprompt fra en separat chat er bevaret uændret i `concept.txt`. Begge er medtaget under opslagets byggeforklaring på forsiden med tydelig angivelse af ophav. Der er ikke fjernet noget fra backloggen.
