@@ -55,6 +55,8 @@ jobs:
           mkdir -p "$RUNNER_TEMP/trusted-runner"
           cp scripts/cloud-runner.mjs scripts/backlog.mjs "$RUNNER_TEMP/trusted-runner/"
           cp .github/codex/daily-app.md "$RUNNER_TEMP/trusted-runner/prompt.md"
+          mkdir -p "$RUNNER_TEMP/codex-build-home"
+          cp .github/codex/config.toml "$RUNNER_TEMP/codex-build-home/config.toml"
       - name: Select or resume one backlog task
         id: queue
         env:
@@ -79,7 +81,8 @@ jobs:
           output-file: .runner-artifacts/codex-report.md
           model: ${{ vars.CODEX_MODEL }}
           effort: ${{ vars.CODEX_EFFORT }}
-          sandbox: workspace-write
+          codex-home: ${{ runner.temp }}/codex-build-home
+          permission-profile: app-build
           safety-strategy: drop-sudo
       - name: Capture changes even if Codex fails or reaches its time limit
         if: always() && steps.queue.outputs.has_work == 'true'

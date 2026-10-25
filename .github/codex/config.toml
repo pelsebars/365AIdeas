@@ -1,0 +1,9 @@
+# Browser tests need localhost; source verification may need public documentation.
+# Keep workspace filesystem boundaries while allowing command network access.
+default_permissions = "app-build"
+
+[permissions.app-build]
+extends = ":workspace"
+
+[permissions.app-build.network]
+enabled = true
