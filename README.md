@@ -79,4 +79,29 @@ Opdatering: Referencelinjer og beskæring er nu adskilt. Hele billedets transfor
 - `npm run daily:run -- <kommando> [argumenter]`: holder en lokal eksklusiv lås under hele kommandoen og sender valgt ID/action som `BACKLOG_ID`/`BACKLOG_ACTION`. Starter ingen kommando, hvis køen er tom. Kommandoen står selv for startmarkering, bygning og statusopdatering.
 - `npm run test:backlog`: afprøver køvalg, genoptagelse, ugyldige data, startmarkering og lås/fejl.
 
-De fire allerede byggede apps er markeret `Kø: historik`, da deres deployment ikke blev efterprøvet under importen. De skal ikke blokere den nye kø. Alle nye idéer står fortsat som kladder. Der er endnu intet GitHub-workflow eller daglig tidsplan; repository-dækkende concurrency, vedvarende checkpoint af afbrudt cloudarbejde og deploymentkontrol tilføjes ved cloud-opsætningen.
+De fire allerede byggede apps er markeret `Kø: historik`, da deres deployment ikke blev efterprøvet under importen. De skal ikke blokere den nye kø. Alle nye idéer står fortsat som kladder. Cloud-workflowet nedenfor håndterer repository-dækkende concurrency, checkpoint og deploymentkontrol. Den lokale lås bruges til lokale kørsler. Der er endnu ingen daglig tidsplan.
+
+## Cloud-runner (manuelt aktiveret)
+
+Workflow: `.github/workflows/daily-app.yml` — **Build one backlog app** under GitHub Actions. Det kan kun startes manuelt på `main`; en daglig tidsplan er bevidst ikke aktiveret før første fulde app-prøve.
+
+### Forløb
+
+1. Runneren henter `main`, installerer de låste Playwright-afhængigheder og Chromium og afprøver projektet.
+2. Et eventuelt checkpoint fra `codex/daily-app-work` flettes ind. Mergekonflikter stopper kørslen og kræver afklaring; intet overskrives.
+3. Køen vælger én klar/afbrudt opgave. Er køen tom, bliver der hverken kaldt på AI eller ændret kode.
+4. Den officielle Codex Action læser `.github/codex/daily-app.md` samt build.md/backlog.md. API-nøglen kommer fra repository-secretet `OPENAI_API_KEY`. Repository-variables `CODEX_MODEL` og `CODEX_EFFORT` kan sættes; uden dem bruger actionen sine standarder. Der er ikke fastsat et dokumenteret forbrugsbudget endnu.
+5. Ændringer pakkes som en Git-patch med en tilladt filliste. En separat runner uden API-nøgle eller skrivetoken kontrollerer appstatus, uændrede oprindelige idéer, reproducerbare HTML-downloads, beregninger og browsertests på desktop/mobil. Nye apps skal have en funktionel `tests/browser/<slug>.spec.mjs` ud over den generelle navigationstest.
+6. Et separat job med skriverettighed gemmer checkpoint på arbejdsbranchen, også når AI eller appkontroller fejler, hvis patchen kan indsamles og godkendes. Jobbet udfører ikke genereret appkode.
+7. Inputtet **publish** er som standard false. I den tilstand bliver arbejdet på checkpointbranchen. Hvis publish er true og alle kontroller består, pushes til main, forudsat at main ikke har flyttet sig under arbejdet. Ingen force-push.
+8. Vercel-status for præcis den publicerede commit og offentlig forside/app kontrolleres. Først derefter markeres entryen udgivet, og checkpointbranchen fjernes. Manglende Vercel-status giver fejl, og entryen forbliver implementeret til næste forsøg. Bot-udløst Vercel-udgivelse skal verificeres ved den første fulde prøve.
+
+### Fejl og grænser
+
+- GitHub Actions concurrency holder én hel workflowkørsel ad gangen for denne udgivelsesproces. Det forhindrer ikke menneskers samtidige pushes; derfor kontrolleres main igen før publicering.
+- Codex-trinnet har en grænse på 45 minutter inden for et byggejob på 65 minutter, så der normalt er tid til at gemme efter en timeout. Et abrupt runnernedbrud eller en tvungen afbrydelse kan stadig miste arbejde siden sidste checkpoint. Branche-checkpoints bevares; artifacts opbevares i 14 dage.
+- Browserkontroller er headless Chromium med desktop- og mobilviewport, ikke en fysisk telefon. Den generelle test kontrollerer indlæsning, navigation, JS-fejl, bredde og HTML-download; den beviser ikke alle appfunktioner eller fuld offlinefunktion. Den app-specifikke test skal dække centrale funktioner.
+- Workflowet må ændre apps, app-tests, ekstra beregningschecks, hovedsidens HTML/CSS, README og den valgte backlogentry. Det må ikke ændre workflows, afhængigheder eller runnerinfrastruktur under en appbygning. Den slags kræver en separat ændring.
+- Fejl fremgår som fejlede Actions-kørsler. Modtagerens GitHub-notifikationsindstillinger afgør mail/push; der er ikke tilføjet en særskilt beskedtjeneste.
+
+Lokalt: `npm ci`, `npx playwright install chromium`, `npm run test:runner`, `npm run check` og `npm run test:browser`. Ved ændringer i apps/CSS køres også `npm run build`, og genererede downloads medtages.

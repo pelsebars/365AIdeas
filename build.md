@@ -5,7 +5,7 @@ Læs denne fil og `backlog.md` ved hver byggekørsel. Backloggens A er den oprin
 ## Vælg én opgave
 
 1. Læs eventuelle AGENTS.md-instruktioner, README, denne fil og backlog.md. Undersøg git-status, branch, remote og eksisterende apps. Bevar andres ændringer og private inputfiler.
-2. Kør hele forløbet under låsen med `npm run daily:run -- <runnerkommando>`. Låsen gælder samme checkout. Cloud-workflowet skal derudover bruge GitHub Actions concurrency for repositoryet; det tilføjes i workflowtrinnet. Ved optaget lås: stop. En efterladt lås må først fjernes manuelt, når det er kontrolleret, at ejeren ikke længere kører.
+2. Kør hele forløbet under låsen med `npm run daily:run -- <runnerkommando>`. Låsen gælder samme checkout. Cloud-workflowet bruger GitHub Actions concurrency for hele forløbet i stedet for den lokale lås. Ved optaget lås: stop. En efterladt lås må først fjernes manuelt, når det er kontrolleret, at ejeren ikke længere kører.
 3. Brug `npm run backlog:next` til at vælge opgaven. Scriptet returnerer JSON med ID og action (`build`, `resume`, `deploy`) eller `null`. `i gang` og aktive `implementeret` prioriteres før første `klar`. Historik er undtaget. Ved `null` afsluttes uden bygning. Flere aktive ufærdige opgaver er en fejl, som kræver afklaring.
 4. Ved action `build`: kør `npm run backlog:start` inde under låsen; det sætter `i gang` og Startet med dansk dato. Ved `resume`: undersøg eksisterende arbejde først. Ved `deploy`: genoptag kun kontrol/udgivelse af den byggede app. Bevar oprindelig A og ID. Nye implementerede apps må ikke mærkes `Kø: historik`; markeringen er kun til de ældre importerede apps.
 5. Udbyg A til en konkret C, hvis C mangler eller kun er en seed-prompt. Beskriv brugeroplevelse, funktioner, visuel forklaring, afgrænsning og meningsfulde acceptkriterier. Følg idéens omfang; opfind ikke en større app. Gem C før implementeringen. En eksisterende dækkende C genbruges.
@@ -52,3 +52,7 @@ README dokumenterer GitHub-repositoriet https://github.com/pelsebars/365AIdeas o
 ## Afslutning
 
 Giv en kort rapport med entry-ID, hvad der blev bygget, udførte kontroller, eventuelle hindringer samt lokal/offentlig URL. Denne fil opretter ikke i sig selv en tidsplan: den daglige automation konfigureres separat.
+
+## Når GitHub Actions er runneren
+
+`.github/workflows/daily-app.yml` og `.github/codex/daily-app.md` fordeler ansvaret: AI-trinnet bygger og afprøver, mens separate jobs gemmer checkpoint, validerer og eventuelt publicerer. AI-trinnet skal ikke committe/pushe selv. `publish=false` gemmer alene checkpoint, og `publish=true` autoriserer publicering efter kontroller. Den daglige tidsplan aktiveres separat efter første fulde prøve. Se README for adgang, timeoutgrænser og genoptagelse.

@@ -5,3 +5,6 @@ node_modules/
 # Local daily runner lock
 .daily-app.lock/
 backlog.md.*.tmp
+.runner-artifacts/
+playwright-report/
+test-results/

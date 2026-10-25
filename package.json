@@ -10,6 +10,11 @@
     "backlog:next": "node scripts/backlog.mjs next",
     "backlog:start": "node scripts/backlog.mjs start",
     "daily:run": "node scripts/backlog.mjs run",
-    "test:backlog": "node --test scripts/tests/backlog.test.mjs"
+    "test:backlog": "node --test scripts/tests/backlog.test.mjs",
+    "test:runner": "node --test scripts/tests/*.test.mjs && node scripts/check-extra.mjs",
+    "test:browser": "playwright test"
+  },
+  "devDependencies": {
+    "@playwright/test": "1.64.1"
   }
 }

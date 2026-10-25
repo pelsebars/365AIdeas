@@ -1,0 +1,242 @@
+name: Build one backlog app
+
+# No schedule until the first full app/deployment trial has passed.
+on:
+  workflow_dispatch:
+    inputs:
+      publish:
+        description: 'Publish to main after all checks pass (otherwise save checkpoint only)'
+        type: boolean
+        default: false
+
+concurrency:
+  group: daily-app-production
+  cancel-in-progress: false
+
+permissions:
+  contents: read
+
+env:
+  NODE_VERSION: '24'
+
+jobs:
+  build:
+    if: github.ref == 'refs/heads/main'
+    runs-on: ubuntu-latest
+    timeout-minutes: 65
+    outputs:
+      has_work: ${{ steps.queue.outputs.has_work }}
+      base: ${{ steps.queue.outputs.base }}
+      prior: ${{ steps.queue.outputs.prior }}
+      id: ${{ steps.queue.outputs.id }}
+      action: ${{ steps.queue.outputs.action }}
+      codex: ${{ steps.codex.outcome }}
+    steps:
+      - uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262 # v4
+        with:
+          ref: main
+          fetch-depth: 0
+          persist-credentials: false
+      - uses: actions/setup-node@49933ea5288caeca8642d1e84afbd3f7d6820020 # v4
+        with:
+          node-version: ${{ env.NODE_VERSION }}
+          cache: npm
+      - name: Install test tools
+        run: |
+          npm ci --ignore-scripts
+          npx playwright install --with-deps chromium
+      - name: Check runner and current project
+        run: |
+          npm run test:runner
+          npm run check
+          npm run test:browser
+      - name: Keep trusted runner instructions outside candidate files
+        run: |
+          mkdir -p "$RUNNER_TEMP/trusted-runner"
+          cp scripts/cloud-runner.mjs scripts/backlog.mjs "$RUNNER_TEMP/trusted-runner/"
+          cp .github/codex/daily-app.md "$RUNNER_TEMP/trusted-runner/prompt.md"
+      - name: Select or resume one backlog task
+        id: queue
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: node "$RUNNER_TEMP/trusted-runner/cloud-runner.mjs" prepare
+      - name: Check API secret exists
+        if: steps.queue.outputs.has_work == 'true' && steps.queue.outputs.action != 'deploy'
+        env:
+          HAS_API_KEY: ${{ secrets.OPENAI_API_KEY != '' }}
+        run: test "$HAS_API_KEY" = true
+      - name: Build the selected app with Codex
+        id: codex
+        if: steps.queue.outputs.has_work == 'true' && steps.queue.outputs.action != 'deploy'
+        timeout-minutes: 45
+        uses: openai/codex-action@1d82a3dba7c7988ec71ecae1ed5b8e8db96495c5 # v1
+        env:
+          BACKLOG_ID: ${{ steps.queue.outputs.id }}
+          BACKLOG_ACTION: ${{ steps.queue.outputs.action }}
+        with:
+          openai-api-key: ${{ secrets.OPENAI_API_KEY }}
+          prompt-file: ${{ runner.temp }}/trusted-runner/prompt.md
+          output-file: .runner-artifacts/codex-report.md
+          model: ${{ vars.CODEX_MODEL }}
+          effort: ${{ vars.CODEX_EFFORT }}
+          sandbox: workspace-write
+          safety-strategy: drop-sudo
+      - name: Capture changes even if Codex fails or reaches its time limit
+        if: always() && steps.queue.outputs.has_work == 'true'
+        env:
+          BASE_SHA: ${{ steps.queue.outputs.base }}
+        run: node "$RUNNER_TEMP/trusted-runner/cloud-runner.mjs" capture
+      - name: Save candidate and diagnostic reports
+        if: always()
+        uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02 # v4
+        with:
+          name: app-candidate
+          path: .runner-artifacts/
+          include-hidden-files: true
+          retention-days: 14
+          if-no-files-found: ignore
+      - name: Save runner browser diagnostics
+        if: always()
+        uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02 # v4
+        with:
+          name: runner-browser-check
+          path: |
+            playwright-report/
+            test-results/
+          retention-days: 14
+          if-no-files-found: ignore
+      - name: Report empty queue
+        if: steps.queue.outputs.has_work == 'false'
+        run: echo 'No ready or interrupted task. No AI call or app build was started.' >> "$GITHUB_STEP_SUMMARY"
+
+  validate:
+    needs: build
+    if: always() && needs.build.outputs.has_work == 'true'
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    steps:
+      - uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262 # v4
+        with:
+          ref: ${{ needs.build.outputs.base }}
+          persist-credentials: false
+      - uses: actions/setup-node@49933ea5288caeca8642d1e84afbd3f7d6820020 # v4
+        with:
+          node-version: ${{ env.NODE_VERSION }}
+      - uses: actions/download-artifact@d3f86a106a0bac45b974a628896c90dbdf5c8093 # v4
+        with:
+          name: app-candidate
+          path: ${{ runner.temp }}/candidate
+      - name: Apply candidate with trusted infrastructure
+        env:
+          ARTIFACT_DIR: ${{ runner.temp }}/candidate
+        run: node scripts/cloud-runner.mjs apply
+      - name: Require completed Codex run
+        env:
+          CODEX_OUTCOME: ${{ needs.build.outputs.codex }}
+          BACKLOG_ACTION: ${{ needs.build.outputs.action }}
+        run: test "$BACKLOG_ACTION" = deploy || test "$CODEX_OUTCOME" = success
+      - name: Require completed app and functional browser test
+        env:
+          BACKLOG_ID: ${{ needs.build.outputs.id }}
+          BASE_SHA: ${{ needs.build.outputs.base }}
+        run: node scripts/cloud-runner.mjs ready
+      - name: Install browser tools
+        run: |
+          npm ci --ignore-scripts
+          npx playwright install --with-deps chromium
+      - name: Independently validate candidate
+        run: |
+          npm run build
+          git diff --exit-code
+          npm run test:runner
+          npm run check
+          npm run test:browser
+      - name: Save browser results
+        if: always()
+        uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02 # v4
+        with:
+          name: app-validation
+          path: |
+            playwright-report/
+            test-results/
+          retention-days: 14
+          if-no-files-found: ignore
+
+  save:
+    needs: [build, validate]
+    if: always() && needs.build.outputs.has_work == 'true'
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    permissions:
+      contents: write
+    outputs:
+      candidate: ${{ steps.checkpoint.outputs.commit }}
+      published: ${{ steps.publish.outcome }}
+    steps:
+      - uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262 # v4
+        with:
+          ref: ${{ needs.build.outputs.base }}
+          fetch-depth: 0
+      - uses: actions/setup-node@49933ea5288caeca8642d1e84afbd3f7d6820020 # v4
+        with:
+          node-version: ${{ env.NODE_VERSION }}
+      - uses: actions/download-artifact@d3f86a106a0bac45b974a628896c90dbdf5c8093 # v4
+        with:
+          name: app-candidate
+          path: ${{ runner.temp }}/candidate
+      - name: Restore permitted files only
+        env:
+          ARTIFACT_DIR: ${{ runner.temp }}/candidate
+        run: node scripts/cloud-runner.mjs apply
+      # This job never runs generated application code with a write token.
+      - name: Persist checkpoint on a separate branch
+        id: checkpoint
+        env:
+          BASE_SHA: ${{ needs.build.outputs.base }}
+          PRIOR_SHA: ${{ needs.build.outputs.prior }}
+          BACKLOG_ID: ${{ needs.build.outputs.id }}
+        run: node scripts/cloud-runner.mjs checkpoint
+      - name: Publish validated candidate to main
+        id: publish
+        if: needs.validate.result == 'success' && inputs.publish
+        env:
+          BASE_SHA: ${{ needs.build.outputs.base }}
+          CANDIDATE_SHA: ${{ steps.checkpoint.outputs.commit }}
+        run: node scripts/cloud-runner.mjs publish
+      - name: Summarize result
+        if: always()
+        env:
+          TASK_ID: ${{ needs.build.outputs.id }}
+          VALIDATION: ${{ needs.validate.result }}
+          PUBLISH: ${{ steps.publish.outcome }}
+        run: |
+          printf 'Task: %s\n\nValidation: %s\n\nPublish: %s\n\nCheckpoint branch: codex/daily-app-work\n' "$TASK_ID" "$VALIDATION" "$PUBLISH" >> "$GITHUB_STEP_SUMMARY"
+      - name: Fail visibly when app validation failed
+        if: needs.validate.result != 'success'
+        run: exit 1
+
+  verify:
+    needs: [build, save]
+    if: needs.save.outputs.published == 'success'
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    permissions:
+      contents: write
+      statuses: read
+    steps:
+      - uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262 # v4
+        with:
+          ref: ${{ needs.save.outputs.candidate }}
+          fetch-depth: 0
+      - uses: actions/setup-node@49933ea5288caeca8642d1e84afbd3f7d6820020 # v4
+        with:
+          node-version: ${{ env.NODE_VERSION }}
+      - name: Verify Vercel status and public pages before recording publication
+        env:
+          GH_TOKEN: ${{ github.token }}
+          CANDIDATE_SHA: ${{ needs.save.outputs.candidate }}
+          BACKLOG_ID: ${{ needs.build.outputs.id }}
+        run: |
+          git config user.name 'github-actions[bot]'
+          git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
+          node scripts/cloud-runner.mjs verify
