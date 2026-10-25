@@ -5,6 +5,11 @@
   "scripts": {
     "dev": "python3 -m http.server 3000",
     "check": "node scripts/check.mjs",
-    "build": "node scripts/build-downloads.mjs"
+    "build": "node scripts/build-downloads.mjs",
+    "backlog:check": "node scripts/backlog.mjs check",
+    "backlog:next": "node scripts/backlog.mjs next",
+    "backlog:start": "node scripts/backlog.mjs start",
+    "daily:run": "node scripts/backlog.mjs run",
+    "test:backlog": "node --test scripts/tests/backlog.test.mjs"
   }
 }

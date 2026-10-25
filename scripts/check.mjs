@@ -1,3 +1,4 @@
+import {parseBacklog} from './backlog.mjs';
 import './check-perspective.mjs';
 import './check-gps.mjs';
 import {readFileSync,existsSync,readdirSync} from 'node:fs';
@@ -7,6 +8,7 @@ import {runInNewContext} from 'node:vm';
 function files(dir){return readdirSync(dir,{withFileTypes:true}).flatMap(e=>e.isDirectory()?files(`${dir}/${e.name}`):[`${dir}/${e.name}`]);}
 const appFiles=files('apps');
 for(const file of appFiles.filter(f=>extname(f)==='.js'))execFileSync(process.execPath,['--check',file]);
+parseBacklog(readFileSync('backlog.md','utf8'));
 const ideas=JSON.parse(readFileSync('backlog.json','utf8'));
 if(!Array.isArray(ideas)||new Set(ideas.map(x=>x.day)).size!==ideas.length)throw Error('Ugyldig backlog');
 for(const item of ideas){if(!Number.isInteger(item.day))throw Error('Ugyldig dag');for(const key of ['title','category','description','prompt'])if(typeof item[key]!=='string'||!item[key].trim())throw Error(`Mangler ${key}`);}

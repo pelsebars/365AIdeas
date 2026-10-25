@@ -12,17 +12,14 @@ Kør `npm run dev` og åbn http://localhost:3000. Python 3 kræves til den lokal
 - `apps/space-invaders/`: første spil, med point, liv, bølger, pause og touch.
 - `apps/paa-kanten-af-kaos/`: interaktiv logistisk afbildning med worker, zoom, guidede stop og tidsserier.
 - `apps/gps-og-tiden/`: syv interaktive kapitler om GPS og relativitet med tre forklaringsniveauer og eget laboratorium.
-- `backlog.json`: intern backlog med 36 idéer og byggeprompts; vises ikke på hjemmesiden. Tallene er forslag til rækkefølge, ikke udgivelsesdatoer.
+- `backlog.md`: autoritativ idébacklog med oprindelig idé, status/datoer og fuld konceptprompt. Kan redigeres manuelt eller via en chat.
+- `build.md`: fælles regler for valg af opgave, bygning, integration, kontrol og deployment.
+- `backlog.json`: historisk seed-arkiv med 36 AI-forslag, importeret i backlog.md. Brug det ikke som aktiv kø; kontrolscriptet validerer det stadig som arkiv.
 - `scripts/seed-backlog.py`: oprindelig seed. Kør den ikke igen efter manuelle ændringer i backloggen; den overskriver filen.
 
 ## Daglig arbejdsgang
 
-1. Vælg en idé fra backloggen.
-2. Brug prompten som brief og byg appen i `apps/<slug>/`.
-3. Afprøv appen på mobil og desktop; tjek konsollen, tastatur, touch og nulstilling.
-4. Vis den faktiske prompt, AI-værktøj, model, teknologien og eventuelle efterfølgende rettelser under appen. Angiv kun indsatsniveau, når det er kendt. Angiv begrænsninger ærligt.
-5. Flyt idéen fra backloggen til hovedsidens udgivne apps, og opdatér tæller og fremdrift. Det er manuelt i denne første version.
-6. Kør `npm run check`, commit og push til produktionsbranchen.
+Følg [build.md](build.md), og vælg første `klar`-entry i [backlog.md](backlog.md). Nye idéer starter som `kladde`; skift til `klar`, når de må bygges automatisk. Kørslen gemmer den fulde konceptprompt før implementeringen og opdaterer status og datoer bagefter. Afsluttede entries bevares som historik. En daglig tidsplan er endnu ikke oprettet af denne arbejdsgang.
 
 ## Vercel
 
@@ -32,7 +29,7 @@ Git-repository: https://github.com/pelsebars/365AIdeas. Vercel er tilkoblet Git-
 
 ## Udgivelsesplan
 
-Startdato, klokkeslæt og automatisk kørsel er ikke fastsat. Backloggen har 36 startidéer, ikke 365 færdige apps. En daglig agentkørsel skal have adgang til repository og deployment og bør kun udgive efter sine kontroller. En tidsplan alene genererer ikke apps.
+Startdato, klokkeslæt og automatisk kørsel er ikke fastsat. Backlog.md rummer både egne idéer, implementerede apps og 36 importerede AI-forslag; kun entries markeret `klar` er i byggekøen. En daglig agentkørsel skal have adgang til repository og deployment og bør kun udgive efter sine kontroller. En tidsplan alene genererer ikke apps.
 
 Websitet bruger Google Fonts som valgfri typografiforbedring med lokale fallback-skrifter. Spillet har ingen netværksafhængigheder og gemmer kun rekord i localStorage.
 
@@ -73,3 +70,13 @@ Opdatering: Referencelinjer og beskæring er nu adskilt. Hele billedets transfor
 Åbn `/apps/gps-og-tiden/`. Eksperiment 004 følger to atomure gennem bevægelse, gravitation, mikrosekunder og positionering frem til et relativitetslaboratorium. Ændr højde, tid og bidrag; hastigheden følger højden i en cirkulær bane. Kapitel 6 løser position og urfejl numerisk fra fire signaler i en forenklet 2D-model. Alle kapitler deler en ren, testbar fysikmotor. Kapitel og forklaringsniveau gemmes i URL'en. Downloadudgaven virker uden server og netværk.
 
 `npm run check` omfatter nu GPS-tal, fortegn, balancehøjde, lysur, tidsakkumulering og 60 positioner med urfejl. Browserafprøvet 24. oktober 2026 ved 1280×720 og 390×844. Detaljer om arkitektur, kontroller og modellens afgrænsning findes i `apps/gps-og-tiden/README.md`. Menneskets oprindelige idé er bevaret ordret i appens `original-prompt.txt`, og den AI-udbyggede byggeprompt fra en separat chat er bevaret uændret i `concept.txt`. Begge er medtaget under opslagets byggeforklaring på forsiden med tydelig angivelse af ophav. Der er ikke fjernet noget fra backloggen.
+
+## Automatisk køvalg (forberedelse)
+
+- `npm run backlog:check`: validerer A/B/C, unikke ID'er, status, datoer og køens entydighed. Indgår også i `npm run check`.
+- `npm run backlog:next`: læser køen uden ændringer; giver JSON eller `null`.
+- `npm run backlog:start`: markerer den næste klare idé som startet. Brug kun inde i en låst kørsel.
+- `npm run daily:run -- <kommando> [argumenter]`: holder en lokal eksklusiv lås under hele kommandoen og sender valgt ID/action som `BACKLOG_ID`/`BACKLOG_ACTION`. Starter ingen kommando, hvis køen er tom. Kommandoen står selv for startmarkering, bygning og statusopdatering.
+- `npm run test:backlog`: afprøver køvalg, genoptagelse, ugyldige data, startmarkering og lås/fejl.
+
+De fire allerede byggede apps er markeret `Kø: historik`, da deres deployment ikke blev efterprøvet under importen. De skal ikke blokere den nye kø. Alle nye idéer står fortsat som kladder. Der er endnu intet GitHub-workflow eller daglig tidsplan; repository-dækkende concurrency, vedvarende checkpoint af afbrudt cloudarbejde og deploymentkontrol tilføjes ved cloud-opsætningen.

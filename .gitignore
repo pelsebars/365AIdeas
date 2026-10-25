@@ -1,3 +1,7 @@
 .vercel/
 node_modules/
 .DS_Store
+
+# Local daily runner lock
+.daily-app.lock/
+backlog.md.*.tmp
