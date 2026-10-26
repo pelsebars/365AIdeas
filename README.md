@@ -17,7 +17,7 @@ Kør `npm run dev` og åbn http://localhost:3000. Python 3 kræves til den lokal
 
 ## Daglig arbejdsgang
 
-Følg [build.md](build.md), og vælg første `klar`-entry i [backlog.md](backlog.md). Nye idéer starter som `kladde`; skift til `klar`, når de må bygges automatisk. Kørslen gemmer den fulde konceptprompt før implementeringen og opdaterer status og datoer bagefter. Afsluttede entries bevares som historik. En daglig tidsplan er endnu ikke oprettet af denne arbejdsgang.
+Følg [build.md](build.md), og vælg første `klar`-entry i [backlog.md](backlog.md). Nye idéer starter som `kladde`; skift til `klar`, når de må bygges automatisk. Kørslen gemmer den fulde konceptprompt før implementeringen og opdaterer status og datoer bagefter. Afsluttede entries bevares som historik. GitHub starter dagligt kl. 06.00 i Europe/Copenhagen; sommertid/vintertid følger tidszonen.
 
 ## Vercel
 
@@ -27,7 +27,7 @@ Git-repository: https://github.com/pelsebars/365AIdeas. Vercel er tilkoblet Git-
 
 ## Udgivelsesplan
 
-Startdato, klokkeslæt og automatisk kørsel er ikke fastsat. Backlog.md rummer egne idéer og implementerede apps; de 36 oprindelige AI-forslag er fjernet efter brugerens ønske; kun entries markeret `klar` er i byggekøen. En daglig agentkørsel skal have adgang til repository og deployment og bør kun udgive efter sine kontroller. En tidsplan alene genererer ikke apps.
+Daglig cloud-kørsel er aktiveret fra 26. oktober 2026 med første planlagte kørsel 27. oktober kl. 06.00 dansk tid. GitHub kan forsinke planlagte kørsler. Backlog.md rummer egne idéer og implementerede apps; de 36 oprindelige AI-forslag er fjernet efter brugerens ønske; kun entries markeret `klar` er i byggekøen. En daglig agentkørsel skal have adgang til repository og deployment og bør kun udgive efter sine kontroller. En tidsplan alene genererer ikke apps.
 
 Websitet bruger Google Fonts som valgfri typografiforbedring med lokale fallback-skrifter. Spillet har ingen netværksafhængigheder og gemmer kun rekord i localStorage.
 
@@ -77,21 +77,21 @@ Opdatering: Referencelinjer og beskæring er nu adskilt. Hele billedets transfor
 - `npm run daily:run -- <kommando> [argumenter]`: holder en lokal eksklusiv lås under hele kommandoen og sender valgt ID/action som `BACKLOG_ID`/`BACKLOG_ACTION`. Starter ingen kommando, hvis køen er tom. Kommandoen står selv for startmarkering, bygning og statusopdatering.
 - `npm run test:backlog`: afprøver køvalg, genoptagelse, ugyldige data, startmarkering og lås/fejl.
 
-De fire allerede byggede apps er markeret `Kø: historik`, da deres deployment ikke blev efterprøvet under importen. De skal ikke blokere den nye kø. Nye idéer starter som kladder, medmindre brugeren vælger dem til en byggekørsel. Cloud-workflowet nedenfor håndterer repository-dækkende concurrency, checkpoint og deploymentkontrol. Den lokale lås bruges til lokale kørsler. Der er endnu ingen daglig tidsplan.
+De fire allerede byggede apps er markeret `Kø: historik`, da deres deployment ikke blev efterprøvet under importen. De skal ikke blokere den nye kø. Nye idéer starter som kladder, medmindre brugeren vælger dem til en byggekørsel. Cloud-workflowet nedenfor håndterer repository-dækkende concurrency, checkpoint og deploymentkontrol. Den lokale lås bruges til lokale kørsler. Den daglige tidsplan er kl. 06.00 dansk tid.
 
 ## Cloud-runner (manuelt aktiveret)
 
-Workflow: `.github/workflows/daily-app.yml` — **Build one backlog app** under GitHub Actions. Det kan kun startes manuelt på `main`; en daglig tidsplan er bevidst ikke aktiveret før første fulde app-prøve.
+Workflow: `.github/workflows/daily-app.yml` — **Build one backlog app** under GitHub Actions. Det kører dagligt kl. 06.00 i Europe/Copenhagen på `main` og kan også startes manuelt. Den fulde app-prøve bestod 26. oktober 2026.
 
 ### Forløb
 
 1. Runneren henter `main`, installerer de låste Playwright-afhængigheder og Chromium og afprøver projektet.
 2. Et eventuelt checkpoint fra `codex/daily-app-work` flettes ind. Mergekonflikter stopper kørslen og kræver afklaring; intet overskrives.
 3. Køen vælger én klar/afbrudt opgave. Er køen tom, bliver der hverken kaldt på AI eller ændret kode.
-4. Den officielle Codex Action læser `.github/codex/daily-app.md` samt build.md/backlog.md. API-nøglen kommer fra repository-secretet `OPENAI_API_KEY`. En workspace-profil i `.github/codex/config.toml` tillader netværk til lokal browserafprøvning og kildeopslag, mens filskrivning er begrænset til arbejdsområdet. Repository-variables `CODEX_MODEL` og `CODEX_EFFORT` kan sættes; uden dem bruger actionen sine standarder. Der er ikke fastsat et dokumenteret forbrugsbudget endnu.
+4. Den officielle Codex Action læser `.github/codex/daily-app.md` samt build.md/backlog.md. API-nøglen kommer fra repository-secretet `OPENAI_API_KEY`. En workspace-profil i `.github/codex/config.toml` tillader netværk til lokal browserafprøvning og kildeopslag, mens filskrivning er begrænset til arbejdsområdet. Modelvalget er fastsat direkte i workflowet til `gpt-6.1-sol`, effort `none`, svarende til den vellykkede prøve. Repository-variables ændrer ikke modelvalget. Der er ikke fastsat et dokumenteret forbrugsbudget endnu.
 5. Ændringer pakkes som en Git-patch med en tilladt filliste. En separat runner uden API-nøgle eller skrivetoken kontrollerer appstatus, uændrede oprindelige idéer, reproducerbare HTML-downloads, beregninger og browsertests på desktop/mobil. Nye apps skal have en funktionel `tests/browser/<slug>.spec.mjs` ud over den generelle navigationstest.
 6. Et separat job med skriverettighed gemmer checkpoint på arbejdsbranchen, også når AI eller appkontroller fejler, hvis patchen kan indsamles og godkendes. Jobbet udfører ikke genereret appkode.
-7. Inputtet **publish** er som standard false. I den tilstand bliver arbejdet på checkpointbranchen. Hvis publish er true og alle kontroller består, pushes til main, forudsat at main ikke har flyttet sig under arbejdet. Ingen force-push.
+7. Planlagte kørsler publicerer automatisk efter beståede kontroller. Ved manuel start er inputtet **publish** som standard false. I den tilstand bliver arbejdet på checkpointbranchen. Hvis publish er true og alle kontroller består, pushes til main, forudsat at main ikke har flyttet sig under arbejdet. Ingen force-push.
 8. Vercel-status for præcis den publicerede commit og offentlig forside/app kontrolleres. Først derefter markeres entryen udgivet, og checkpointbranchen fjernes. Manglende Vercel-status giver fejl, og entryen forbliver implementeret til næste forsøg. Bot-udløst Vercel-udgivelse skal verificeres ved den første fulde prøve.
 
 ### Fejl og grænser
@@ -118,4 +118,4 @@ Beregningstesten `scripts/check-memento-mori.mjs` kontrollerer snapshot, betingn
 
 [Actions-kørsel 40300853240](https://github.com/pelsebars/365AIdeas/actions/runs/40300853240) byggede og udgav Memento mori (IDE-042) med publish=true. Alle fire jobs bestod: build, validate, save og verify. Hele forløbet tog cirka 7 minutter. API-nøglen virkede, checkpoint blev pushet fra runneren, Vercel reagerede på bottens push, og den offentlige app blev verificeret før status udgivet blev gemt. 7 runner-tests, kontrollen af 400 statistiktal og 14 browsertests bestod. API-prisen er ikke udledt af køretiden.
 
-Efterfølgende manuel kontrol bekræftede alle 400 snapshotværdier mod Danmarks Statistiks API samt fungerende input/resultatændring på den offentlige app uden observerede JavaScript-fejl. Desktopskærmbillede er gennemset. Den daglige tidsplan er fortsat slukket; næste trin er separat aktivering og valg af tidspunkt samt flere klare idéer.
+Efterfølgende manuel kontrol bekræftede alle 400 snapshotværdier mod Danmarks Statistiks API samt fungerende input/resultatændring på den offentlige app uden observerede JavaScript-fejl. Desktopskærmbillede er gennemset. Den daglige tidsplan blev efter prøven aktiveret til kl. 06.00 dansk tid. Tilføj og push flere entries med status klar for at fylde køen. Brugeren har aflæst dagens API-forbrug til $0,14; det er en måling, ikke en fast pris for fremtidige apps.

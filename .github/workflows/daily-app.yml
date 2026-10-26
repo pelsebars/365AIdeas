@@ -1,7 +1,10 @@
 name: Build one backlog app
 
-# No schedule until the first full app/deployment trial has passed.
+# Daily website publication; first complete cloud trial passed 2026-10-26.
 on:
+  schedule:
+    - cron: '0 6 * * *'
+      timezone: Europe/Copenhagen
   workflow_dispatch:
     inputs:
       publish:
@@ -79,8 +82,8 @@ jobs:
           openai-api-key: ${{ secrets.OPENAI_API_KEY }}
           prompt-file: ${{ runner.temp }}/trusted-runner/prompt.md
           output-file: .runner-artifacts/codex-report.md
-          model: ${{ vars.CODEX_MODEL }}
-          effort: ${{ vars.CODEX_EFFORT }}
+          model: gpt-6.1-sol
+          effort: none
           codex-home: ${{ runner.temp }}/codex-build-home
           permission-profile: app-build
           safety-strategy: drop-sudo
@@ -201,7 +204,7 @@ jobs:
         run: node scripts/cloud-runner.mjs checkpoint
       - name: Publish validated candidate to main
         id: publish
-        if: needs.validate.result == 'success' && inputs.publish
+        if: needs.validate.result == 'success' && (github.event_name == 'schedule' || inputs.publish)
         env:
           BASE_SHA: ${{ needs.build.outputs.base }}
           CANDIDATE_SHA: ${{ steps.checkpoint.outputs.commit }}
