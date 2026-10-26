@@ -211,13 +211,13 @@ Ophav: menneske
 Idé: Memento mori. Brugeren indtaster alder, køn og måske andre relevante faktorer for forventet levetid. Så renderer vi resten af de dage der er tilbage på en eller anden måde. Jeg forstiller mig måske rækker af 30 - 50 firkanter, og så ellers nedad indtil den forventede dødsdag som markeres med et krucifiks. Måske vi også farver firkanterne efter forventet død: Helt hvid = 0% død, helt sort = 100% død. Øverst en tekst som fejrer livet, noget i retning af "når vi husker døden, husker vi at leve livet".
 
 ### B · Status
-- Status: implementeret
+- Status: udgivet
 - Tilføjet: 2026-10-26
 - Startet: 2026-10-26
 - Implementeret: 2026-10-26
-- Udgivet: —
+- Udgivet: 2026-10-26
 - App: [Åbn app](apps/memento-mori/index.html)
-- Deployment: —
+- Deployment: https://365aideas.vercel.app/apps/memento-mori/
 - Noter: Bygget 2026-10-26 med lokal HISB8 2024:2025 (400 kildetal, metadata og CSV bevaret). A er bevaret ordret med menneskeligt ophav; C er præciseret og gemt før implementering. Integreret som eksperiment 005 med promptvisning, tællere og selvstændig HTML-download. npm run build, npm run check, npm run test:runner (7 tests samt ny beregningstest) og npm run test:browser (14 tests) bestået. Funktionstest dækker resultatændring, rækkevalg, tegnet kors, efterfølgende dage, tastatur, nulstilling, ugyldig alder, grænsealdre og offlinefil. Generelle browserkontroller er bevaret; navigation, konsol og overløb kontrolleret. Desktop- og mobilskærmbilleder gennemset. En fundet nulstillingsfejl er rettet før sidste fulde testkørsel. Begrænsninger: alder 0–90, lineær interpolation, kurve kun til alder 99, periodestatistik uden individuelle risikofaktorer eller fremtidig prognose. Mobil er Chromium-viewport, ikke fysisk telefon. Ingen commit, push, deployment eller social publicering udført.
 
 ### C · Fuld konceptprompt
