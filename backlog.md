@@ -235,3 +235,37 @@ Afprøv beregningerne mod kildedata: restlevetid ved flere aldre, betingning, en
 
 
 Implementeringspræcisering (AI, 2026-10-26): Brug HISB8, periode 2024:2025, TAVLE 1 (overlevende pr. 100.000) og 3 (restlevetid i år). Tillad startalder 0–90 år, så der er et meningsfuldt synligt interval frem til tabellens sidste alder, 99. Beting overlevelse med l(x+t)/l(x), interpolér l lineært mellem hele aldre, og vis aldrig sandsynligheder ud over alder 99. Omregn restlevetid med 365,2425 dage pr. år og afrund til hele dage fra lokal dagsdato. Tegn et scrollbart dagtæppe i Canvas, en kurve med navngivne akser, en tastaturbetjent dagvælger og et hop til korset. Nulstil til 40 år, mænd og 40 firkanter pr. række.
+
+## IDE-043 — Myresimulator: fra tilfældig søgen til fælles spor
+
+### A · Grundlæggende idé
+Ophav: menneske
+
+En myre simulator. Skærmen viser et sted i øvre venstre hjørne hvor myrene kommer ud af tuen. De bruger random work for at finde en kage i nederste højre hjørne. Når de har fundet kagen bringer de en kagebid tilbage til tuen, og sætter undervejs et feromon spor som andre myrer (og dem selv) kan følge til kagen. Feromon-sporet styrkes når flere myrer følger sporet med kage, og afkøles over tid hvis det ikke gen-forstærkes. Feromon styrken vises på baggrunden som farve intensitet.
+Når en kage er spist, dukker en ny kage op et andet sted på skærmen.
+Brugeren kan lave og fjerne  forhindringer med en mouse-pointer.
+
+### B · Status
+- Status: klar
+- Tilføjet: 2026-10-26
+- Startet: —
+- Implementeret: —
+- Udgivet: —
+- App: —
+- Deployment: —
+- Noter: Tilføjet til den daglige byggekø. “random work” fortolkes som random walk (tilfældig vandring). Bygges af cloud-runneren; ingen manuel byggestart eller social publicering ved denne tilføjelse.
+
+### C · Fuld konceptprompt
+Byg en interaktiv myresimulator, hvor en synlig myretue i øverste venstre hjørne og en kage i nederste højre hjørne bliver forbundet af myrernes selvorganiserede feromonspor. Bevar brugerens oprindelige idé under A ordret. Brug dansk og følg build.md for integration, HTML-download, tests og publicering.
+
+Simulér individuelle myrer med mindst to tydelige tilstande: søgende uden mad og hjemvendende med en synlig kagebid. Søgende myrer foretager random walk med en vis retningsvedholdenhed. De opdager kun mad inden for en lokal sanseradius; ingen skjult global kageposition må styre deres søgen. Tune antal myrer, bevægelse og fødestørrelse, så man normalt ser opdagelse og etablering af spor inden for en overskuelig tid i standardscenariet. Bevar et element af tilfældig udforskning, også når et spor findes.
+
+Ved kontakt med kagen reserverer myren én portion, som trækkes fra kagens beholdning, og bringer den fysisk tilbage til tuen. Hjemnavigation må bruge en forklarlig model, eksempelvis hukommelse om egen rute eller orientering mod tuen med forhindringshåndtering. Myren lægger og forstærker madferomon langs sin returrute, mens den bærer en kagebid. Søgende myrer kan derefter følge lokale spor mod maden. Vælg en model, der giver retning mod fødekilden i stedet for blot at fastholde myrer på den stærkeste plet ved tuen; fx lokale retningsspor kombineret med intensitet. Forklar forenklingen kort. Forstærkning skal komme fra hjemvendende myrer med mad, og alle myrer skal kollidere med forhindringer.
+
+Feromonet lagres i et separat felt og aftager over simulationstid uden genforstærkning. Vis det direkte på baggrunden som farveintensitet med en tydelig skala: lyst/svagt til intenst/stærkt. Flere hjemvendende myrer skal give et tydeligere spor. Sørg for begrænsede, stabile værdier og frame-rate-uafhængig fordampning. Når kagen er tømt, opstår en ny kage et tilfældigt, egnet sted; behold det gamle spor, så man kan se det aftage, og myrerne finde en ny rute. Fødeplacering skal være uden for tuen og forhindringer og tilgængelig fra tuen på placeringstidspunktet. Hvis brugeren senere afskærer ruten, må det gerne påvirke kolonien synligt. Vis separate tællere for portioner tilbage, mad leveret til tuen og eventuelt mad båret undervejs.
+
+Brugeren kan male forhindringer ved at trække med musemarkøren og fjerne dem med et tydeligt viskelæderværktøj. Understøt også touch via Pointer Events og tilbyder valg af penselstørrelse. Markér det aktive værktøj, og forklar betjeningen. Beskyt tuen og den aktuelle kage mod overmaling. Håndtér myrer, som bliver ramt af nye forhindringer, og gamle ruteminder, som bliver blokeret: ingen vægpassage, fastlåsning i en væg eller uendelig beregning. Brugeren skal kunne bryde et eksisterende spor og se lokal omvejssøgning. Tilføj pause/fortsæt, nulstilling og fjern alle forhindringer. Pause skal også sætte fordampning og fødehåndtering på pause; nye browserfaner må ikke give et voldsomt tidsryk ved genoptagelse.
+
+Lav en gennemarbejdet Canvas-oplevelse med let genkendelige myrer, tue, kage, forhindringer og farvede spor. Sørg for god kontrast mellem objekter og feromon. Giv korte pædagogiske forklaringer på tilfældig søgen, positiv feedback og fordampning. Vis at dette er en forenklet model, ikke en præcis biologisk simulering. Brug et fast logisk koordinatsystem og skalér billedet responsivt uden at nulstille verden ved resize. Hold mobiloplevelsen flydende med et fornuftigt antal myrer og et passende feltgitter; ingen backend, eksterne biblioteker eller netværkskrav. Tilføj en tilgængelig tekststatus samt tastaturbetjening til almindelige kontroller.
+
+Adskil simulationens regler fra rendering, så man kan afprøve en seedet tilfældighedsgenerator og kontrollerede scenarier. Tilføj meningsfulde beregningstests af lokal madopdagelse, optagelse/levering, ingen dobbeltoptælling, forstærkning fra madbærende myrer, aftagende spor uden genforstærkning, pause, vægkollisioner og ny gyldig kageplacering. Tilføj tests/browser/myresimulator.spec.mjs med funktionel afprøvning af pause/fortsæt, tegning/fjernelse af vægge, nulstilling og et reproducerbart forløb med opdagelse og levering. Brug fx en seedet simulation og en kontrolleret testopsætning til lange forløb; undgå flaky tests baseret på vilkårlig ventetid. Afprøv også selvstændig HTML-download, mobilkoordinater og resize. Gem slug som myresimulator, så test og appmappe passer sammen.
