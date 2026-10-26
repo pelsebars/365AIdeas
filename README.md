@@ -14,8 +14,6 @@ Kør `npm run dev` og åbn http://localhost:3000. Python 3 kræves til den lokal
 - `apps/gps-og-tiden/`: syv interaktive kapitler om GPS og relativitet med tre forklaringsniveauer og eget laboratorium.
 - `backlog.md`: autoritativ idébacklog med oprindelig idé, status/datoer og fuld konceptprompt. Kan redigeres manuelt eller via en chat.
 - `build.md`: fælles regler for valg af opgave, bygning, integration, kontrol og deployment.
-- `backlog.json`: historisk seed-arkiv med 36 AI-forslag, importeret i backlog.md. Brug det ikke som aktiv kø; kontrolscriptet validerer det stadig som arkiv.
-- `scripts/seed-backlog.py`: oprindelig seed. Kør den ikke igen efter manuelle ændringer i backloggen; den overskriver filen.
 
 ## Daglig arbejdsgang
 
@@ -29,7 +27,7 @@ Git-repository: https://github.com/pelsebars/365AIdeas. Vercel er tilkoblet Git-
 
 ## Udgivelsesplan
 
-Startdato, klokkeslæt og automatisk kørsel er ikke fastsat. Backlog.md rummer både egne idéer, implementerede apps og 36 importerede AI-forslag; kun entries markeret `klar` er i byggekøen. En daglig agentkørsel skal have adgang til repository og deployment og bør kun udgive efter sine kontroller. En tidsplan alene genererer ikke apps.
+Startdato, klokkeslæt og automatisk kørsel er ikke fastsat. Backlog.md rummer egne idéer og implementerede apps; de 36 oprindelige AI-forslag er fjernet efter brugerens ønske; kun entries markeret `klar` er i byggekøen. En daglig agentkørsel skal have adgang til repository og deployment og bør kun udgive efter sine kontroller. En tidsplan alene genererer ikke apps.
 
 Websitet bruger Google Fonts som valgfri typografiforbedring med lokale fallback-skrifter. Spillet har ingen netværksafhængigheder og gemmer kun rekord i localStorage.
 
@@ -79,7 +77,7 @@ Opdatering: Referencelinjer og beskæring er nu adskilt. Hele billedets transfor
 - `npm run daily:run -- <kommando> [argumenter]`: holder en lokal eksklusiv lås under hele kommandoen og sender valgt ID/action som `BACKLOG_ID`/`BACKLOG_ACTION`. Starter ingen kommando, hvis køen er tom. Kommandoen står selv for startmarkering, bygning og statusopdatering.
 - `npm run test:backlog`: afprøver køvalg, genoptagelse, ugyldige data, startmarkering og lås/fejl.
 
-De fire allerede byggede apps er markeret `Kø: historik`, da deres deployment ikke blev efterprøvet under importen. De skal ikke blokere den nye kø. Alle nye idéer står fortsat som kladder. Cloud-workflowet nedenfor håndterer repository-dækkende concurrency, checkpoint og deploymentkontrol. Den lokale lås bruges til lokale kørsler. Der er endnu ingen daglig tidsplan.
+De fire allerede byggede apps er markeret `Kø: historik`, da deres deployment ikke blev efterprøvet under importen. De skal ikke blokere den nye kø. Nye idéer starter som kladder, medmindre brugeren vælger dem til en byggekørsel. Cloud-workflowet nedenfor håndterer repository-dækkende concurrency, checkpoint og deploymentkontrol. Den lokale lås bruges til lokale kørsler. Der er endnu ingen daglig tidsplan.
 
 ## Cloud-runner (manuelt aktiveret)
 
@@ -105,3 +103,5 @@ Workflow: `.github/workflows/daily-app.yml` — **Build one backlog app** under 
 - Fejl fremgår som fejlede Actions-kørsler. Modtagerens GitHub-notifikationsindstillinger afgør mail/push; der er ikke tilføjet en særskilt beskedtjeneste.
 
 Lokalt: `npm ci`, `npx playwright install chromium`, `npm run test:runner`, `npm run check` og `npm run test:browser`. Ved ændringer i apps/CSS køres også `npm run build`, og genererede downloads medtages.
+
+Der postes ikke automatisk til LinkedIn eller andre sociale medier. Udgivelsesflowet gælder kun hjemmesiden.

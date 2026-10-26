@@ -56,3 +56,7 @@ Giv en kort rapport med entry-ID, hvad der blev bygget, udførte kontroller, eve
 ## Når GitHub Actions er runneren
 
 `.github/workflows/daily-app.yml` og `.github/codex/daily-app.md` fordeler ansvaret: AI-trinnet bygger og afprøver, mens separate jobs gemmer checkpoint, validerer og eventuelt publicerer. AI-trinnet skal ikke committe/pushe selv. `publish=false` gemmer alene checkpoint, og `publish=true` autoriserer publicering efter kontroller. Den daglige tidsplan aktiveres separat efter første fulde prøve. Se README for adgang, timeoutgrænser og genoptagelse.
+
+## Sociale medier
+
+Der må ikke automatisk postes til LinkedIn eller andre sociale medier. Udgivelsesflowet gælder kun projektets website. Eventuel deling foretages manuelt af brugeren.

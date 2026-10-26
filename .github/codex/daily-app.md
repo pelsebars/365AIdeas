@@ -7,3 +7,5 @@ Playwright er installeret med Chromium. Tilføj en meningsfuld funktionel test i
 Kør npm run build, npm run check, npm run test:runner og npm run test:browser. Hvis kontrollen kræver at importere en ny beregningstest, kan scripts/check-<slug>.mjs tilføjes; den bliver automatisk kørt af workflowet via npm run test:runner. Ændr ikke package.json, låsefiler, scripts/backlog.mjs, scripts/cloud-runner.mjs, scripts/check.mjs, playwright.config.mjs eller .github/.
 
 Når appen og kontrollerne er færdige: sæt kun den valgte entry til implementeret med dansk dato og App i formatet [Åbn app](apps/<slug>/index.html). Sæt ikke Kø: historik og markér ikke udgivet. Dokumentér kontroller og begrænsninger under Noter. Hvis du ikke bliver færdig, behold i gang eller blokeret med konkret forklaring. Slutrapporten skal være kort og ærlig. Workflowet verificerer resultatet selvstændigt.
+
+Der må ikke automatisk postes til LinkedIn eller andre sociale medier. Publicering gælder kun projektets website.
