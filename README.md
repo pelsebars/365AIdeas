@@ -105,3 +105,11 @@ Workflow: `.github/workflows/daily-app.yml` — **Build one backlog app** under 
 Lokalt: `npm ci`, `npx playwright install chromium`, `npm run test:runner`, `npm run check` og `npm run test:browser`. Ved ændringer i apps/CSS køres også `npm run build`, og genererede downloads medtages.
 
 Der postes ikke automatisk til LinkedIn eller andre sociale medier. Udgivelsesflowet gælder kun hjemmesiden.
+
+## Memento mori
+
+Åbn `/apps/memento-mori/`. Indtast 0–90 hele år og statistisk kønskategori. Dagtæppet viser én firkant pr. dag, med kors ved forventet restlevetid og valgfri fortsættelse til alder 99. Klik på en firkant eller brug dagvælgerens piletaster for dato og afrundet sandsynlighed. Rækkevalg 30/40/50 og “Find korset” hjælper med navigationen.
+
+Almindelig HTML/CSS/JavaScript med Canvas og SVG; ingen nye afhængigheder, lagring eller netværkskald. HISB8 fra Danmarks Statistik, 2024–2025, hentet 2026-10-26: `source.csv` bevarer originalsvaret, `source-metadata.json` variabelkoder og enheder, `data.js` det indlejrede snapshot. TAVLE 3 bruges direkte til betinget restlevetid; overlevelse er TAVLE 1 divideret med overlevende ved startalder. Lineær interpolation og 365,2425 dage/år er tilnærmelser. Periodestatistikken er ingen personlig prognose og modellerer ikke fremtidige ændringer i dødelighed. Kurven stopper ved 99 uden at antage 100% døde. Den selvstændige HTML indeholder data og virker offline; hjem- og kildelinks kræver netværk.
+
+Beregningstesten `scripts/check-memento-mori.mjs` kontrollerer snapshot, betingning, restlevetid, sandsynligheder, datoer og grænser. `tests/browser/memento-mori.spec.mjs` tester input, resultatændring, rækkevalg, markør, nulstilling og den selvstændige fil uden netværk i desktop- og mobilprojektet. Mobilkontrollen bruger Chromium-viewport, ikke fysisk telefon.

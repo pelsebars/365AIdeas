@@ -211,14 +211,14 @@ Ophav: menneske
 Idé: Memento mori. Brugeren indtaster alder, køn og måske andre relevante faktorer for forventet levetid. Så renderer vi resten af de dage der er tilbage på en eller anden måde. Jeg forstiller mig måske rækker af 30 - 50 firkanter, og så ellers nedad indtil den forventede dødsdag som markeres med et krucifiks. Måske vi også farver firkanterne efter forventet død: Helt hvid = 0% død, helt sort = 100% død. Øverst en tekst som fejrer livet, noget i retning af "når vi husker døden, husker vi at leve livet".
 
 ### B · Status
-- Status: klar
+- Status: implementeret
 - Tilføjet: 2026-10-26
-- Startet: —
-- Implementeret: —
+- Startet: 2026-10-26
+- Implementeret: 2026-10-26
 - Udgivet: —
-- App: —
+- App: [Åbn app](apps/memento-mori/index.html)
 - Deployment: —
-- Noter: Valgt som prøveapp i skridt 4 efter brugerens ønske om at gå videre. Ingen automatisk LinkedIn-postning eller anden social publicering.
+- Noter: Bygget 2026-10-26 med lokal HISB8 2024:2025 (400 kildetal, metadata og CSV bevaret). A er bevaret ordret med menneskeligt ophav; C er præciseret og gemt før implementering. Integreret som eksperiment 005 med promptvisning, tællere og selvstændig HTML-download. npm run build, npm run check, npm run test:runner (7 tests samt ny beregningstest) og npm run test:browser (14 tests) bestået. Funktionstest dækker resultatændring, rækkevalg, tegnet kors, efterfølgende dage, tastatur, nulstilling, ugyldig alder, grænsealdre og offlinefil. Generelle browserkontroller er bevaret; navigation, konsol og overløb kontrolleret. Desktop- og mobilskærmbilleder gennemset. En fundet nulstillingsfejl er rettet før sidste fulde testkørsel. Begrænsninger: alder 0–90, lineær interpolation, kurve kun til alder 99, periodestatistik uden individuelle risikofaktorer eller fremtidig prognose. Mobil er Chromium-viewport, ikke fysisk telefon. Ingen commit, push, deployment eller social publicering udført.
 
 ### C · Fuld konceptprompt
 Byg “Memento mori”: en smuk og livsbekræftende visualisering af de dage, man statistisk kan have tilbage. Øverst står “Når vi husker døden, husker vi at leve livet”. Bevar menneskets idé under A ordret og vis det tydelige ophav under opslaget på forsiden.
@@ -232,3 +232,6 @@ Lad farven repræsentere den kumulative sandsynlighed for at være død inden de
 Giv oplevelsen ro, varme og plads til eftertanke. Brug typografi, forklarende grafik og kontrast, der gør den behagelig at udforske. Alle brugeroplysninger behandles lokalt; ingen upload, konti eller tracking. Brug inputvalidering med et dokumenteret aldersinterval, nulstilling og tydelige fejlbeskeder. Fejr livet frem for at skabe en alarm eller nedtælling med sekunder.
 
 Afprøv beregningerne mod kildedata: restlevetid ved flere aldre, betingning, enheder, monotoni og sandsynligheder i [0,1]. Afprøv grænsealdre, ugyldigt input, farveskalaens betydning og datoer over årsskifte/skudår. Tilføj en funktionel Playwright-test i tests/browser/memento-mori.spec.mjs, som indtaster alder og kategori, genererer resultatet og kontrollerer ændringen ved et nyt input, rækkevalg, nulstilling og forventningsmarkør. Brug den eksisterende downloadproces og få standalone-udgaven til at virke med det indlejrede datasnapshot. Følg build.md for integration, tællere, promptvisning og kontroller. Ingen LinkedIn- eller anden automatisk social publicering.
+
+
+Implementeringspræcisering (AI, 2026-10-26): Brug HISB8, periode 2024:2025, TAVLE 1 (overlevende pr. 100.000) og 3 (restlevetid i år). Tillad startalder 0–90 år, så der er et meningsfuldt synligt interval frem til tabellens sidste alder, 99. Beting overlevelse med l(x+t)/l(x), interpolér l lineært mellem hele aldre, og vis aldrig sandsynligheder ud over alder 99. Omregn restlevetid med 365,2425 dage pr. år og afrund til hele dage fra lokal dagsdato. Tegn et scrollbart dagtæppe i Canvas, en kurve med navngivne akser, en tastaturbetjent dagvælger og et hop til korset. Nulstil til 40 år, mænd og 40 firkanter pr. række.
