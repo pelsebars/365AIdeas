@@ -246,9 +246,9 @@ Når en kage er spist, dukker en ny kage op et andet sted på skærmen.
 Brugeren kan lave og fjerne  forhindringer med en mouse-pointer.
 
 ### B · Status
-- Status: klar
+- Status: i gang
 - Tilføjet: 2026-10-26
-- Startet: —
+- Startet: 2026-10-27
 - Implementeret: —
 - Udgivet: —
 - App: —
