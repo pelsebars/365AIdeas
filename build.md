@@ -55,7 +55,7 @@ Giv en kort rapport med entry-ID, hvad der blev bygget, udførte kontroller, eve
 
 ## Når GitHub Actions er runneren
 
-`.github/workflows/daily-app.yml` og `.github/codex/daily-app.md` fordeler ansvaret: AI-trinnet bygger og afprøver, mens separate jobs gemmer checkpoint, validerer og eventuelt publicerer. AI-trinnet skal ikke committe/pushe selv. `publish=false` gemmer alene checkpoint, og `publish=true` autoriserer publicering efter kontroller. Den daglige tidsplan er aktiveret til kl. 06.07 i Europe/Copenhagen. Planlagte kørsler publicerer efter beståede kontroller; modellen er fastsat til gpt-6.1-sol med effort none. Se README for adgang, timeoutgrænser og genoptagelse.
+`.github/workflows/daily-app.yml` og `.github/codex/daily-app.md` fordeler ansvaret: AI-trinnet bygger og afprøver, mens separate jobs gemmer checkpoint, validerer og eventuelt publicerer. AI-trinnet skal ikke committe/pushe selv. `publish=false` gemmer alene checkpoint, og `publish=true` autoriserer publicering efter kontroller. Den daglige tidsplan er aktiveret til kl. 06.07 i Europe/Copenhagen. Planlagte kørsler publicerer efter beståede kontroller; modellen er fastsat til gpt-6.1-sol med effort low. Se README for adgang, timeoutgrænser og genoptagelse.
 
 ## Sociale medier
 

@@ -100,7 +100,7 @@ jobs:
           prompt-file: ${{ runner.temp }}/trusted-runner/prompt.md
           output-file: .runner-artifacts/codex-report.md
           model: gpt-6.1-sol
-          effort: none
+          effort: low
           codex-home: ${{ runner.temp }}/codex-build-home
           permission-profile: app-build
           safety-strategy: drop-sudo
