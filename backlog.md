@@ -367,3 +367,49 @@ Lad vejen og de små biler dominere, med synlige bremselys og diskret markering 
 
 Afprøvning:
 Test reaktionens tidsforsinkelse i et kontrolleret tobilsscenarie, afstands-/bremseformlernes enheder, sikkert og afvist vognbaneskift, samtidige skift, bilbevarelse (initiale + indslupne − udløb = aktive, bortset fra eksplicit registrerede hændelser), upstream-kø, nulstilling og beregning af throughput fra kendte passageantal. Test stabile lange forløb og ens simuleret udvikling ved forskellige renderframerates. Tilføj tests/browser/motorvejslaboratoriet.spec.mjs med funktionel afprøvning af trafiktilførsel, reaktions-/bremsevalg, opbremsningsforsøg, pause, nulstilling, grafens målte data samt offlineudgaven og mobilviewport. Brug kontrollerede seeds og målepunkter frem for vilkårlige sleeps. Beskriv begrænsninger ærligt.
+
+## IDE-047 — Hold banen eller skift? Et trafikeksperiment
+
+### A · Grundlæggende idé
+Ophav: menneske
+
+Måske samme grundmodel som motorvejslaboratoriet (IDE-046), men her vil vi gerne undersøge om en bil kommer hurtigst frem i tæt trafik ved at holde egen bane, eller foretage hyppige vognbaneskift hver gang det er muligt.
+I denne simulering skal vi måske enten have en længere strækning (måske zoomet længere ud, og have en bane på tværs af skærmen) eller følge bilen over tid ved at "scrolle" vejen
+
+### B · Status
+- Status: klar
+- Tilføjet: 2026-10-27
+- Startet: —
+- Implementeret: —
+- Udgivet: —
+- App: —
+- Deployment: —
+- Noter: Selvstændigt eksperiment, der følger efter og bygger videre på IDE-046. Brugerens idé bevaret ordret. Kørslen skal først undersøge den faktiske motorvejsmodel og undgå at kopiere eventuelle fejl eller påstå en generel vinder på forhånd. Ingen manuel byggestart ved tilføjelsen.
+
+### C · Fuld konceptprompt
+Byg “Hold banen eller skift?” med slug hold-banen-eller-skift som et interaktivt, pædagogisk eksperiment i tæt motorvejstrafik. Undersøg, om en bestemt bil vinder rejsetid ved at blive i sin bane eller ved hyppigt at benytte muligheder for at skifte. Der må ikke være en forudbestemt vinder. Følg build.md for integration, download, prompts og tests. Bevar A ordret.
+
+Tag udgangspunkt i den implementerede model fra IDE-046, hvis den findes. Læs dens koncept, kildehenvisninger og begrænsninger samt den faktiske kode, før noget genbruges. Genbrug en ren simuleringsmotor eller en dokumenteret, selvstændig kopi; medtag nødvendige filer, så appens HTML-download kan virke alene. Ændr ikke IDE-046’s eksisterende brugeroplevelse utilsigtet. Hvis grundmodellen endnu ikke er bygget eller er uegnet, dokumentér afhængigheden og hindringen i Noter frem for at foregive, at sammenligningen er valideret.
+
+Strategier og kontroller:
+- Sammenlign to alternative politikker for den samme forsøgsbil: “Hold banen” udfører ingen frivillige skift; “Hyppige skift” vurderer sikkert mulige og fordelagtige skift ofte, med lav skiftetærskel. Definér “muligt” og “fordelagtigt” tydeligt. Undgå meningsløs højre/venstre-zigzag, og giv brugeren eventuelt mulighed for at vælge mellem ethvert sikkert skift og kun sikkert skift med forventet fremdriftsfordel. Begge politikker skal have samme fartønske, acceleration, reaktionstid, bremseevne og biltype.
+- Bevar de samme sikkerheds- og fysiske regler for begge politikker. Et skift tager tid og kan få andre biler til at bremse. Tving ikke ekstra forsinkelser eller fartfordele ind alene for at styre resultatet. Første version behøver ingen lukket bane eller ramper, så et tvungent skift ikke gør “hold banen” tvetydigt.
+- Lad brugeren justere trafikbelastning, baggrundstrafikkens adfærd og forsøgsbilens skiftetærskel. Vis, hvilke parametre der holdes ens. Brug tydelig kontrol af start, pause, nulstilling og gentagelse med samme seed.
+
+Fair forsøgsdesign:
+Brug som primær måling parrede, separate simulationer med én forsøgsbil i hver: samme udgangstilstand og seed, samme starttidspunkt, position og vognbane, samme målstrækning og samme eksogent planlagte baggrundstrafik. Den eneste tilsigtede forskel er forsøgsbilens strategi. Hold baggrundens tilfældighed stabil med forudplanlagte ankomst-/førerdata eller separate RNG-strømme, så et ekstra vognbaneskift ikke ændrer alle efterfølgende tilfældige input. De øvrige bilers faktiske reaktioner må gerne divergere som konsekvens af forsøgsbilens adfærd; dét er en del af effekten.
+
+Vis gerne begge alternative verdener samtidigt med synkroniseret kamera/tid. En duel med to markerede biler i samme simulation kan tilbydes som illustration, men skal mærkes anderledes: bilerne påvirker hinanden og starter ikke nødvendigvis helt sammenligneligt. Brug den ikke som eneste evidens for, hvilken strategi der er bedst. Afprøv flere seeds og startbaner; vis, hvor mange gentagelser sammenligningen bygger på. En enkelt spektakulær overhaling er ikke et samlet resultat.
+
+Vej og kamera:
+Brug en længere, endelig strækning med en synlig start- og mållinje, eksempelvis nogle kilometer med et meningsfuldt standardvalg, så mange skift og køforløb kan nå at få effekt. Vis vejen vandret på tværs af skærmen med fire spor, og lad kameraet følge forsøgsbilen eller tilbyd et zoomet overblik. Vejmarkeringer, andre biler og mål skal bevæge sig konsistent med bilens faktiske position. Vis kørt distance, resterende distance og en minimap/progressionslinje. Kameraets bevægelse må ikke ændre fysik, vejlængde eller målinger; hverken forsøg eller trafik må nulstilles, når et objekt forlader skærmen. Undgå en kunstig rundbane, der i det skjulte giver gentagne møder med de samme biler. Håndtér udløb og tilførsel samt indkøring af tæt trafik, før forsøgsbilen starter.
+
+Resultater:
+Mål først og fremmest faktisk rejsetid fra samme start til samme mål og tidsforskel mellem strategierne. Vis også antal vognbaneskift, gennemsnitshastighed, eventuelle kraftige opbremsninger og sikkerhedsindgreb. Et tidsbegrænset forsøg uden ankomst skal markeres som ikke afsluttet; afstand efter fast tid er en særskilt måling og må ikke kaldes rejsetid. Vis en tidsserie for forsøgsbilernes reelle fremdrift/indbyrdes forskel samt en opsummering af parrede gentagelser: gennemsnit/median af tidsgevinsten, spredning og antal løb. Nulstil eller adskil resultater ved parameterændringer, og gør definitionen af positiv/negativ forskel tydelig.
+
+Forklar, at resultatet gælder den valgte model og trafik, ikke beviser en universel regel for virkelige motorveje. Henvis til grundmodellens primærkilder og forklar åbne grænser, førervariation og sikkerhedsregler. Oplevelsen skal gøre det muligt at opdage både små fordele, ulemper og tilfældig variation uden at have valgt en konklusion på forhånd. Dette er en modelundersøgelse, ikke en opfordring til risikabel kørsel.
+
+Teknik og afprøvning:
+Brug en ren, seedet og tidsstepbaseret motor adskilt fra Canvas-rendering og kamera. Arbejd i mindre portioner eller en worker ved serier af gentagelser, så kontrollerne forbliver responsive; nye indstillinger skal kunne afbryde et gammelt scan. Ingen eksterne runtime-afhængigheder eller backend. Giv dansk forklaring og tilgængelige kontroller på desktop og mobil, og en selvstændig offline-HTML.
+
+Test identiske strategier mod hinanden som nulreference, fælles begyndelsestilstand/ankomstplan, ingen frivillige skift i hold-banen-politikken, gyldige skift i skiftepolitikken, korrekt mållinjepassage og rejsetid, håndtering af ikke-afsluttede løb, samt at kamera, zoom og renderframerate ikke ændrer resultatet. Genbrug relevante fysik- og sikkerhedstests fra IDE-046. Tilføj tests/browser/hold-banen-eller-skift.spec.mjs, der starter et reproducerbart sammenligningsforløb, afprøver strategi-/trafikvalg, pause, nulstilling, kamerafølge/overblik, afsluttet måling og standalone-udgaven. Test ikke mod en bestemt strategis sejr; det er netop det åbne spørgsmål.
