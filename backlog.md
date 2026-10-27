@@ -246,14 +246,14 @@ Når en kage er spist, dukker en ny kage op et andet sted på skærmen.
 Brugeren kan lave og fjerne  forhindringer med en mouse-pointer.
 
 ### B · Status
-- Status: klar
+- Status: implementeret
 - Tilføjet: 2026-10-26
-- Startet: —
-- Implementeret: —
+- Startet: 2026-10-27
+- Implementeret: 2026-10-27
 - Udgivet: —
-- App: —
+- App: [Åbn app](apps/myresimulator/index.html)
 - Deployment: —
-- Noter: Tilføjet til den daglige byggekø. “random work” fortolkes som random walk (tilfældig vandring). Bygges af cloud-runneren; ingen manuel byggestart eller social publicering ved denne tilføjelse.
+- Noter: Tilføjet til den daglige byggekø. “random work” fortolkes som random walk (tilfældig vandring). Bygget 27. oktober 2026 ved genoptagelse; ingen eksisterende appfiler fandtes. C præciseret og gemt før implementering; A bevaret ordret med menneskeligt ophav. Implementeret med 220 myrer, lokale retningsspor, vægge, touch/tastatur, pause, tempo, nulstilling, madregnskab og offline-HTML. npm run build, npm run check, npm run test:runner (10 runner-tests og beregningskontroller) og npm run test:browser (20 tests) bestod. Efter tilføjet direkte mobil-touchkontrol bestod alle fire app-specifikke browsertests igen. Kontroller omfatter lokal madoptagelse, levering uden dobbeltoptælling, spor/fordampning, pause, vægge, gyldig ny kage, reproducerbart standardforløb, resize, navigation og selvstændig fil uden netværk. Ingen observerede JS-fejl eller vandret overløb i de generelle browserkontroller; desktopbillede gennemset. Begrænsninger: gittermodel med fælles afstandsbaseret hjemnavigation og flytning af overmalede myrer, ikke præcis biologi; mobil testet i Chromium-emulering, ikke på fysisk telefon. Space Invaders-download regenereret automatisk pga. fælles CSS. Ingen nye afhængigheder, infrastrukturændringer, commit, push, deployment eller social publicering.
 
 ### C · Fuld konceptprompt
 Byg en interaktiv myresimulator, hvor en synlig myretue i øverste venstre hjørne og en kage i nederste højre hjørne bliver forbundet af myrernes selvorganiserede feromonspor. Bevar brugerens oprindelige idé under A ordret. Brug dansk og følg build.md for integration, HTML-download, tests og publicering.
@@ -269,3 +269,6 @@ Brugeren kan male forhindringer ved at trække med musemarkøren og fjerne dem m
 Lav en gennemarbejdet Canvas-oplevelse med let genkendelige myrer, tue, kage, forhindringer og farvede spor. Sørg for god kontrast mellem objekter og feromon. Giv korte pædagogiske forklaringer på tilfældig søgen, positiv feedback og fordampning. Vis at dette er en forenklet model, ikke en præcis biologisk simulering. Brug et fast logisk koordinatsystem og skalér billedet responsivt uden at nulstille verden ved resize. Hold mobiloplevelsen flydende med et fornuftigt antal myrer og et passende feltgitter; ingen backend, eksterne biblioteker eller netværkskrav. Tilføj en tilgængelig tekststatus samt tastaturbetjening til almindelige kontroller.
 
 Adskil simulationens regler fra rendering, så man kan afprøve en seedet tilfældighedsgenerator og kontrollerede scenarier. Tilføj meningsfulde beregningstests af lokal madopdagelse, optagelse/levering, ingen dobbeltoptælling, forstærkning fra madbærende myrer, aftagende spor uden genforstærkning, pause, vægkollisioner og ny gyldig kageplacering. Tilføj tests/browser/myresimulator.spec.mjs med funktionel afprøvning af pause/fortsæt, tegning/fjernelse af vægge, nulstilling og et reproducerbart forløb med opdagelse og levering. Brug fx en seedet simulation og en kontrolleret testopsætning til lange forløb; undgå flaky tests baseret på vilkårlig ventetid. Afprøv også selvstændig HTML-download, mobilkoordinater og resize. Gem slug som myresimulator, så test og appmappe passer sammen.
+
+
+Implementeringspræcisering (AI, 2026-10-27): Brug et fast 64 × 40-gitter og 220 myrer. Søgende bruger vedholdende tilfældig vandring og lokale retningsspor; kun kontakt med kagens felt giver mad. Hjemvendende følger afstande til tuen i frie nabofelter (en forenklet fælles orienteringsevne, ikke biologisk rutelæring) og afsætter et udadrettet spor. Fire naboretninger forhindrer passage gennem væghjørner. Utilgængelige myrer udforsker lokalt, og overmalede myrer flyttes til nærmeste frie felt. Test seedede lange forløb samt små kontrollerede scenarier. Forklar modellen og dens grænser i appen.

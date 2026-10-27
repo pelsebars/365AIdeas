@@ -1,0 +1,3 @@
+En myre simulator. Skærmen viser et sted i øvre venstre hjørne hvor myrene kommer ud af tuen. De bruger random work for at finde en kage i nederste højre hjørne. Når de har fundet kagen bringer de en kagebid tilbage til tuen, og sætter undervejs et feromon spor som andre myrer (og dem selv) kan følge til kagen. Feromon-sporet styrkes når flere myrer følger sporet med kage, og afkøles over tid hvis det ikke gen-forstærkes. Feromon styrken vises på baggrunden som farve intensitet.
+Når en kage er spist, dukker en ny kage op et andet sted på skærmen.
+Brugeren kan lave og fjerne  forhindringer med en mouse-pointer.
