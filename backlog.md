@@ -316,3 +316,54 @@ Visualisering og oplevelse:
 
 Afprøvning:
 Adskil simuleringsmotoren fra rendering, og brug en seedet generator til tests. Test 3D-nabovalg mod kontrollerede punktopsætninger, begrænset hastighed/acceleration, bevægelse i alle tre akser, endelige koordinater over lange forløb, pause og projektionens grænsetilfælde. Undersøg i en kontrolleret nabokæde, at kun den valgte fugl/gruppe får en direkte drejeimpuls, og at fjernere fugle reagerer senere via lokal vekselvirkning; mål eller vis begrænsningerne uden at love en universel bølgehastighed. Tilføj tests/browser/staereflok.spec.mjs, der afprøver pause/fortsæt, retningsskift og lokal reaktion, nabovisning, kontroller, nulstilling, resize og standalone-udgaven. Gennemse animeret bevægelse ved desktop- og mobilviewport; et skærmbillede alene kan ikke godkende, om flokken flyver flydende.
+
+## IDE-046 — Motorvejslaboratoriet: fire spor, vognbaneskift og kø
+
+### A · Grundlæggende idé
+Ophav: menneske
+
+Lad os simulere hvad der sker på en 4 sporet motorvej: Der er flere parametre:
+A: Antallet af biler
+B: Tendens til vognbane skift
+C: Reaktions-tid og bremselængde (hvad sker der når en bil skifter vognbane)
+D: Tilføj gerne selv andre relevante parametre du kan idnetificere
+Jeg forestiller mig en top-down visualisering hvor man kan se måske 300 meter motorvej eller hvad der nu er passende. Bilerne kommer ind i billedet nedefra, og forsvinder ud i toppen.
+Man kan måske se en graf der viser sammenhængen af reelt throughput på motorvejen som funktion af antal biler, og måske også andre parametre som man selv kan justere.
+
+### B · Status
+- Status: klar
+- Tilføjet: 2026-10-27
+- Startet: —
+- Implementeret: —
+- Udgivet: —
+- App: —
+- Deployment: —
+- Noter: Brugerens idé er bevaret ordret; AI-udbygning og kilder står i C. Klar til den daglige kø efter stæreflokken. Fire baner fortolkes som fire baner i samme kørselsretning. Ingen manuel byggestart ved tilføjelsen.
+
+### C · Fuld konceptprompt
+Byg “Motorvejslaboratoriet” med slug motorvejslaboratoriet: en top-down, interaktiv mikrosimulation af fire vognbaner i samme kørselsretning. Biler kommer ind nedefra, bevæger sig opad og forlader strækningen øverst. Vis afstandsmarkeringer i meter og et vejstykke på cirka 300–600 meter; vælg en dokumenteret længde, som gør lokale opbremsninger og vognbaneskift lette at se. Brug faktisk positions-/hastighedsdynamik, ikke en forudbestemt køreanimation. Følg build.md for hovedside, prompts, HTML-download og tests. Bevar A ordret.
+
+Fagligt grundlag: Undersøg IDM som model for at følge bilen foran og MOBIL som inspiration til vognbaneskift. Brug modellernes egne kilder, eksempelvis https://mtreiber.de/MicroApplet/MOBIL.html og https://mtreiber.de/publications/MOBIL.pdf . Skeln eksplicit mellem reaktionsforsinkelse og ønsket tidsafstand til bilen foran: de er forskellige størrelser, som også fremhævet i https://sumo.dlr.de/docs/Simulation/Safety.html . Standard-IDM har ikke en separat menneskelig reaktionsforsinkelse; hvis den udvides med forsinkelse, beskriv metode, stabilitetsgrænser og konsekvenser i stedet for blot at omdøbe tidsafstanden. Treiber m.fl. behandler emnet i https://mtreiber.de/publications/StabilityIFAC06.pdf . Appen er et pædagogisk model-forsøg, ikke en kalibreret prognose for en bestemt motorvej. Giv kort forklaring og primærkildelinks i appen.
+
+Kontroller:
+- Antal biler: lad brugeren vælge et initialt antal/tæthed ved nulstilling og justere trafiktilførslen løbende i biler/time. Vis separat aktuelt antal biler på selve strækningen, faktisk indslupne biler og eventuelt ventende biler før indkørslen. Biler må ikke indsættes oven i hinanden for at nå et ønsket antal.
+- Tendens til vognbaneskift: styr incitament/tærskel og eventuelt hensyn til andre førere. Det er en adfærdsparameter, ikke en ordre om at skifte tilfældigt eller ignorere sikkerhedsafstanden. Vis faktisk antal vognbaneskift pr. minut.
+- Reaktionstid i sekunder: reelle forsinkede observationer/beslutninger med historik eller en tydeligt forklaret tilsvarende model. Skeln fra simulationens numeriske tidsstep og ønsket tidsafstand. Et vognbaneskift foran en bil skal påvirke dens reaktion på en dokumenteret måde; håndtér korrekt skift af forankørende i historikken.
+- Bremseevne i m/s², med skelnen mellem komfortbremsning og fysisk maksimal nedbremsning. Vis en beregnet reaktionsafstand v·t og en idealiseret bremselængde v²/(2b) ved en angivet hastighed, så “bremselængde” ikke bliver en konstant uafhængig af fart. Forklar modellens forenklinger.
+- Relevante ekstra parametre: ønsket hastighed, variation mellem føreres ønskede hastighed, ønsket tidsafstand og eventuelt lastbilandel. Hold hovedpanelet overskueligt; læg de ekstra valg i et avanceret afsnit. Forklar enheder og virkning.
+
+Bevægelse og sikkerhed:
+Beregn acceleration ud fra lokal trafik, afstand og relativ fart. Udfør vognbaneskift glidende over en kort varighed; tjek både for- og bagvedkørende i målbanen og reservér plads under skift, så samtidige skift ikke kolliderer. Brug en klart angivet model for vognbaneregler, gerne med hold-til-højre-præference uden at hævde fuldstændig gengivelse af færdselsregler. Tilføj knappen “Kort opbremsning”, som påvirker én bil, så brugeren kan undersøge en bagudgående købølge. Animationen skal vise den fremvoksende effekt; indbyg ikke en automatisk bølge uafhængig af bilernes dynamik.
+
+Brug et lille, fast tidsstep og dokumentér den valgte tidsintegration. Hvis store forsinkelser og utilstrækkelig afstand kan give sammenstød i modellen, skal de registreres/vises eller føre til en forståelig pause, ikke skjules ved teleportering eller uendelig bremseevne. Eventuelle sikkerhedsindgreb skal være synlige og tælles. Undgå fysisk overlap i normale standardscenarier, negative hastigheder og NaN-værdier. Håndtér åben indkørsel med sikker placering og en eventuel upstream-kø; udløbet skal være frit, medmindre en konkret flaskehals er valgt. Pause/fortsæt og nulstilling skal også styre målinger og køhistorik; baggrundsfaner indhenter ikke lange tidsspring.
+
+Målinger og graf:
+Vis målt gennemstrømning ud fra faktiske passagehændelser ved en tydeligt markeret tællelinje, normaliseret til biler/time. Vis målevinduets varighed og opvarmningsperioden; korte målinger skal ikke præsenteres som præcise kapacitetstal. Tilføj gennemsnitshastighed, tæthed i biler/km/bane og køindikator. Angiv om flow gælder alle fire baner eller én bane.
+
+Grafen skal bygge på simulationens målinger, ikke en flot forudtegnet kapacitetskurve. Tilbyd at gemme sammenlignelige forsøg eller et kontrolleret scan af trafikbelastning, mens øvrige parametre holdes faste. Vis throughput som funktion af målt tæthed/antal biler og eventuelt en særskilt kurve mod ønsket trafiktilførsel; bland ikke de to akser. Vis variation over et målevindue eller flere seeds, og nulstil/afgræns dataserier ved parameterændringer. En åben, homogen motorvej behøver ikke give en bestemt faldende gren på flowkurven; hvis mere tilførsel blot skaber kø før indkørslen og et plateau i flow, skal graf og forklaring vise det faktiske resultat. Tving ikke et ønsket svar om vognbaneskift eller bilantal frem.
+
+Design og teknik:
+Lad vejen og de små biler dominere, med synlige bremselys og diskret markering af vognbaneskift. Gør den trafikale mekanisme let at følge. Skaler responsivt på desktop og mobil, brug dansk og tastatur-/touchvenlige kontroller. Adskil model, rendering og målinger. Brug seedet tilfældighed, Canvas og almindelig JavaScript uden backend eller eksterne runtime-afhængigheder. Den selvstændige HTML skal indeholde hele modellen og virke offline. Prioritér en robust, sammenhængende første version frem for for mange trafiksituationer.
+
+Afprøvning:
+Test reaktionens tidsforsinkelse i et kontrolleret tobilsscenarie, afstands-/bremseformlernes enheder, sikkert og afvist vognbaneskift, samtidige skift, bilbevarelse (initiale + indslupne − udløb = aktive, bortset fra eksplicit registrerede hændelser), upstream-kø, nulstilling og beregning af throughput fra kendte passageantal. Test stabile lange forløb og ens simuleret udvikling ved forskellige renderframerates. Tilføj tests/browser/motorvejslaboratoriet.spec.mjs med funktionel afprøvning af trafiktilførsel, reaktions-/bremsevalg, opbremsningsforsøg, pause, nulstilling, grafens målte data samt offlineudgaven og mobilviewport. Brug kontrollerede seeds og målepunkter frem for vilkårlige sleeps. Beskriv begrænsninger ærligt.
