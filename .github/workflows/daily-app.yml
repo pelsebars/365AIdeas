@@ -3,8 +3,7 @@ name: Build one backlog app
 # Daily website publication; first complete cloud trial passed 2026-10-26.
 on:
   schedule:
-    - cron: '0 6 * * *'
-      timezone: Europe/Copenhagen
+    - cron: '7 4,5 * * *' # Explicit UTC slots; gate below selects 06:07 Copenhagen.
   workflow_dispatch:
     inputs:
       publish:
@@ -23,8 +22,26 @@ env:
   NODE_VERSION: '24'
 
 jobs:
+  time-slot:
+    runs-on: ubuntu-latest
+    timeout-minutes: 3
+    outputs:
+      run: ${{ steps.slot.outputs.run }}
+    steps:
+      - uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262 # v4
+        with:
+          persist-credentials: false
+      - name: Select the Copenhagen slot using the workflow event time
+        id: slot
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          export EVENT_CREATED_AT="$(gh api "repos/$GITHUB_REPOSITORY/actions/runs/$GITHUB_RUN_ID" --jq .created_at)"
+          node scripts/schedule.mjs
+
   build:
-    if: github.ref == 'refs/heads/main'
+    needs: time-slot
+    if: github.ref == 'refs/heads/main' && needs.time-slot.outputs.run == 'true'
     runs-on: ubuntu-latest
     timeout-minutes: 65
     outputs:
