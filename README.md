@@ -123,3 +123,7 @@ Efterfølgende manuel kontrol bekræftede alle 400 snapshotværdier mod Danmarks
 ### Tidsplansrettelse — 27. oktober 2026
 
 Der blev ikke registreret nogen schedule-kørsel ved den første planlagte start. GitHub-loggen giver ingen konkret årsag. Den native timezone-plan er erstattet af UTC-slots kl. 04.07 og 05.07, hvor et let startjob kun tillader den slot, som svarer til kl. 06.07 i Europe/Copenhagen. Dermed følger kørslen sommer-/vintertid uden timezone-feltet og undgår hel time. Porten bruger workflowets oprettelsestid, så senere køforsinkelse ikke giver et forkert tidsvalg. Dette er en forebyggende ændring, ikke dokumentation for årsagen til den manglende første start. GitHub kan fortsat forsinke eller udelade planlagte events; næste automatiske start skal efterprøves.
+
+### Runnerrettelse — Node-actions og Ubuntu, 27. oktober 2026
+
+Kørsel 40472277950 bestod time-slot, men stoppede i Codex-actionens sikkerhedsopsætning med `Could not restrict access to /run/dbus/system_bus_socket` på Ubuntu 26.04, før modellen blev startet. Validate/save markerede derefter kørslen som fejlet, og checkpoint med startstatus blev bevaret. Det svarer til den åbne upstream-fejl https://github.com/openai/codex-action/issues/188. Alle jobs bruger nu eksplicit Ubuntu 24.04, så ubuntu-latest ikke skifter OS under os. Checkout/setup-node/upload-artifact/download-artifact er opdateret til SHA-fastlåste versioner med native Node 24. Sikkerhedsstrategien er fortsat drop-sudo; den er ikke deaktiveret. Den tidligere Node 20-advarsel var ikke årsagen til byggefejlen.
