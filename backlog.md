@@ -246,13 +246,13 @@ Når en kage er spist, dukker en ny kage op et andet sted på skærmen.
 Brugeren kan lave og fjerne  forhindringer med en mouse-pointer.
 
 ### B · Status
-- Status: implementeret
+- Status: udgivet
 - Tilføjet: 2026-10-26
 - Startet: 2026-10-27
 - Implementeret: 2026-10-27
-- Udgivet: —
+- Udgivet: 2026-10-27
 - App: [Åbn app](apps/myresimulator/index.html)
-- Deployment: —
+- Deployment: https://365aideas.vercel.app/apps/myresimulator/
 - Noter: Tilføjet til den daglige byggekø. “random work” fortolkes som random walk (tilfældig vandring). Bygget 27. oktober 2026 ved genoptagelse; ingen eksisterende appfiler fandtes. C præciseret og gemt før implementering; A bevaret ordret med menneskeligt ophav. Implementeret med 220 myrer, lokale retningsspor, vægge, touch/tastatur, pause, tempo, nulstilling, madregnskab og offline-HTML. npm run build, npm run check, npm run test:runner (10 runner-tests og beregningskontroller) og npm run test:browser (20 tests) bestod. Efter tilføjet direkte mobil-touchkontrol bestod alle fire app-specifikke browsertests igen. Kontroller omfatter lokal madoptagelse, levering uden dobbeltoptælling, spor/fordampning, pause, vægge, gyldig ny kage, reproducerbart standardforløb, resize, navigation og selvstændig fil uden netværk. Ingen observerede JS-fejl eller vandret overløb i de generelle browserkontroller; desktopbillede gennemset. Begrænsninger: gittermodel med fælles afstandsbaseret hjemnavigation og flytning af overmalede myrer, ikke præcis biologi; mobil testet i Chromium-emulering, ikke på fysisk telefon. Space Invaders-download regenereret automatisk pga. fælles CSS. Ingen nye afhængigheder, infrastrukturændringer, commit, push, deployment eller social publicering.
 
 ### C · Fuld konceptprompt
