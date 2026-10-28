@@ -282,13 +282,13 @@ En stære-floks-simulator. Hver stær er en prik på skærmen der som følger de
 Den animerede bevægelse skal ligne en rigtig fugleflok og derfor bevæge sig "flydende" på skærmen, ikke bare lodret eller vandret. Derfor er en fugls bevægelse sikkert en vektor i rummet, og der projiceres ind på den 2-dimensionelle skærm
 
 ### B · Status
-- Status: implementeret
+- Status: udgivet
 - Tilføjet: 2026-10-27
 - Startet: 2026-10-28
 - Implementeret: 2026-10-28
-- Udgivet: —
+- Udgivet: 2026-10-28
 - App: [Åbn app](apps/staereflok/index.html)
-- Deployment: —
+- Deployment: https://365aideas.vercel.app/apps/staereflok/
 - Noter: Implementeret 28. oktober 2026. A bevaret ordret med menneskeligt ophav; C udbygget og gemt før implementering. Primærkilderne Ballerini (2008) og Attanasi (2014) gennemgået. 3D-model med syv lokale naboer, inerti, enkeltfugleimpuls, nabovisning, pause, kontroller og offline-HTML; integreret på forsiden som eksperiment 007. npm run build, npm run check, npm run test:runner (10 runner-tests samt beregningschecks) og npm run test:browser (26 bestået, desktop og mobil) er kørt efter sidste kodeændring. Beregningscheck dækker lokal kædereaktion, 60 sekunders stabilitet, fart/acceleration, 3D, seed, pause og projektion. Browsertest afprøver faktisk animationsfremdrift, drej, kontroller, resize, nulstilling og offline med blokeret netværk; generelle browserkontroller bevaret. Skærmbilleder gennemset ved flere simulationstidspunkter og mobilviewport; ingen observerede JS-fejl eller vandret overløb. Begrænsninger: headless Chromium og emuleret mobil, ingen fysisk telefon eller fuld visuel vurdering af en afspillet animation. Reaktionen kan være diffus; farven er retningsændring, ikke kausalitetsbevis eller præcis biologisk bølgefysik. Mobilprojektion giver ekstra plads til randdrej. Eksisterende Space Invaders-download er automatisk regenereret pga. fælles CSS. Ingen commit, push eller deployment udført.
 
 ### C · Fuld konceptprompt
