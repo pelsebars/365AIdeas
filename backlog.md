@@ -415,3 +415,59 @@ Teknik og afprøvning:
 Brug en ren, seedet og tidsstepbaseret motor adskilt fra Canvas-rendering og kamera. Arbejd i mindre portioner eller en worker ved serier af gentagelser, så kontrollerne forbliver responsive; nye indstillinger skal kunne afbryde et gammelt scan. Ingen eksterne runtime-afhængigheder eller backend. Giv dansk forklaring og tilgængelige kontroller på desktop og mobil, og en selvstændig offline-HTML.
 
 Test identiske strategier mod hinanden som nulreference, fælles begyndelsestilstand/ankomstplan, ingen frivillige skift i hold-banen-politikken, gyldige skift i skiftepolitikken, korrekt mållinjepassage og rejsetid, håndtering af ikke-afsluttede løb, samt at kamera, zoom og renderframerate ikke ændrer resultatet. Genbrug relevante fysik- og sikkerhedstests fra IDE-046. Tilføj tests/browser/hold-banen-eller-skift.spec.mjs, der starter et reproducerbart sammenligningsforløb, afprøver strategi-/trafikvalg, pause, nulstilling, kamerafølge/overblik, afsluttet måling og standalone-udgaven. Test ikke mod en bestemt strategis sejr; det er netop det åbne spørgsmål.
+
+## IDE-048 — Se et neuralt netværk genkende firkanter og trekanter
+
+### A · Grundlæggende idé
+Ophav: menneske
+
+En visualisering af et lille neuralt netværk der læser et meget simpelt billede, 10*10 pixels, sort-hvid, og afgør om billedet er en firkant eller en trekant. Brugeren kan tegne i billedet og det visualiseres hvilke neuroner der fyrer, og hvilke styrker der sendes videre til det næste lag. Grøn = positiv, Rød = negativ. Desto tykkere streg, desto større numerisk værdi. Byg selv et script til at træne netværket med, og gem alle værdier i simuleringen.
+Jeg tænker 100 input neuroner der repræsenterer selve billedet, et skjult lag med måske 8 (?) neuroner, og 3 output neuroner for firkant, trekant og "ved ikke".
+Forklar gerne oven over visualiseringen af netværket en tekst, med en illustration hvordan en simuleret neuron virker, og hvordan de, når de sættes sammen, kan bruges til mønster-genkendelse som f.eks. i LLM'er
+
+### B · Status
+- Status: klar
+- Tilføjet: 2026-10-28
+- Startet: —
+- Implementeret: —
+- Udgivet: —
+- App: —
+- Deployment: —
+- Noter: Brugerens idé er bevaret ordret. Klar til den daglige kø efter IDE-047. AI-præcisering: vis faktisk trænet inferens, ikke håndkodet formgenkendelse; skeln mellem vægte, aktiveringer og bidrag. Ingen manuel byggestart ved tilføjelsen.
+
+### C · Fuld konceptprompt
+Byg “Se netværket tænke” med slug se-netvaerket-taenke: en interaktiv, pædagogisk visualisering af et rigtigt, lille trænet neuralt netværk, som klassificerer brugerens sort-hvide tegning på 10 × 10 pixels som firkant, trekant eller “ved ikke”. Følg build.md for integration, promptvisning, selvstændig HTML og kontroller. Bevar A ordret og angiv det faktiske ophav.
+
+Tegning og netværk:
+- Giv brugeren en stor, tydelig 10 × 10-tegneflade med binære pixels. Mus og touch skal male sammenhængende streger ved træk. Tilføj viskelæder, ryd, nogle eksempelbilleder og mulighed for udfyldte figurer/konturer, hvis træningsgrundlaget dækker begge. Angiv tydeligt, hvilke variationer modellen er trænet på.
+- Brug som standard 100 inputneuroner, ét skjult lag med 8 neuroner og 3 outputneuroner. Input er et dokumenteret rækkefølge-fladet billede med værdier 0/1. Brug en egnet skjult aktiveringsfunktion (fx tanh) og softmax til de tre klasser. Hold modellen lille og gennemskuelig; ændr ikke stiltiende arkitektur for at få flotte resultater. Hvis 8 skjulte enheder giver klare begrænsninger, vis og dokumentér dem. Ingen backend og ingen API-kald til billedgenkendelse.
+- Implementér faktisk matrix-/vektorberegning med de gemte trænede parametre. Resultatet skal komme fra netværket, ikke en håndkodet geometrisk klassifikator med en dekorativ netværksanimation ovenpå. Opdatér ved hvert ændret pixel, og tilbyd eventuelt “Gå ét lag frem” til forklaring.
+
+Træning og reproducerbarhed:
+Byg et selvstændigt træningsscript i appens mappe, fx train.mjs eller train.py, uden nye tredjepartsafhængigheder. Scriptet skal generere mærkede syntetiske træningseksempler, udføre gradientbaseret træning og eksportere alle vægte, bias, arkitektur, klasse-/pixelrækkefølge og nødvendig normalisering til browserlæselige filer. Træn ved bygning, ikke hver gang en besøgende åbner siden. Gem seed, hyperparametre, træningskommando, datagenereringsregler og målte resultater i appens dokumentation eller metadata. Netværk og data skal kunne genskabes med den dokumenterede kommando.
+
+Træningsdata skal omfatte passende variation i placering, størrelse og orientering samt konturer/udfyldning, hvis begge understøttes. Afklar “firkant” som en geometrisk kvadratisk figur og forklar, at rotation kan få den til at ligne en rombe. Pixelgitteret giver uundgåeligt grove approximationer. Tilføj separate negative eksempler mærket “ved ikke”, fx tomme billeder, støj, linjer, cirkellignende former, delvise og tvetydige figurer. Fjern eller ommærk sammenfaldende rasterbilleder med modstridende labels. Lad ikke en enkelt pixel-count eller fast position blive en utilsigtet genvej for labels; afbalancér variationerne efter behov.
+
+Brug et separat holdout-sæt med anden seed/eksempler, som ikke bruges til træning eller valg af den endelige rapport. Kontrollér datalæk og dubletter, og rapportér samlet og pr. klasse-resultat på holdout-sættet. Lov ikke perfekt genkendelse af vilkårlige tegninger. “Ved ikke” er her en trænet restklasse med begrænset dækning; den gør ikke netværket til en sikker detektor af alt ukendt. Hvis der desuden bruges en tærskel for at afvise lav sikkerhed, så vis den som en separat regel, som kan forklare forskellen på vindende output og den endelige brugerbesked. Softmax-score er modelscore og ikke automatisk en kalibreret sandsynlighed.
+
+Visualisering af de faktiske tal:
+Vis alle 100 inputneuroner med entydig forbindelse til de 100 pixels, de 8 skjulte neuroner og de 3 navngivne outputneuroner. Inputneuronerne kan stå i en 10 × 10-matrix, så diagrammet ikke bliver flere tusinde pixels højt. De skjulte neuroners aktuelle aktiveringer og outputklassernes scores skal kunne aflæses, også som tekst. Fortæl at “fyrer” her betyder en numerisk aktivering, ikke en biologisk spike.
+
+Skeln tydeligt mellem:
+1. En indlært vægt w, som normalt er fast under brug.
+2. En neurons aktuelle aktivering a, som ændres med tegningen.
+3. Et aktuelt bidrag w·a, som sendes til næste neurons vægtede sum.
+
+Lad standardvisningen farve forbindelser efter bidragets fortegn: grøn for positivt, rød for negativt, neutral/usynlig for nul. Stregtykkelse angiver absolut størrelse, ikke en større negativ værdi som “mindre vigtig”. Brug en forklaret, stabil skala, så hele netværket ikke skifter visuel betydning efter hver tegning. Tilbyd eventuelt skift mellem “Indlærte vægte” og “Aktuelle bidrag”, med tydeligt forskellig signatur. Undgå at vise alle streger grønne blot fordi input/output er positive.
+
+Ved valg/hover/fokus på en neuron skal brugeren kunne se dens bias, vægtede sum før aktivering, aktiveringsfunktion og resultat. Fremhæv de vigtigste indgående bidrag med konkrete tal og vis, at bias lægges til; skjul ikke bias eller kald den en ekstra billedpixel. Ved valg af en forbindelse vises w, kildens a og w·a. Brug Canvas/SVG og filtrering/fremhævning til at gøre de 824 forbindelser forståelige uden at opfinde forbindelser eller skjule hele inputlaget. En valgfri signalanimation skal følge den aktuelle forward pass og må ikke ændre tallene. Respekter reduceret bevægelse og understøt tastaturvalg af neuroner/pixels samt touch uden hoverkrav.
+
+Forklaring oven over netværket:
+Skriv en kort, trinvis tekst med en illustration af én simuleret neuron: flere input → vægtning → sum plus bias → aktiveringsfunktion → output. Lad gerne brugeren justere et lille særskilt eksempel og se regnestykket. Forklar derefter, hvordan træning ændrer vægte og bias ud fra eksempler og fejl, mens tegning efter træningen normalt kun ændrer aktiveringer. Beskriv skjulte neuroner som indlærte numeriske mønstre; påstå ikke uden undersøgelse, at neuron 3 altid genkender en bestemt kant.
+
+Knyt idéen til LLM'er på et præcist begynderniveau: mange lærte vægte og sammenkoblede beregninger kan lære mønstre, men dette lille feedforward-billednetværk er ikke en miniature-LLM. LLM'er behandler tokens og bruger typisk transformerarkitektur med attention og mange lag; de klassificerer ikke blot 10 × 10-billeder i tre kategorier. Brug verificerede primærkilder/oprindelig dokumentation til forklaringerne og giv få diskrete kildelinks. Hold hovedteksten let at forstå, med tekniske detaljer i et fold-ud-afsnit.
+
+Design og afprøvning:
+Gør tegneflade, aktuelt resultat og netværk til en samlet oplevelse på desktop og mobil. Brug dansk, læselige tal og en signatur, der også forklarer positiv/negativ med tekst eller symboler, så farven ikke står alene. Brug egne almindelige HTML/CSS/JavaScript-filer uden eksterne runtime-afhængigheder. Alle parametre og metadata skal være gemt med appen og med i HTML-downloaden.
+
+Afprøv træningsscript, eksport/import og forward pass mod håndberegnede små eksempler; numerisk stabil softmax; netværkets præcise dimensioner; binær inputmapping; nulinput/bias; fortegn og størrelser for vægte og bidrag; sammenhæng mellem viste tal og klassifikationsresultat; samt holdout-resultater og håndtering af negative/tvetydige tegninger. Tilføj tests/browser/se-netvaerket-taenke.spec.mjs med funktionelle tests af tegning/viskning, eksempler, ryd, neuron-/forbindelsesvalg, modelresultat, mobil-touch og standalone-udgaven. Ingen tests må afhænge af en forventning om perfekt klassifikation af alle tænkelige håndtegninger. Rapportér konkrete præstationsgrænser ærligt.
