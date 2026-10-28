@@ -112,16 +112,18 @@ export async function main(command) {
     out('app', app);
     if (!existsSync(`tests/browser/${app.split('/')[1]}.spec.mjs`)) throw Error('Appens funktionelle browsertest mangler');
     const expected = process.env.BACKLOG_ID;
-    const baseEntries = parseBacklog(git('show', `${process.env.BASE_SHA}:backlog.md`));
-    const entries = parseBacklog(readFileSync('backlog.md', 'utf8'));
+    // Preserve file contents exactly; git() trims output intended for SHAs and paths.
+    const baseText = execFileSync('git', ['show', `${process.env.BASE_SHA}:backlog.md`], {encoding: 'utf8'});
+    const candidateText = readFileSync('backlog.md', 'utf8');
+    const baseEntries = parseBacklog(baseText);
+    const entries = parseBacklog(candidateText);
     if (baseEntries.length !== entries.length) throw Error('Kørslen må ikke tilføje eller fjerne idéer');
     for (const before of baseEntries) {
       const after = entries.find(e => e.id === before.id);
       if (!after) throw Error('Backlog-ID fjernet');
-      const baseText = git('show', `${process.env.BASE_SHA}:backlog.md`);
-      if (before.id !== expected && baseText.slice(before.start, before.end) !== readFileSync('backlog.md', 'utf8').slice(after.start, after.end)) throw Error('En anden backlogentry er ændret');
+      if (before.id !== expected && baseText.slice(before.start, before.end) !== candidateText.slice(after.start, after.end)) throw Error(`En anden backlogentry er ændret: ${before.id}`);
       const idea = block => block.slice(block.indexOf('### A ·'), block.indexOf('### B ·'));
-      if (idea(baseText.slice(before.start, before.end)) !== idea(readFileSync('backlog.md', 'utf8').slice(after.start, after.end))) throw Error('Oprindelig idé er ændret');
+      if (idea(baseText.slice(before.start, before.end)) !== idea(candidateText.slice(after.start, after.end))) throw Error(`Oprindelig idé er ændret: ${before.id}`);
     }
   } else if (command === 'checkpoint') checkpoint();
   else if (command === 'publish') {

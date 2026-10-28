@@ -6,6 +6,58 @@ import {tmpdir} from 'node:os';
 import {execFileSync, spawnSync} from 'node:child_process';
 import {validatePatchPaths} from '../cloud-runner.mjs';
 
+test('ready preserves exact backlog text and still rejects changes to other entries', () => {
+  const dir = mkdtempSync(join(tmpdir(), '365-ready-'));
+  const cli = resolve('scripts/cloud-runner.mjs');
+  const git = (...args) => execFileSync('git', args, {cwd: dir, encoding: 'utf8'}).trim();
+  const entry = id => `## ${id} — Test
+
+### A · Grundlæggende idé
+Original idea.
+
+### B · Status
+- Status: klar
+- Tilføjet: 2026-10-27
+- Startet: —
+- Implementeret: —
+- Udgivet: —
+- App: —
+- Deployment: —
+- Noter: Original notes.
+
+### C · Fuld konceptprompt
+Original concept.
+`;
+  try {
+    git('init', '-q'); git('config', 'user.name', 'Test'); git('config', 'user.email', 'test@example.org');
+    mkdirSync(join(dir, 'apps/test'), {recursive: true});
+    mkdirSync(join(dir, 'tests/browser'), {recursive: true});
+    writeFileSync(join(dir, 'apps/test/index.html'), 'app');
+    writeFileSync(join(dir, 'tests/browser/test.spec.mjs'), 'test');
+    for (const ending of ['\n', '']) {
+      const original = entry('IDE-001') + '\n' + entry('IDE-002').trimEnd() + ending;
+      writeFileSync(join(dir, 'backlog.md'), original);
+      git('add', '.'); git('commit', '-qm', 'base');
+      const base = git('rev-parse', 'HEAD');
+      const candidate = original.replace('- Status: klar', '- Status: implementeret')
+        .replace('- Implementeret: —', '- Implementeret: 2026-10-28')
+        .replace('- App: —', '- App: apps/test/index.html');
+      const run = text => {
+        writeFileSync(join(dir, 'backlog.md'), text);
+        return spawnSync(process.execPath, [cli, 'ready'], {cwd: dir, encoding: 'utf8', env: {...process.env, BASE_SHA: base, BACKLOG_ID: 'IDE-001'}});
+      };
+      const accepted = run(candidate);
+      assert.equal(accepted.status, 0, accepted.stderr);
+      const changedOther = run(candidate.replace('## IDE-002 — Test', '## IDE-002 — Changed'));
+      assert.equal(changedOther.status, 1);
+      assert.match(changedOther.stderr, /En anden backlogentry er ændret/);
+      const changedIdea = run(candidate.replace('Original idea.', 'Changed idea.'));
+      assert.equal(changedIdea.status, 1);
+      assert.match(changedIdea.stderr, /Oprindelig idé er ændret/);
+    }
+  } finally { rmSync(dir, {recursive: true, force: true}); }
+});
+
 test('app patches cannot modify workflow, dependencies or queue infrastructure', () => {
   validatePatchPaths(['backlog.md', 'apps/test/index.html', 'tests/browser/test.spec.mjs', 'scripts/check-test.mjs']);
   for (const path of ['.github/workflows/daily-app.yml', 'package.json', 'scripts/cloud-runner.mjs', 'scripts/backlog.mjs', 'apps/test/../../.git/config', 'apps/test/.env', 'node_modules/a']) assert.throws(() => validatePatchPaths([path]));
