@@ -3,7 +3,9 @@ name: Build one backlog app
 # Daily website publication; first complete cloud trial passed 2026-10-26.
 on:
   schedule:
-    - cron: '7 4,5 * * *' # Explicit UTC slots; gate below selects 06:07 Copenhagen.
+    # Explicit UTC slots; gate below selects 06:07 Copenhagen.
+    - cron: '7 4 * * *'
+    - cron: '7 5 * * *'
   workflow_dispatch:
     inputs:
       publish:
