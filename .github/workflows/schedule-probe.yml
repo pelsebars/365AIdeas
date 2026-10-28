@@ -1,0 +1,30 @@
+name: Schedule trigger probe
+
+# Temporary diagnostic: disable this workflow after collecting scheduled runs.
+on:
+  schedule:
+    - cron: '*/5 * * * *'
+  workflow_dispatch:
+
+permissions: {}
+
+jobs:
+  heartbeat:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 1
+    steps:
+      - name: Record trigger and time
+        env:
+          EVENT_NAME: ${{ github.event_name }}
+          CRON_EXPRESSION: ${{ github.event.schedule }}
+          RUN_ID: ${{ github.run_id }}
+          COMMIT_SHA: ${{ github.sha }}
+        run: |
+          {
+            printf 'Event: %s\n' "$EVENT_NAME"
+            printf 'Cron: %s\n' "$CRON_EXPRESSION"
+            printf 'Run: %s\n' "$RUN_ID"
+            printf 'Commit: %s\n' "$COMMIT_SHA"
+            printf 'Runner started (UTC): %s\n' "$(date -u --iso-8601=seconds)"
+            printf 'Runner started (Copenhagen): %s\n' "$(TZ=Europe/Copenhagen date --iso-8601=seconds)"
+          } | tee -a "$GITHUB_STEP_SUMMARY"
