@@ -1,20 +1,26 @@
 import {test} from 'node:test';
 import assert from 'node:assert/strict';
 import {shouldRun} from '../schedule.mjs';
-test('winter slot is 05:07 UTC; summer slot is 04:07 UTC', () => {
-  assert.equal(shouldRun('schedule', '2026-10-27T04:07:00Z'), false);
-  assert.equal(shouldRun('schedule', '2026-10-27T05:07:00Z'), true);
-  assert.equal(shouldRun('schedule', '2027-07-01T04:07:00Z'), true);
-  assert.equal(shouldRun('schedule', '2027-07-01T05:07:00Z'), false);
+
+const published = day => [{metadata: {Status: 'udgivet', Udgivet: day}}];
+test('duplicate dispatches stop after a publication on the same Copenhagen day', () => {
+  const entries = published('2026-10-28');
+  assert.equal(shouldRun('workflow_dispatch', '2026-10-28T05:07:00Z', entries), false);
+  assert.equal(shouldRun('workflow_dispatch', '2026-10-28T22:59:59Z', entries), false);
+  assert.equal(shouldRun('workflow_dispatch', '2026-10-28T23:00:00Z', entries), true);
 });
-test('DST transition days choose exactly one slot', () => {
-  for (const day of ['2027-03-28', '2027-10-31']) {
-    const slots = ['04', '05'].filter(hour => shouldRun('schedule', `${day}T${hour}:07:00Z`));
-    assert.equal(slots.length, 1);
-  }
+test('Copenhagen dates follow summer time and DST transition days', () => {
+  for (const [timestamp, day] of [
+    ['2027-06-30T22:07:00Z', '2027-07-01'],
+    ['2027-03-28T04:07:00Z', '2027-03-28'],
+    ['2027-10-31T05:07:00Z', '2027-10-31'],
+  ]) assert.equal(shouldRun('workflow_dispatch', timestamp, published(day)), false);
 });
-test('manual retries run regardless of hour; unrelated triggers do not', () => {
-  assert.equal(shouldRun('workflow_dispatch', '2026-10-27T12:00:00Z'), true);
-  assert.equal(shouldRun('push', '2026-10-27T05:07:00Z'), false);
-  assert.throws(() => shouldRun('schedule', 'bad-date'));
+test('first runs and incomplete checkpoints may proceed; obsolete schedule events cannot', () => {
+  assert.equal(shouldRun('workflow_dispatch', '2026-10-28T05:07:00Z', published('2026-10-27')), true);
+  assert.equal(shouldRun('workflow_dispatch', '2026-10-28T05:07:00Z', [{metadata: {Status: 'implementeret', Udgivet: '—'}}]), true);
+  assert.equal(shouldRun('workflow_dispatch', '2026-10-28T05:07:00Z', []), true);
+  assert.equal(shouldRun('schedule', '2026-10-28T05:07:00Z'), false);
+  assert.equal(shouldRun('push', '2026-10-28T05:07:00Z'), false);
+  assert.throws(() => shouldRun('workflow_dispatch', 'bad-date'));
 });

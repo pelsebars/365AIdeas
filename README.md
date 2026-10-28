@@ -17,7 +17,7 @@ Kør `npm run dev` og åbn http://localhost:3000. Python 3 kræves til den lokal
 
 ## Daglig arbejdsgang
 
-Følg [build.md](build.md), og vælg første `klar`-entry i [backlog.md](backlog.md). Nye idéer starter som `kladde`; skift til `klar`, når de må bygges automatisk. Kørslen gemmer den fulde konceptprompt før implementeringen og opdaterer status og datoer bagefter. Afsluttede entries bevares som historik. GitHub starter dagligt kl. 06.07 i Europe/Copenhagen; sommertid/vintertid følger tidszonen.
+Følg [build.md](build.md), og vælg første `klar`-entry i [backlog.md](backlog.md). Nye idéer starter som `kladde`; skift til `klar`, når de må bygges automatisk. Kørslen gemmer den fulde konceptprompt før implementeringen og opdaterer status og datoer bagefter. Afsluttede entries bevares som historik. cron-job.org starter GitHub-workflowet dagligt kl. 06.07 i Europe/Copenhagen via workflow_dispatch; sommertid/vintertid følger tidszonen.
 
 ## Vercel
 
@@ -27,7 +27,7 @@ Git-repository: https://github.com/pelsebars/365AIdeas. Vercel er tilkoblet Git-
 
 ## Udgivelsesplan
 
-Daglig cloud-kørsel er aktiveret fra 26. oktober 2026 med første planlagte kørsel 27. oktober kl. 06.07 dansk tid. GitHub kan forsinke planlagte kørsler. Backlog.md rummer egne idéer og implementerede apps; de 36 oprindelige AI-forslag er fjernet efter brugerens ønske; kun entries markeret `klar` er i byggekøen. En daglig agentkørsel skal have adgang til repository og deployment og bør kun udgive efter sine kontroller. En tidsplan alene genererer ikke apps.
+Fra 28. oktober 2026 styres den daglige cloud-kørsel af cron-job.org kl. 06.07 dansk tid. GitHubs native schedule-trigger er fjernet efter gentagne udeblevne kørsler. Backlog.md rummer egne idéer og implementerede apps; de 36 oprindelige AI-forslag er fjernet efter brugerens ønske; kun entries markeret `klar` er i byggekøen. En daglig agentkørsel skal have adgang til repository og deployment og bør kun udgive efter sine kontroller. En tidsplan alene genererer ikke apps.
 
 Websitet bruger Google Fonts som valgfri typografiforbedring med lokale fallback-skrifter. Spillet har ingen netværksafhængigheder og gemmer kun rekord i localStorage.
 
@@ -81,7 +81,7 @@ De fire allerede byggede apps er markeret `Kø: historik`, da deres deployment i
 
 ## Cloud-runner (manuelt aktiveret)
 
-Workflow: `.github/workflows/daily-app.yml` — **Build one backlog app** under GitHub Actions. Det kører dagligt kl. 06.07 i Europe/Copenhagen på `main` og kan også startes manuelt. Den fulde app-prøve bestod 26. oktober 2026.
+Workflow: `.github/workflows/daily-app.yml` — **Build one backlog app** under GitHub Actions. Det startes af cron-job.org dagligt kl. 06.07 i Europe/Copenhagen på `main` og kan også startes manuelt. Den fulde app-prøve bestod 26. oktober 2026.
 
 ### Forløb
 
@@ -147,3 +147,11 @@ Bekræftet genkørsel: https://github.com/pelsebars/365AIdeas/actions/runs/40473
 Ren JavaScript og Canvas 2D uden nye afhængigheder, lagring eller runtime-netværkskald. Fast 1/60-sekundsmodel med eksakte syv nærmeste 3D-naboer opdateret hver fjerde step. Kort afstand giver frastødning; vinkelhastighed har inerti og dæmpning. Blød randstyring er en visuel afgrænsning. Ballerini (2008) og Attanasi (2014) er gennemgået som primærkilder; appens drej er en pædagogisk forenkling med mulig diffus reaktion, ikke en rekonstruktion af målt bølgefysik. Farve måler retningsændring og beviser ikke årsag. Selvstændig HTML virker offline; kilde- og hjemlinks kræver netværk.
 
 `scripts/check-staereflok.mjs` tester 3D-nabovalg, lokal kædereaktion, fart/acceleration, 60 sekunders stabilitet, alle akser, seed, pause og projektion. `tests/browser/staereflok.spec.mjs` dækker interaktion, animation, resize, nulstilling og offline-download i Chromium på desktop og emuleret mobil. Ingen fysisk telefon er afprøvet. Menneskets A og anvendt AI-koncept C er gemt særskilt og vist med ophav på forsiden.
+
+### Ekstern timer — 28. oktober 2026
+
+cron-job.org-job 8744014 kalder `POST https://api.github.com/repos/pelsebars/365AIdeas/actions/workflows/daily-app.yml/dispatches` dagligt kl. 06.07 i Europe/Copenhagen med JSON `{"ref":"main","inputs":{"publish":true}}`. Den eksisterende repository-begrænsede GitHub-token opbevares kun hos cron-job.org. Tokenens udløb skal fornyes dér. HTTP 204 bekræfter modtagelse, ikke en vellykket bygning; resultatet findes i GitHub Actions.
+
+Begge workflows har nu kun workflow_dispatch; testworkflowets femminutters-cron er også fjernet. Det eksterne testjob er ændret til den daglige produktionstimer. Tidligere tidsplansafsnit ovenfor er historik.
+
+Workflowets concurrency serialiserer alle byggekørsler. Startjobbet henter aktuel main og springer hele bygningen over, hvis en backlogentry allerede har status udgivet med dagens dato i Europe/Copenhagen. Det gælder også manuelle starter. En uafsluttet/fejlet kørsel kan genoptages fra checkpoint; der bygges ikke en ekstra app efter en registreret udgivelse samme dag. Kontrollen bruger faktisk kørselsdato, så en ventende kørsel over midnat vurderes på den nye danske dato.

@@ -1,19 +1,21 @@
 import {resolve} from 'node:path';
 import {fileURLToPath} from 'node:url';
-import {appendFileSync} from 'node:fs';
+import {appendFileSync, readFileSync} from 'node:fs';
+import {parseBacklog} from './backlog.mjs';
 
-// GitHub cron is UTC; two UTC slots cover Copenhagen's standard and summer time.
-// Evaluate the event timestamp, not runner start time, so queue delay is harmless.
-export function shouldRun(event, timestamp = new Date()) {
-  if (event === 'workflow_dispatch') return true;
-  if (event !== 'schedule') return false;
+// Workflow concurrency serializes runs. Read current main after acquiring it,
+// so duplicate dispatches see the publication recorded by the previous run.
+export function shouldRun(event, timestamp = new Date(), entries = []) {
+  if (event !== 'workflow_dispatch') return false;
   const date = new Date(timestamp);
   if (!Number.isFinite(date.getTime())) throw Error('Ugyldigt eventtidspunkt');
-  const hour = new Intl.DateTimeFormat('en-GB', {timeZone: 'Europe/Copenhagen', hour: '2-digit', hourCycle: 'h23'}).format(date);
-  return hour === '06';
+  const today = new Intl.DateTimeFormat('sv-SE', {timeZone: 'Europe/Copenhagen'}).format(date);
+  return !entries.some(entry => entry.metadata.Status === 'udgivet' && entry.metadata.Udgivet === today);
 }
 if (process.argv[1] && resolve(process.argv[1]) === fileURLToPath(import.meta.url)) {
-  const run = shouldRun(process.env.GITHUB_EVENT_NAME, process.env.EVENT_CREATED_AT || new Date());
+  const run = shouldRun(process.env.GITHUB_EVENT_NAME, new Date(), parseBacklog(readFileSync('backlog.md', 'utf8')));
   if (process.env.GITHUB_OUTPUT) appendFileSync(process.env.GITHUB_OUTPUT, `run=${run}\n`);
-  console.log(run ? 'Kørsel tilladt for dette tidspunkt.' : 'Spring den alternative UTC-slot over.');
+  const message = run ? 'Kørsel tilladt: ingen app er registreret udgivet i dag i Europe/Copenhagen.' : 'Spring over: en app er allerede udgivet i dag, eller triggeren er ikke workflow_dispatch.';
+  console.log(message);
+  if (process.env.GITHUB_STEP_SUMMARY) appendFileSync(process.env.GITHUB_STEP_SUMMARY, `${message}\n`);
 }
