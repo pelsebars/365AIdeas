@@ -1,0 +1,41 @@
+import {test,expect} from '@playwright/test';
+import {resolve} from 'node:path';
+test('flokken bevæger sig, kan pauses, drejes lokalt og nulstilles',async({page})=>{
+ await page.route('https://**/*',r=>r.abort());
+ const errors=[];page.on('pageerror',e=>errors.push(e.message));
+ await page.goto('/apps/staereflok/');
+ await page.getByRole('button',{name:'Pause',exact:true}).click();
+ const frozen=await page.evaluate(()=>JSON.stringify(starlingLab.world.birds));
+ await page.evaluate(()=>starlingLab.advance(1));expect(await page.evaluate(()=>JSON.stringify(starlingLab.world.birds))).toBe(frozen);
+ await expect(page.getByRole('button',{name:'Start et retningsskift'})).toBeDisabled();
+ await page.getByLabel('Vis fugl 1 og dens syv naboer').check();await page.getByLabel('Vis hastighedsvektorer').check();
+ expect(await page.evaluate(()=>starlingLab.world.graph[0].length)).toBe(7);
+ await page.getByLabel('Antal fugle').selectOption('80');expect(await page.evaluate(()=>starlingLab.world.birds.length)).toBe(80);
+ await page.locator('#follow').fill('4');await page.locator('#inertia').fill('1.5');
+ expect(await page.evaluate(()=>[starlingLab.world.follow,starlingLab.world.inertia])).toEqual([4,1.5]);
+ await page.getByRole('button',{name:'Fortsæt',exact:true}).click();
+ await page.getByRole('button',{name:'Start et retningsskift'}).click();
+ expect(await page.evaluate(()=>starlingLab.world.event.direct)).toEqual([0]);
+ await page.evaluate(()=>starlingLab.advance(1));
+ expect(await page.evaluate(()=>starlingLab.world.reactions().filter(x=>x>.01).length)).toBeGreaterThan(1);
+ await expect(page.locator('#event')).toContainText('direkte påvirkning: 1 fugl');
+ // Observe actual animation frames, independently of deterministic stepping.
+ const before=await page.evaluate(()=>starlingLab.world.time);
+ await expect.poll(()=>page.evaluate(()=>starlingLab.world.time)).toBeGreaterThan(before+.15);
+ await page.getByRole('button',{name:'Pause',exact:true}).click();
+ const positions=await page.evaluate(()=>JSON.stringify(starlingLab.world.birds));
+ await page.setViewportSize({width:520,height:800});expect(await page.evaluate(()=>JSON.stringify(starlingLab.world.birds))).toBe(positions);
+ expect(await page.evaluate(()=>document.documentElement.scrollWidth<=innerWidth)).toBe(true);
+ await page.getByRole('button',{name:'Start forfra'}).click();
+ expect(await page.evaluate(()=>[starlingLab.world.time,starlingLab.world.birds.length,starlingLab.world.follow,starlingLab.world.inertia])).toEqual([0,240,3,1]);
+ expect(errors).toEqual([]);
+});
+test('download virker offline og reduced motion starter pauset',async({page})=>{
+ await page.emulateMedia({reducedMotion:'reduce'});
+ await page.route('**/*',r=>r.request().url().startsWith('file:')?r.continue():r.abort());
+ await page.goto('file://'+resolve('apps/staereflok/staereflok.html'));
+ await expect(page.getByRole('button',{name:'Fortsæt',exact:true})).toBeVisible();
+ await page.getByRole('button',{name:'Fortsæt',exact:true}).click();await page.getByRole('button',{name:'Start et retningsskift'}).click();
+ await page.evaluate(()=>starlingLab.advance(2));expect(await page.evaluate(()=>starlingLab.world.time)).toBeGreaterThan(1.9);
+ await expect(page.locator('#event')).toContainText('har ændret retning');
+});

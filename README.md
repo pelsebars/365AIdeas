@@ -139,3 +139,11 @@ Ren JavaScript-model på 64 × 40 felter og Canvas-rendering; ingen nye afhængi
 `scripts/check-myresimulator.mjs` afprøver regler, seedet levering, pause, fordampning, kageflytning og vægge. `tests/browser/myresimulator.spec.mjs` afprøver funktioner i desktop- og mobilprojekterne samt downloadfilen uden netværk. Mobil er Chromium-emulering, ikke en fysisk telefon. A er bevaret ordret med menneskeligt ophav; den anvendte AI-konceptprompt er gemt som C.
 
 Bekræftet genkørsel: https://github.com/pelsebars/365AIdeas/actions/runs/40473435157 bestod alle fem jobs med Ubuntu 24.04, native Node 24-actions og gpt-6.1-sol/low. Ingen Node 20-deprecations blev logget. Begge browserkørsler bestod 20 tests. Myresimulatoren blev publiceret i a5f37ce og verificeret i 518b1fb. Dette bekræfter den manuelle genkørsel; næste automatiske schedule-event skal stadig observeres.
+
+## Stæreflok (IDE-045)
+
+Åbn `/apps/staereflok/`. 240 fugle flyver i et tredimensionelt rum med fast kamera. Pause/fortsæt, lokalt retningsskift, 80–360 fugle, nabofølgning, drejeinerti, nabovisning og hastighedsvektorer styres med tastatur eller touch. Reduceret bevægelse starter pauset. Nulstilling genskaber den seedede start.
+
+Ren JavaScript og Canvas 2D uden nye afhængigheder, lagring eller runtime-netværkskald. Fast 1/60-sekundsmodel med eksakte syv nærmeste 3D-naboer opdateret hver fjerde step. Kort afstand giver frastødning; vinkelhastighed har inerti og dæmpning. Blød randstyring er en visuel afgrænsning. Ballerini (2008) og Attanasi (2014) er gennemgået som primærkilder; appens drej er en pædagogisk forenkling med mulig diffus reaktion, ikke en rekonstruktion af målt bølgefysik. Farve måler retningsændring og beviser ikke årsag. Selvstændig HTML virker offline; kilde- og hjemlinks kræver netværk.
+
+`scripts/check-staereflok.mjs` tester 3D-nabovalg, lokal kædereaktion, fart/acceleration, 60 sekunders stabilitet, alle akser, seed, pause og projektion. `tests/browser/staereflok.spec.mjs` dækker interaktion, animation, resize, nulstilling og offline-download i Chromium på desktop og emuleret mobil. Ingen fysisk telefon er afprøvet. Menneskets A og anvendt AI-koncept C er gemt særskilt og vist med ophav på forsiden.

@@ -282,14 +282,14 @@ En stære-floks-simulator. Hver stær er en prik på skærmen der som følger de
 Den animerede bevægelse skal ligne en rigtig fugleflok og derfor bevæge sig "flydende" på skærmen, ikke bare lodret eller vandret. Derfor er en fugls bevægelse sikkert en vektor i rummet, og der projiceres ind på den 2-dimensionelle skærm
 
 ### B · Status
-- Status: klar
+- Status: implementeret
 - Tilføjet: 2026-10-27
-- Startet: —
-- Implementeret: —
+- Startet: 2026-10-28
+- Implementeret: 2026-10-28
 - Udgivet: —
-- App: —
+- App: [Åbn app](apps/staereflok/index.html)
 - Deployment: —
-- Noter: Valgt til den næste daglige kørsel efter brugerens ønske om noget til i morgen. Kilder undersøgt 2026-10-27; forskningsbaseret pædagogisk forenkling, ikke en valideret biologisk rekonstruktion. Ingen manuel byggestart ved denne tilføjelse.
+- Noter: Implementeret 28. oktober 2026. A bevaret ordret med menneskeligt ophav; C udbygget og gemt før implementering. Primærkilderne Ballerini (2008) og Attanasi (2014) gennemgået. 3D-model med syv lokale naboer, inerti, enkeltfugleimpuls, nabovisning, pause, kontroller og offline-HTML; integreret på forsiden som eksperiment 007. npm run build, npm run check, npm run test:runner (10 runner-tests samt beregningschecks) og npm run test:browser (26 bestået, desktop og mobil) er kørt efter sidste kodeændring. Beregningscheck dækker lokal kædereaktion, 60 sekunders stabilitet, fart/acceleration, 3D, seed, pause og projektion. Browsertest afprøver faktisk animationsfremdrift, drej, kontroller, resize, nulstilling og offline med blokeret netværk; generelle browserkontroller bevaret. Skærmbilleder gennemset ved flere simulationstidspunkter og mobilviewport; ingen observerede JS-fejl eller vandret overløb. Begrænsninger: headless Chromium og emuleret mobil, ingen fysisk telefon eller fuld visuel vurdering af en afspillet animation. Reaktionen kan være diffus; farven er retningsændring, ikke kausalitetsbevis eller præcis biologisk bølgefysik. Mobilprojektion giver ekstra plads til randdrej. Eksisterende Space Invaders-download er automatisk regenereret pga. fælles CSS. Ingen commit, push eller deployment udført.
 
 ### C · Fuld konceptprompt
 Byg en stæreflok-simulator med slug staereflok. Hver fugl tegnes som en lille prik, men bevæger sig i et reelt tredimensionelt simulationsrum med position (x,y,z) og hastighedsvektor (vx,vy,vz), som projiceres til skærmen. Målet er en samlet, organisk flok med flydende bevægelse, formændringer og retningsskift, der forplanter sig lokalt. Følg build.md for integration og afprøvning. Bevar A ordret og adskil brugerens idé fra denne AI-udbyggede prompt.
@@ -316,6 +316,8 @@ Visualisering og oplevelse:
 
 Afprøvning:
 Adskil simuleringsmotoren fra rendering, og brug en seedet generator til tests. Test 3D-nabovalg mod kontrollerede punktopsætninger, begrænset hastighed/acceleration, bevægelse i alle tre akser, endelige koordinater over lange forløb, pause og projektionens grænsetilfælde. Undersøg i en kontrolleret nabokæde, at kun den valgte fugl/gruppe får en direkte drejeimpuls, og at fjernere fugle reagerer senere via lokal vekselvirkning; mål eller vis begrænsningerne uden at love en universel bølgehastighed. Tilføj tests/browser/staereflok.spec.mjs, der afprøver pause/fortsæt, retningsskift og lokal reaktion, nabovisning, kontroller, nulstilling, resize og standalone-udgaven. Gennemse animeret bevægelse ved desktop- og mobilviewport; et skærmbillede alene kan ikke godkende, om flokken flyver flydende.
+
+Implementeringspræcisering (AI, 28. oktober 2026): Brug 240 fugle som standard og 80–360 som valgmuligheder. Beregn de syv nærmeste med eksakt 3D-afstand; genbrug nabografen i fire faste tidsstep af 1/60 sekund for at begrænse mobilbelastning. Integrér begrænset vinkelhastighed med dæmpning, lokal retningsfølgning, kortdistancefrastødning og svag nabosamling. En enkelt fugl påvirkes i 0,7 sekund ved manuelt eller periodisk drej. Reaktionsfarve måles som faktisk ændring af hastighedsretningen siden forsøgets start; den er ikke et kausalitetsbevis. Vis antal reagerende fugle og forløbet simulationstid. Fast kamera er standard. Reduced motion starter pauset. Ingen lagring eller eksterne runtimekald. Accept: pause fryser modellen, direkte påvirkning rammer kun én fugl, en kontrolleret nabokæde reagerer i lokal rækkefølge, nulstilling genskaber seedet start, og standalone virker uden netværk.
 
 ## IDE-046 — Motorvejslaboratoriet: fire spor, vognbaneskift og kø
 
