@@ -1,0 +1,7 @@
+Lad os simulere hvad der sker på en 4 sporet motorvej: Der er flere parametre:
+A: Antallet af biler
+B: Tendens til vognbane skift
+C: Reaktions-tid og bremselængde (hvad sker der når en bil skifter vognbane)
+D: Tilføj gerne selv andre relevante parametre du kan idnetificere
+Jeg forestiller mig en top-down visualisering hvor man kan se måske 300 meter motorvej eller hvad der nu er passende. Bilerne kommer ind i billedet nedefra, og forsvinder ud i toppen.
+Man kan måske se en graf der viser sammenhængen af reelt throughput på motorvejen som funktion af antal biler, og måske også andre parametre som man selv kan justere.

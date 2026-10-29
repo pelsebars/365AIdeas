@@ -333,14 +333,14 @@ Jeg forestiller mig en top-down visualisering hvor man kan se måske 300 meter m
 Man kan måske se en graf der viser sammenhængen af reelt throughput på motorvejen som funktion af antal biler, og måske også andre parametre som man selv kan justere.
 
 ### B · Status
-- Status: klar
+- Status: implementeret
 - Tilføjet: 2026-10-27
-- Startet: —
-- Implementeret: —
+- Startet: 2026-10-29
+- Implementeret: 2026-10-29
 - Udgivet: —
-- App: —
+- App: [Åbn app](apps/motorvejslaboratoriet/index.html)
 - Deployment: —
-- Noter: Brugerens idé er bevaret ordret; AI-udbygning og kilder står i C. Klar til den daglige kø efter stæreflokken. Fire baner fortolkes som fire baner i samme kørselsretning. Ingen manuel byggestart ved tilføjelsen.
+- Noter: Implementeret 29. oktober 2026. A er bevaret ordret med menneskeligt ophav; C blev præciseret og gemt før implementering. Fire ensrettede baner over 500 m, forsinket IDM-inspireret model, sikre reserverede skift, indkørselskø, opbremsningsforsøg og faktisk målt flow med gemte graf-/tabelpunkter. Forside, tællere, README og selvstændig offline-HTML er integreret; build opdaterer også Space Invaders-downloadens indlejrede fælles CSS. Kontroller: npm run build og npm run check bestod; npm run test:runner bestod med alle 11 runner-tests og ekstra modelchecks, kørt som env -u GITHUB_OUTPUT npm run test:runner, fordi runnerens nedarvede GITHUB_OUTPUT peger på en skrivebeskyttet sti (første forsøg fejlede af den grund). Ingen infrastrukturændring. npm run test:browser bestod alle 32 tests i desktop- og mobilprojekterne; appens fire tests blev efter sidste visuelle justering genkørt og bestod. Modelcheck dækker reaktionsforsinket cut-in, bremseformler, sikkert/afvist/samtidigt skift, lokal opbremsning, 180 s stabilitet, bilbevarelse, upstream-kø, flow, kollisionsstop, seed/reset og framerate-uafhængighed. Desktop- og mobilgrafik gennemset; ingen observerede konsolfejl eller vandret overløb. Offlinefil beregner og gemmer resultater uden netværk. Begrænsninger: Chromium-emuleret mobil, ikke fysisk telefon; ét seed og korte målevinduer, ingen kalibreret kapacitetsprognose. Lange reaktionstider kan give synligt kollisionsstop. Ingen lastbiler, tilkørsler, vejr eller flaskehals; MOBIL-inspiration er ikke fuld MOBIL. Kilde- og hjemlinks kræver netværk. Ingen commit, push eller publicering udført.
 
 ### C · Fuld konceptprompt
 Byg “Motorvejslaboratoriet” med slug motorvejslaboratoriet: en top-down, interaktiv mikrosimulation af fire vognbaner i samme kørselsretning. Biler kommer ind nedefra, bevæger sig opad og forlader strækningen øverst. Vis afstandsmarkeringer i meter og et vejstykke på cirka 300–600 meter; vælg en dokumenteret længde, som gør lokale opbremsninger og vognbaneskift lette at se. Brug faktisk positions-/hastighedsdynamik, ikke en forudbestemt køreanimation. Følg build.md for hovedside, prompts, HTML-download og tests. Bevar A ordret.
@@ -369,6 +369,10 @@ Lad vejen og de små biler dominere, med synlige bremselys og diskret markering 
 
 Afprøvning:
 Test reaktionens tidsforsinkelse i et kontrolleret tobilsscenarie, afstands-/bremseformlernes enheder, sikkert og afvist vognbaneskift, samtidige skift, bilbevarelse (initiale + indslupne − udløb = aktive, bortset fra eksplicit registrerede hændelser), upstream-kø, nulstilling og beregning af throughput fra kendte passageantal. Test stabile lange forløb og ens simuleret udvikling ved forskellige renderframerates. Tilføj tests/browser/motorvejslaboratoriet.spec.mjs med funktionel afprøvning af trafiktilførsel, reaktions-/bremsevalg, opbremsningsforsøg, pause, nulstilling, grafens målte data samt offlineudgaven og mobilviewport. Brug kontrollerede seeds og målepunkter frem for vilkårlige sleeps. Beskriv begrænsninger ærligt.
+
+Implementeringspræcisering (AI, 29. oktober 2026): Første version bruger 500 meter, fire ensrettede baner, 0,05 s fast ballistisk integration og seed 46. IDM med acceleration 1,2 m/s², minimumsafstand 2 m og komfortbremsning 2 m/s²; brugeren vælger maksimal fysisk bremsning. Forsinkelse implementeres ved at gemme de øjeblikkelige observationer (egen fart, afstand og lederfart) og bruge observationen fra t−reaktionstid. Nye ledere ved indkørsel/skift kommer dermed først ind i den forsinkede observation efter reaktionstiden; historik må aldrig genfortolkes med en ny leder. Skift varer 2 s, optager begge baner og afgøres sekventielt med for-/bagafstand og accelerationstjek. Dette er MOBIL-inspireret egen implementering med gevinsttærskel og svag højrepræference, ikke fuld MOBIL. Overlap stopper forsøget med synlig kollisionsregistrering; ingen positionskorrektion. Høj forsinkelse kan være ustabil. Indkørselskø er ubegrænset som tæller, ikke som tegnede biler uden for vejen.
+
+Målinger: tællelinjen er udløbet ved 500 m. Første 30 s er opvarmning, derefter højst 60 s rullende passagevindue. Gem sammenligningspunkt efter mindst 90 s med målt middeltæthed, samlet flow og interval mellem seks 10-sekunders passagevinduer. Parameterændring nulstiller forsøget og dets målinger; gemte forsøg bevares med parameteretiket. Tilførsel kan ændres med det samme, men starter et nyt måleforsøg for sammenlignelighed. Knap til beregning af 90 s gør forsøg reproducerbare uden ventetid i realtid. Graf og tilgængelig tabel viser kun gemte faktiske resultater. Ingen forventet kapacitetskurve tegnes. Initiale biler 0–80, tilførsel 0–10.000 biler/time, reaktion 0–2 s, maksimal bremsning 3–9 m/s²; ønsket fart, variation og tidsafstand kan justeres. Ingen lastbiler eller flaskehals i første version. Reduceret bevægelse starter pauset. Afprøv centrale modelregler numerisk samt brugerflow og offlinefil i begge browserprojekter.
 
 ## IDE-047 — Hold banen eller skift? Et trafikeksperiment
 
