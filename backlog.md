@@ -333,13 +333,13 @@ Jeg forestiller mig en top-down visualisering hvor man kan se måske 300 meter m
 Man kan måske se en graf der viser sammenhængen af reelt throughput på motorvejen som funktion af antal biler, og måske også andre parametre som man selv kan justere.
 
 ### B · Status
-- Status: implementeret
+- Status: udgivet
 - Tilføjet: 2026-10-27
 - Startet: 2026-10-29
 - Implementeret: 2026-10-29
-- Udgivet: —
+- Udgivet: 2026-10-30
 - App: [Åbn app](apps/motorvejslaboratoriet/index.html)
-- Deployment: —
+- Deployment: https://365aideas.vercel.app/apps/motorvejslaboratoriet/
 - Noter: Implementeret 29. oktober 2026. A er bevaret ordret med menneskeligt ophav; C blev præciseret og gemt før implementering. Fire ensrettede baner over 500 m, forsinket IDM-inspireret model, sikre reserverede skift, indkørselskø, opbremsningsforsøg og faktisk målt flow med gemte graf-/tabelpunkter. Forside, tællere, README og selvstændig offline-HTML er integreret; build opdaterer også Space Invaders-downloadens indlejrede fælles CSS. Kontroller: npm run build og npm run check bestod; npm run test:runner bestod med alle 11 runner-tests og ekstra modelchecks, kørt som env -u GITHUB_OUTPUT npm run test:runner, fordi runnerens nedarvede GITHUB_OUTPUT peger på en skrivebeskyttet sti (første forsøg fejlede af den grund). Ingen infrastrukturændring. npm run test:browser bestod alle 32 tests i desktop- og mobilprojekterne; appens fire tests blev efter sidste visuelle justering genkørt og bestod. Modelcheck dækker reaktionsforsinket cut-in, bremseformler, sikkert/afvist/samtidigt skift, lokal opbremsning, 180 s stabilitet, bilbevarelse, upstream-kø, flow, kollisionsstop, seed/reset og framerate-uafhængighed. Desktop- og mobilgrafik gennemset; ingen observerede konsolfejl eller vandret overløb. Offlinefil beregner og gemmer resultater uden netværk. Begrænsninger: Chromium-emuleret mobil, ikke fysisk telefon; ét seed og korte målevinduer, ingen kalibreret kapacitetsprognose. Lange reaktionstider kan give synligt kollisionsstop. Ingen lastbiler, tilkørsler, vejr eller flaskehals; MOBIL-inspiration er ikke fuld MOBIL. Kilde- og hjemlinks kræver netværk. Ingen commit, push eller publicering udført.
 
 ### C · Fuld konceptprompt
