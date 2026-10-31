@@ -383,13 +383,13 @@ Måske samme grundmodel som motorvejslaboratoriet (IDE-046), men her vil vi gern
 I denne simulering skal vi måske enten have en længere strækning (måske zoomet længere ud, og have en bane på tværs af skærmen) eller følge bilen over tid ved at "scrolle" vejen
 
 ### B · Status
-- Status: implementeret
+- Status: udgivet
 - Tilføjet: 2026-10-27
 - Startet: 2026-10-31
 - Implementeret: 2026-10-31
-- Udgivet: —
+- Udgivet: 2026-10-31
 - App: [Åbn app](apps/hold-banen-eller-skift/index.html)
-- Deployment: —
+- Deployment: https://365aideas.vercel.app/apps/hold-banen-eller-skift/
 - Noter: Selvstændigt eksperiment, der følger efter og bygger videre på IDE-046. Brugerens idé bevaret ordret. Kørslen skal først undersøge den faktiske motorvejsmodel og undgå at kopiere eventuelle fejl eller påstå en generel vinder på forhånd. Ingen manuel byggestart ved tilføjelsen. Implementeret 31. oktober 2026: parrede 2 km forsøg, fælles seed/ankomstdata, kamerafølge/overblik, faktiske rejsetider, seks gentagelser og selvstændig offline-HTML. A bevaret ordret med menneskeligt ophav; C udbygget og gemt før kode. Kontroller: npm run build og npm run check bestået; npm run test:runner bestået med GITHUB_OUTPUT udeladt fra testprocessen (første forsøg ramte runnerens skrivebeskyttede outputfil; ingen infrastrukturændring). npm run test:browser: 38/38 bestået på desktop/mobil; efter udvidelse til fuld seksparsserie bestod appens fire tests igen, inklusive offline, reproducerbarhed og afbrydelse. Ingen konsolfejl eller vandret overløb i generelle kontroller. Primærkilder for IDM, MOBIL og forsinkelse tilgået; modellen er en egen udvidelse, ikke fuld MOBIL eller kalibreret trafikprognose. Mobil er Chromium-viewport, ikke fysisk telefon. Kollisioner og 300 s uden ankomst udelades fra rejsetidsstatistik. Ingen commit, push eller publicering udført.
 
 ### C · Fuld konceptprompt
