@@ -1,8 +1,10 @@
 const $=id=>document.getElementById(id),{Pair,summarize}=LaneExperiment;
 let pair,rows=[],running=false,busy=false,generation=0,last=0;
 const fmt=n=>n.toLocaleString('da-DK',{minimumFractionDigits:1,maximumFractionDigits:1});
-function params(){return Object.fromEntries(['load','share','threshold','seed','lane'].map(k=>[k,Number($(k).value)]));}
-function reset(){generation++;running=false;busy=false;rows=[];pair=new Pair(params());render();}
+function params(){return Object.fromEntries(['load','share','threshold','lane'].map(k=>[k,Number($(k).value)]));}
+const usedSeeds=new Set();
+function freshSeed(){let seed;do{seed=crypto.getRandomValues(new Uint32Array(1))[0];}while(!seed||usedSeeds.has(seed));usedSeeds.add(seed);return seed;}
+function reset(){generation++;running=false;busy=false;rows=[];pair=new Pair({...params(),seed:freshSeed()});render();}
 function save(){if(!pair.saved){rows.push(pair.result());pair.saved=true;}}
 function render(){
  $('shareValue').value=params().share+' %';
@@ -21,14 +23,14 @@ function render(){
  ctx.fillStyle='#d2e0e7';ctx.font='13px system-ui';ctx.fillText(`${Math.round(left)} m → ${Math.round(left+span)} m`,12,202);
  });
  const summary=summarize(rows);$('summary').textContent=summary.n?`${summary.n} gyldige af ${rows.length} par · Middel: ${fmt(summary.mean)} s · Median: ${fmt(summary.median)} s · Spænd: ${fmt(summary.min)} til ${fmt(summary.max)} s`:`${rows.length} registrerede par · Ingen gyldige, afsluttede par endnu.`;
- $('records').replaceChildren(...rows.map(r=>{const tr=document.createElement('tr');for(const text of [`${r.seed} / ${r.lane+1}`,`${r.share} %`,...r.times.map(t=>t===null?'Ingen gyldig ankomst':fmt(t)+' s'),r.valid?fmt(r.delta)+' s':'Ugyldigt / uafsluttet',r.trafficSpeed.map(v=>v===null?'–':fmt(v)).join(' / ')+' km/t']){const td=document.createElement('td');td.textContent=text;tr.append(td);}return tr;}));
+ $('records').replaceChildren(...rows.map(r=>{const tr=document.createElement('tr');for(const text of [`${r.seed} / ${r.lane+1}`,`${r.share} %`,...r.times.map(t=>t===null?'Ingen gyldig ankomst':fmt(t)+' s'),r.valid?fmt(r.delta)+' s':'Ugyldigt / uafsluttet',r.switches.join(' / ')+(r.valid&&r.switches.every(n=>n===0)?' · Ingen skift udført':''),r.trafficSpeed.map(v=>v===null?'–':fmt(v)).join(' / ')+' km/t']){const td=document.createElement('td');td.textContent=text;tr.append(td);}return tr;}));
  const ctx=$('chart').getContext('2d');ctx.clearRect(0,0,1000,260);ctx.strokeStyle='#536672';ctx.strokeRect(60,20,900,200);ctx.fillStyle='#d2e0e7';ctx.font='16px system-ui';ctx.fillText('2.000 m',0,20);ctx.fillText('0 m',15,220);ctx.fillText(`Tid: 0 → ${fmt(pair.time)} s`,360,250);
  for(let i=0;i<2;i++){ctx.strokeStyle=i?'#f6cc72':'#71d4ed';ctx.lineWidth=3;ctx.beginPath();pair.samples.forEach((s,n)=>{const x=60+s.t/Math.max(1,pair.time)*900,y=220-s.d[i]/2000*200;n?ctx.lineTo(x,y):ctx.moveTo(x,y);});ctx.stroke();}
  const lastSample=pair.samples.at(-1);$('chartText').textContent=`Seneste sample ${fmt(lastSample.t)} s: hold ${fmt(lastSample.d[0])} m, skift ${fmt(lastSample.d[1])} m. Blå = hold; gul = skift.`;
 }
 async function complete(token){while(!pair.done&&token===generation){pair.advance(2);if(Math.round(pair.time)%10===0)render();await new Promise(resolve=>setTimeout(resolve,0));}if(token!==generation)return false;save();render();return true;}
-$('finish').onclick=async()=>{if(busy)return;running=false;busy=true;const token=++generation;render();await complete(token);if(token===generation){busy=false;render();}};
-$('series').onclick=async()=>{if(busy)return;running=false;busy=true;rows=[];const token=++generation,p=params();for(let i=0;i<6;i++){if(token!==generation)return;pair=new Pair({...p,seed:p.seed+i,lane:(p.lane+i)%4});render();if(!await complete(token))return;}busy=false;render();};
-$('play').onclick=()=>{generation++;busy=false;if(pair.done)return;running=!running;last=0;render();};$('reset').onclick=reset;
-for(const id of ['load','share','threshold','seed','lane'])$(id).onchange=()=>{if(id==='seed')$('seed').value=Math.max(1,Math.min(999999,Math.trunc(Number($('seed').value)||47)));reset();};$('camera').onchange=render;$('share').oninput=()=>$('shareValue').value=$('share').value+' %';
+$('finish').onclick=async()=>{if(busy)return;if(pair.done)reset();running=false;busy=true;const token=++generation;render();await complete(token);if(token===generation){busy=false;render();}};
+$('series').onclick=async()=>{if(busy)return;running=false;busy=true;rows=[];const token=++generation,p=params();for(let i=0;i<6;i++){if(token!==generation)return;pair=new Pair({...p,seed:freshSeed(),lane:(p.lane+i)%4});render();if(!await complete(token))return;}busy=false;render();};
+$('play').onclick=()=>{if(pair.done)reset();generation++;busy=false;running=!running;last=0;render();};$('reset').onclick=reset;
+for(const id of ['load','share','threshold','lane'])$(id).onchange=reset;$('camera').onchange=render;$('share').oninput=()=>$('shareValue').value=$('share').value+' %';
 function frame(now){if(running){pair.advance(last?Math.min(.1,(now-last)/1000)*8:0);if(pair.done){running=false;save();}render();}last=now;requestAnimationFrame(frame);}reset();requestAnimationFrame(frame);

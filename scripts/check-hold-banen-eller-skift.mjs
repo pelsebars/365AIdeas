@@ -40,3 +40,16 @@ for(const share of [0,50,100]){
  for(const w of pair.worlds)assert.ok(w.sim.cars.filter(c=>c!==w.car).every(c=>c.policy===(w.sim.driverRandom(c.id,0x51ed270b)<share/100?'switch':'hold')));
 }
 console.log('OK: 0/50/100 %, stabile førerdata, nye ankomster, parret adfærd og trafikmålinger.');
+
+// Running the series in reverse must not change any result: no shared state.
+const independentRows=new Map();
+for(const i of [0,1,2,3,4,5,5,4,3,2,1,0]){
+ const pair=new Pair({seed:47+i,lane:(1+i)%4});
+ assert.equal(pair.time,0);assert.equal(pair.samples.length,1);
+ assert.ok(pair.worlds.every(w=>w.arrival===null&&w.car.switches===0&&w.trafficSeconds===0));
+ pair.advance(300);const row=pair.result();
+ if(independentRows.has(i))assert.deepEqual(row,independentRows.get(i));
+ else independentRows.set(i,row);
+ if(row.valid&&row.switches.every(n=>n===0))assert.equal(row.delta,0);
+}
+console.log('OK: seks selvstændige forsøg giver identiske resultater i omvendt rækkefølge.');

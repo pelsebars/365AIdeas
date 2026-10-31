@@ -2,7 +2,7 @@
 
 Selvstændig kopi af IDE-046’s model, ikke en import af dens brugerflade. base.js bevarer forsinkede observationer, ballistisk integration, skiftesikkerhed og kollisionsstop. Kopien ændrer vejlængde til 3 km, seed/ID-baserede førerdata, FIFO-ankomstplan og særskilt forsøgspolitik. model.js udpeger bilen efter 30 s og måler 2 km med interpoleret passage. app.js styrer kun portioner, rendering og rapportering.
 
-Ankomster planlægges efter simulationstiden, uafhængigt af skiftebeslutninger. Hver ankomst får fast ID, bane og fartønske før eventuel ventetid. De to verdener kan have forskellig ventekø og forskellige reaktioner, men samme eksogene input. Serieknappen forskyder seed med 0–5 og startbane cyklisk. Ingen automatisk konklusion om en bestemt strategi.
+Ankomster planlægges efter simulationstiden, uafhængigt af skiftebeslutninger. Hver ankomst får fast ID, bane og fartønske før eventuel ventetid. De to verdener kan have forskellig ventekø og forskellige reaktioner, men samme eksogene input. Brugerfladen trækker automatisk et nyt tilfældigt seed ved nye forsøg og for hvert par i serien; startbanen varieres cyklisk. Pause og genoptagelse bevarer forsøget. Seed vises i resultattabellen, og selve modellen er fortsat deterministisk ved samme seed. Ingen automatisk konklusion om en bestemt strategi.
 
 Grænser: 300 s pr. par, fire ensrettede spor uden ramper, én biltype, ingen kalibrering mod observationsdata. Sikkerhedsreglen er inspireret af MOBIL, ikke fuld MOBIL. Der er ingen skjulte kollisionskorrektioner. Graf og statistik inkluderer kun faktiske data; ugyldige par vises særskilt. Starttætheden er en valgt begyndelsestilstand; 30 s er indkøring, ikke garanti for stationær trafik. Tegnede biler er forstørrede. Ingen permanent lagring.
 

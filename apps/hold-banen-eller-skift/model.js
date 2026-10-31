@@ -20,7 +20,7 @@ class Pair{
  if(w.car.x>=w.goal)w.arrival=this.time+DT*(w.goal-before)/(w.car.x-before);
  }this.time=+(this.time+DT).toFixed(8);if(Math.round(this.time/DT)%20===0)this.sample();this.done=this.time>=300||this.worlds.every(w=>w.arrival!==null||w.invalid);if(this.done)this.sample();}
  advance(seconds){for(let n=0;n<Math.round(seconds/DT)&&!this.done;n++)this.tick();}
- result(){const valid=this.done&&this.worlds.every(w=>w.arrival!==null&&!w.invalid);return {share:this.p.share,trafficSpeed:this.worlds.map(w=>w.trafficSeconds?w.trafficDistance/w.trafficSeconds*3.6:null),seed:this.p.seed,lane:this.p.lane,valid,delta:valid?this.worlds[0].arrival-this.worlds[1].arrival:null,times:this.worlds.map(w=>w.arrival)};}
+ result(){const valid=this.done&&this.worlds.every(w=>w.arrival!==null&&!w.invalid);return {switches:this.worlds.map(w=>w.car.switches),share:this.p.share,trafficSpeed:this.worlds.map(w=>w.trafficSeconds?w.trafficDistance/w.trafficSeconds*3.6:null),seed:this.p.seed,lane:this.p.lane,valid,delta:valid?this.worlds[0].arrival-this.worlds[1].arrival:null,times:this.worlds.map(w=>w.arrival)};}
 }
 function summarize(rows){const values=rows.filter(r=>r.valid).map(r=>r.delta).sort((a,b)=>a-b),n=values.length;return n?{n,mean:values.reduce((a,b)=>a+b,0)/n,median:(values[Math.floor((n-1)/2)]+values[Math.floor(n/2)])/2,min:values[0],max:values[n-1]}:{n:0};}
 root.LaneExperiment={Pair,defaults,summarize};

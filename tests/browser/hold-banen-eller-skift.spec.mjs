@@ -1,5 +1,6 @@
 import {test,expect} from '@playwright/test';
 for(const standalone of [false,true])test(`parret trafikforsøg${standalone?' offline':''}`,async({page})=>{
+ await page.addInitScript(()=>{let seed=46;crypto.getRandomValues=array=>{array[0]=++seed;return array;};});
  await page.route('https://**/*',route=>route.abort());
  await page.goto(`/apps/hold-banen-eller-skift/${standalone?'hold-banen-eller-skift.html':''}`);
  if(standalone)await page.context().setOffline(true);
@@ -11,18 +12,22 @@ for(const standalone of [false,true])test(`parret trafikforsøg${standalone?' of
  await expect(page.locator('#status')).toContainText('Kører');
  await page.getByRole('button',{name:'Pause',exact:true}).click();
  const paused=await page.evaluate(()=>pair.time);await page.waitForTimeout(150);expect(await page.evaluate(()=>pair.time)).toBe(paused);
- await page.getByRole('button',{name:'Nulstil'}).click();
+ await page.getByRole('button',{name:'Nyt forsøg'}).click();
  await page.getByRole('button',{name:'Beregn færdig'}).click();
  await expect(page.locator('#records tr')).toHaveCount(1,{timeout:25000});
  await expect(page.locator('#summary')).toContainText('1 gyldige');
  await expect(page.locator('#metric0')).toContainText('0 skift');
  const result=await page.evaluate(()=>pair.result());expect(result.valid).toBe(true);expect(result.times.every(t=>t>0)).toBe(true);
  await page.getByLabel('Kamera').selectOption('follow');expect(await page.evaluate(()=>pair.result())).toEqual(result);
- await page.getByRole('button',{name:'Nulstil'}).click();await expect(page.locator('#records tr')).toHaveCount(0);
- await page.getByRole('button',{name:'Beregn færdig'}).click();await expect(page.locator('#records tr')).toHaveCount(1,{timeout:25000});expect(await page.evaluate(()=>pair.result())).toEqual(result);
+ await page.getByRole('button',{name:'Nyt forsøg'}).click();await expect(page.locator('#records tr')).toHaveCount(0);
+ await page.getByRole('button',{name:'Beregn færdig'}).click();await expect(page.locator('#records tr')).toHaveCount(1,{timeout:25000});expect((await page.evaluate(()=>pair.result())).seed).not.toBe(result.seed);
  await page.getByRole('button',{name:'Kør 6 par'}).click();await expect(page.locator('#records tr')).toHaveCount(6,{timeout:25000});
  expect(await page.evaluate(()=>new Set(rows.map(r=>r.seed)).size)).toBe(6);
- await page.getByRole('button',{name:'Kør 6 par'}).click();await page.getByLabel('Startbane').selectOption('2');await expect(page.locator('#records tr')).toHaveCount(0);await expect(page.locator('#status')).toContainText('Pause');
+ const completedRows=await page.evaluate(()=>rows);
+ for(let i=0;i<completedRows.length;i++)await expect(page.locator('#records tr').nth(i)).toContainText(completedRows[i].switches.join(' / '));
+ await page.getByRole('button',{name:'Kør 6 par'}).click();
+ expect(await page.evaluate(()=>pair.p.seed)).not.toBe(completedRows[0].seed);
+ await page.getByLabel('Startbane').selectOption('2');await expect(page.locator('#records tr')).toHaveCount(0);await expect(page.locator('#status')).toContainText('Pause');
  await page.locator('#share').fill('100');await page.locator('#share').dispatchEvent('change');
  await expect(page.locator('#shareValue')).toHaveText('100 %');
  expect(await page.evaluate(()=>pair.worlds.every(w=>w.sim.cars.filter(c=>c!==w.car).every(c=>c.policy==='switch')))).toBe(true);
