@@ -383,14 +383,14 @@ Måske samme grundmodel som motorvejslaboratoriet (IDE-046), men her vil vi gern
 I denne simulering skal vi måske enten have en længere strækning (måske zoomet længere ud, og have en bane på tværs af skærmen) eller følge bilen over tid ved at "scrolle" vejen
 
 ### B · Status
-- Status: klar
+- Status: implementeret
 - Tilføjet: 2026-10-27
-- Startet: —
-- Implementeret: —
+- Startet: 2026-10-31
+- Implementeret: 2026-10-31
 - Udgivet: —
-- App: —
+- App: [Åbn app](apps/hold-banen-eller-skift/index.html)
 - Deployment: —
-- Noter: Selvstændigt eksperiment, der følger efter og bygger videre på IDE-046. Brugerens idé bevaret ordret. Kørslen skal først undersøge den faktiske motorvejsmodel og undgå at kopiere eventuelle fejl eller påstå en generel vinder på forhånd. Ingen manuel byggestart ved tilføjelsen.
+- Noter: Selvstændigt eksperiment, der følger efter og bygger videre på IDE-046. Brugerens idé bevaret ordret. Kørslen skal først undersøge den faktiske motorvejsmodel og undgå at kopiere eventuelle fejl eller påstå en generel vinder på forhånd. Ingen manuel byggestart ved tilføjelsen. Implementeret 31. oktober 2026: parrede 2 km forsøg, fælles seed/ankomstdata, kamerafølge/overblik, faktiske rejsetider, seks gentagelser og selvstændig offline-HTML. A bevaret ordret med menneskeligt ophav; C udbygget og gemt før kode. Kontroller: npm run build og npm run check bestået; npm run test:runner bestået med GITHUB_OUTPUT udeladt fra testprocessen (første forsøg ramte runnerens skrivebeskyttede outputfil; ingen infrastrukturændring). npm run test:browser: 38/38 bestået på desktop/mobil; efter udvidelse til fuld seksparsserie bestod appens fire tests igen, inklusive offline, reproducerbarhed og afbrydelse. Ingen konsolfejl eller vandret overløb i generelle kontroller. Primærkilder for IDM, MOBIL og forsinkelse tilgået; modellen er en egen udvidelse, ikke fuld MOBIL eller kalibreret trafikprognose. Mobil er Chromium-viewport, ikke fysisk telefon. Kollisioner og 300 s uden ankomst udelades fra rejsetidsstatistik. Ingen commit, push eller publicering udført.
 
 ### C · Fuld konceptprompt
 Byg “Hold banen eller skift?” med slug hold-banen-eller-skift som et interaktivt, pædagogisk eksperiment i tæt motorvejstrafik. Undersøg, om en bestemt bil vinder rejsetid ved at blive i sin bane eller ved hyppigt at benytte muligheder for at skifte. Der må ikke være en forudbestemt vinder. Følg build.md for integration, download, prompts og tests. Bevar A ordret.
@@ -419,6 +419,11 @@ Teknik og afprøvning:
 Brug en ren, seedet og tidsstepbaseret motor adskilt fra Canvas-rendering og kamera. Arbejd i mindre portioner eller en worker ved serier af gentagelser, så kontrollerne forbliver responsive; nye indstillinger skal kunne afbryde et gammelt scan. Ingen eksterne runtime-afhængigheder eller backend. Giv dansk forklaring og tilgængelige kontroller på desktop og mobil, og en selvstændig offline-HTML.
 
 Test identiske strategier mod hinanden som nulreference, fælles begyndelsestilstand/ankomstplan, ingen frivillige skift i hold-banen-politikken, gyldige skift i skiftepolitikken, korrekt mållinjepassage og rejsetid, håndtering af ikke-afsluttede løb, samt at kamera, zoom og renderframerate ikke ændrer resultatet. Genbrug relevante fysik- og sikkerhedstests fra IDE-046. Tilføj tests/browser/hold-banen-eller-skift.spec.mjs, der starter et reproducerbart sammenligningsforløb, afprøver strategi-/trafikvalg, pause, nulstilling, kamerafølge/overblik, afsluttet måling og standalone-udgaven. Test ikke mod en bestemt strategis sejr; det er netop det åbne spørgsmål.
+
+
+Implementeringspræcisering (AI, 31. oktober 2026): Selvstændig kopi af IDE-046’s IDM-motor med 0,05 s ballistiske skridt, 5 m biler, 2 s skift og 6 s skiftepause. Vejen er 3 km; efter 30 s indkøring udpeges samme eksisterende bil nær 200 m i valgt startbane i begge verdener. Målet ligger 2 km efter dens faktiske startposition. Begge verdener får samme begyndelse og ID-baserede førerdata; planlagte ankomster hvert 3600/tilførsel sekund sættes i en FIFO-kø med fast bane og fartønske, før indkørsel prøves. Ingen tilfældighed afhænger af skiftebeslutninger. Forsøgsbilen ønsker 110 km/t, reaktion 0,3 s, tidsafstand 1,6 s og maksimal bremsning 7 m/s². Baggrundsfart varierer seedet omkring 90 km/t. Brugeren vælger lav/mellem/høj starttæthed og tilførsel, baggrundens skiftelyst, gevinsttærskel 0,1–0,8 m/s², seed og startbane. Hyppige skift kræver positiv accelerationsgevinst over tærsklen uden højrepræference. Hold banen forbyder frivillige skift. Samme sikkerhedskontrol gælder alle.
+
+Vis to vandrette firebanede veje med fælles kameravindue omkring de to forsøgsbilers middelposition, alternativt hele vejen, start/mål og hver sin distancebjælke. Appen starter pauset. Start/pause, nulstil, beregn færdig og serie på seks seeds/startbaner er tilgængelige. Beregn i korte asynkrone portioner med afbrydelse ved parameterændring. Maksimum 300 s efter start; kollision eller manglende ankomst mærkes ugyldig/uafsluttet. Interpolér mållinjepassage inden for tidssteppet. Vis rejsetid, middelfart, skift, episoder med bremsning under −3 m/s² og kollisioner; ingen skjulte sikkerhedsindgreb. Gem kun ét resultat per par. Tidsserie viser faktisk kørt distance mod sekunder med tekstalternativ. Serien viser hvert pars seed/bane, antal gyldige par, middel, median og min–maks for hold-tid minus skift-tid: positivt er fordel til skift. Parameterændring rydder resultater. Primærkilder og modelgrænser videreføres, og kopi/forskelle dokumenteres. Accept: deterministisk nulreference, fælles planer, sikkerhed og afslutningsregler kontrolleres numerisk; centralt brugerflow, afbrydelse og offlinefil testes på desktop og mobil.
 
 ## IDE-048 — Se et neuralt netværk genkende firkanter og trekanter
 

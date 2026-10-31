@@ -1,0 +1,2 @@
+Måske samme grundmodel som motorvejslaboratoriet (IDE-046), men her vil vi gerne undersøge om en bil kommer hurtigst frem i tæt trafik ved at holde egen bane, eller foretage hyppige vognbaneskift hver gang det er muligt.
+I denne simulering skal vi måske enten have en længere strækning (måske zoomet længere ud, og have en bane på tværs af skærmen) eller følge bilen over tid ved at "scrolle" vejen

@@ -165,3 +165,11 @@ Ren JavaScript/Canvas uden nye afhængigheder eller runtime-netværk. IDM med fo
 Flow måles ved udløbet over højst 60 s efter 30 s opvarmning. Grafen viser målt middeltæthed mod samlet flow over fire baner og spændet mellem seks 10 s vinduer; ét seed og korte vinduer er ikke en kapacitetsprognose. Upstream-kø tælles uden at tegnes. Kilder og enheder står i appen. Menneskets A er bevaret ordret, og den anvendte AI-udbygning C er gemt særskilt. Selvstændig HTML indeholder hele modellen og virker offline; hjem- og kildelinks kræver netværk.
 
 `scripts/check-motorvejslaboratoriet.mjs` tester forsinket cut-in, bremseformler, sikre/afviste og samtidige skift, 180 s standardforløb, bevarelse, kø, kollisionsstop, passageflow, reset og renderuafhængighed. `tests/browser/motorvejslaboratoriet.spec.mjs` afprøver kontroller, opbremsning, pause, beregnede målinger, gemte sammenligninger, nulstilling og lokal offlinefil i desktop- og mobilprojektet. Mobil er Chromium-emulering, ikke fysisk telefon.
+
+## Hold banen eller skift? (IDE-047)
+
+Åbn `/apps/hold-banen-eller-skift/`. To separate, parrede trafikverdener sammenligner samme forsøgsbil over 2 km efter 30 s indkøring. Start/pause viser forsøget ved 8× tid; “Beregn færdig” og “Kør 6 par” beregner i afbrydelige portioner. Trafikbelastning, skiftelyst, gevinsttærskel, seed og startbane kan vælges. Parameterændringer rydder målingerne; nulstilling gentager samme seed. Følgkamera og overblik ændrer kun rendering.
+
+Ren JavaScript og Canvas uden nye afhængigheder. `base.js` er en selvstændig, tilpasset kopi af IDE-046: 3 km vej, ID-baserede førerdata, forudplanlagte ankomster med FIFO-kø og separat politik for forsøgsbilen. Ingen ændringer i IDE-046. Rejsetider interpoleres ved mållinjen; kollisioner eller manglende ankomst efter 300 s giver ugyldige par. Statistik gælder kun gyldige par og er ingen universel konklusion om kørsel. Ingen ramper eller lastbiler; ikke kalibreret mod virkelige trafikdata.
+
+`npm run test:runner` omfatter nulreference, stabile ankomstplaner, skiftesikkerhed, mållinje og statistik. Den funktionelle Playwright-test afprøver indstillinger, pause, reproducerbar afslutning, kameraskift, afbrydelse og downloadudgaven uden netværk på desktop og mobil. Downloadfilen indeholder hele motoren og virker offline. Mobilafprøvning er Chromium-viewport, ikke fysisk telefon.
