@@ -7,9 +7,9 @@ function acceleration(o,p,desired){const v=o.v,s=2+Math.max(0,v*p.headway+v*(v-o
 class Simulation{
  constructor(params={}){this.reset(params);}
  reset(params={}){this.p={...defaults,...params};this.seed=this.p.seed||47;this.time=0;this.cars=[];this.entered=0;this.exited=0;this.waiting=0;this.arrivals=0;this.nextID=0;this.passages=[];this.changes=[];this.samples=[];this.collisions=0;this.stopped=false;this.pulses=0;this.accumulator=0;this.queue=[];this.plan=[];for(let i=0;i<this.p.initial;i++)this.cars.push(this.car(i%4,15+Math.floor(i/4)*70));this.initial=this.cars.length;}
- driverRandom(id){let n=((this.p.seed||47)^Math.imul(id+1,2654435761))>>>0;n=Math.imul(n^(n>>>16),2246822507)>>>0;return n/4294967296;}
+ driverRandom(id,salt=0){let n=((this.p.seed||47)^salt^Math.imul(id+1,2654435761))>>>0;n=Math.imul(n^(n>>>16),2246822507)>>>0;return n/4294967296;}
  random(){this.seed=(1664525*this.seed+1013904223)>>>0;return this.seed/4294967296;}
- car(lane,x){const desired=this.p.speed/3.6*(1+(this.driverRandom(this.nextID)-.5)*2*this.p.variation/100);return {id:this.nextID++,lane,from:lane,x,v:Math.min(desired,20),desired,a:0,history:[],shift:0,cool:0,pulse:0};}
+ car(lane,x){const desired=this.p.speed/3.6*(1+(this.driverRandom(this.nextID)-.5)*2*this.p.variation/100);const policy=this.p.share===undefined?undefined:(this.driverRandom(this.nextID,0x51ed270b)<this.p.share/100?'switch':'hold');return {policy,id:this.nextID++,lane,from:lane,x,v:Math.min(desired,20),desired,a:0,history:[],shift:0,cool:0,pulse:0};}
  occupies(c,lane){return c.lane===lane||(c.shift>0&&c.from===lane);}
  leader(c,lane){let best;for(const o of this.cars)if(o!==c&&this.occupies(o,lane)&&o.x>=c.x&&(!best||o.x<best.x))best=o;return best;}
  observe(c,lane=c.lane){const lead=this.leader(c,lane);return {v:c.v,gap:lead?lead.x-c.x-5:1e6,leadV:lead?lead.v:c.v,leader:lead?.id??null};}

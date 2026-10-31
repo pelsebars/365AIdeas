@@ -7,3 +7,9 @@ Ankomster planlægges efter simulationstiden, uafhængigt af skiftebeslutninger.
 Grænser: 300 s pr. par, fire ensrettede spor uden ramper, én biltype, ingen kalibrering mod observationsdata. Sikkerhedsreglen er inspireret af MOBIL, ikke fuld MOBIL. Der er ingen skjulte kollisionskorrektioner. Graf og statistik inkluderer kun faktiske data; ugyldige par vises særskilt. Starttætheden er en valgt begyndelsestilstand; 30 s er indkøring, ikke garanti for stationær trafik. Tegnede biler er forstørrede. Ingen permanent lagring.
 
 Kør fra repositoryroden: npm run build, npm run check, npm run test:runner og npm run test:browser. scripts/check-hold-banen-eller-skift.mjs kontrollerer bl.a. nulreference, planlighed, sikre skift og passage. Browserprøven dækker app og selvstændig offlinefil i desktop-/mobilprojekterne. Primærkilder står i appens fysikafsnit.
+
+## Udvidelse: andel af skiftere
+
+Skyderen styrer 0–100 % af den øvrige trafik, med 0 % som udgangspunkt. Seed og ID giver en fast, uafhængig adfærdstildeling, også ved nye ankomster. Alle skiftere følger samme tærskel som forsøgsbilen. Procenten er en sandsynlighed, ikke en kvote i hvert øjeblik. Farver og antal viser den faktiske fordeling. Fartønsker og ankomstplan ændres ikke af adfærdstildelingen. Parameterændringer nulstiller resultaterne.
+
+Øvrig trafiks fart er samlet afstand / samlet biltid fra forsøgsstart indtil hver verdens afslutning, uden forsøgsbilen og uden ventekø før indkørsel. Resultattabellen gemmer valgt andel og begge fartmålinger. Det er ikke en systemrejsetid eller en kalibreret forudsigelse.
