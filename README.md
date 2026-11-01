@@ -173,3 +173,13 @@ Flow måles ved udløbet over højst 60 s efter 30 s opvarmning. Grafen viser m�
 Ren JavaScript og Canvas uden nye afhængigheder. `base.js` er en selvstændig, tilpasset kopi af IDE-046: 3 km vej, ID-baserede førerdata, forudplanlagte ankomster med FIFO-kø og separat politik for forsøgsbilen. Ingen ændringer i IDE-046. Rejsetider interpoleres ved mållinjen; kollisioner eller manglende ankomst efter 300 s giver ugyldige par. Statistik gælder kun gyldige par og er ingen universel konklusion om kørsel. Ingen ramper eller lastbiler; ikke kalibreret mod virkelige trafikdata.
 
 `npm run test:runner` omfatter nulreference, stabile ankomstplaner, skiftesikkerhed, mållinje og statistik. Den funktionelle Playwright-test afprøver indstillinger, pause, reproducerbar afslutning, kameraskift, afbrydelse og downloadudgaven uden netværk på desktop og mobil. Downloadfilen indeholder hele motoren og virker offline. Mobilafprøvning er Chromium-viewport, ikke fysisk telefon.
+
+## Se netværket tænke (IDE-048)
+
+Åbn `/apps/se-netvaerket-taenke/`. Tegn binære pixels med mus/touch eller Tab + mellemrum, prøv eksempler, visk og ryd. Vælg en af otte skjulte eller tre outputneuroner for aktuelle summer, aktiveringer og alle indgående forbindelser. Skift mellem faste vægte og aktuelle bidrag; fortegn vises med farve og tal.
+
+Almindelig HTML/CSS/JavaScript/SVG, ingen nye afhængigheder, netværkskald eller lagring. Den selvstændige HTML indeholder modellen. Reproducer træning med `node apps/se-netvaerket-taenke/train.mjs`, derefter `npm run build`. Seeds 4801/4802, 100 SGD-epoker, tanh/softmax, 100→8→3; input i rækkefølge y*10+x uden normalisering ud over 0/1. Dataregler og læringsrate står i train.mjs, metadata og forvekslingsmatrix i report.json.
+
+9.357 unikke træningsrastere; 900 andre holdout-rastere, ingen overlap. Resultat: 91,0 % samlet; kvadrater 312/346, trekanter 349/373, restklasse 158/181. Syntetiske roterede kvadrater og ligesidede trekanter, kontur/udfyldt; negative eksempler er tomme billeder, støj, linjer og cirkler. Datasættet er ikke pixelantal-afbalanceret, og mulige genveje samt frie, delvise og tvetydige tegninger begrænser generalisering. Restklassen er ingen garanti for at opdage alt ukendt. Scores er ikke kalibrerede sandsynligheder. Ingen ekstra afvisningstærskel. Holdout blev først evalueret efter den fastlagte træning; modellen er ikke valgt mellem flere træningskørsler.
+
+Beregningstesten kontrollerer dimensioner, håndberegnet forward pass, stabil softmax, bias og genskabt holdout. Browserprøven dækker tegning, viskning, tastatur, eksempler, ryd, neuron-/forbindelsesvalg og selvstændig HTML i desktop- og mobilviewport. Mobil er Chromium-emulering, ikke fysisk telefon.

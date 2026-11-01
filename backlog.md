@@ -435,14 +435,14 @@ Jeg tænker 100 input neuroner der repræsenterer selve billedet, et skjult lag 
 Forklar gerne oven over visualiseringen af netværket en tekst, med en illustration hvordan en simuleret neuron virker, og hvordan de, når de sættes sammen, kan bruges til mønster-genkendelse som f.eks. i LLM'er
 
 ### B · Status
-- Status: klar
+- Status: implementeret
 - Tilføjet: 2026-10-28
-- Startet: —
-- Implementeret: —
+- Startet: 2026-11-01
+- Implementeret: 2026-11-01
 - Udgivet: —
-- App: —
+- App: [Åbn app](apps/se-netvaerket-taenke/index.html)
 - Deployment: —
-- Noter: Brugerens idé er bevaret ordret. Klar til den daglige kø efter IDE-047. AI-præcisering: vis faktisk trænet inferens, ikke håndkodet formgenkendelse; skeln mellem vægte, aktiveringer og bidrag. Ingen manuel byggestart ved tilføjelsen.
+- Noter: A bevaret ordret med menneskeligt ophav; C præciseret og gemt før implementering. Bygget 1. november 2026 med OpenAI Codex / GPT-6.1 Sol: faktisk trænet 100→8→3-netværk, lokal tegning, tal/forbindelser og selvstændig HTML. Træning gentaget med identiske parametre (SHA-256). 9.357 træningsrastere; separat holdout på 900 rastere: 91,0 % korrekt (firkant 312/346, trekant 349/373, restklasse 158/181). npm run build og npm run check bestået. npm run test:runner bestået med env -u GITHUB_OUTPUT, da den nedarvede Actions-outputfil er skrivebeskyttet i sandboxen; ingen infrastruktur ændret. npm run test:browser: 44/44 bestået i desktop- og mobilprojekt; tegning, viskning, tastatur, eksempler, neuron-/forbindelsesvalg og HTML med blokeret netværk afprøvet. Desktop/mobilskærmbilleder gennemset; ingen observerede JS-fejl eller vandret overløb i generelle kontroller. Mobil er Chromium-emulering, ikke fysisk telefon. Begrænsninger: syntetiske kvadrater/ligesidede trekanter; pixelantal ikke afbalanceret; delvise/tvetydige frie tegninger uden særskilt dækning; restklasse er ingen sikker ukendt-detektor, softmax er ikke kalibreret. Kilder: Google ML Crash Course og original transformerartikel. Ikke publiceret; workflowet håndterer Git og deployment.
 
 ### C · Fuld konceptprompt
 Byg “Se netværket tænke” med slug se-netvaerket-taenke: en interaktiv, pædagogisk visualisering af et rigtigt, lille trænet neuralt netværk, som klassificerer brugerens sort-hvide tegning på 10 × 10 pixels som firkant, trekant eller “ved ikke”. Følg build.md for integration, promptvisning, selvstændig HTML og kontroller. Bevar A ordret og angiv det faktiske ophav.
@@ -480,3 +480,5 @@ Design og afprøvning:
 Gør tegneflade, aktuelt resultat og netværk til en samlet oplevelse på desktop og mobil. Brug dansk, læselige tal og en signatur, der også forklarer positiv/negativ med tekst eller symboler, så farven ikke står alene. Brug egne almindelige HTML/CSS/JavaScript-filer uden eksterne runtime-afhængigheder. Alle parametre og metadata skal være gemt med appen og med i HTML-downloaden.
 
 Afprøv træningsscript, eksport/import og forward pass mod håndberegnede små eksempler; numerisk stabil softmax; netværkets præcise dimensioner; binær inputmapping; nulinput/bias; fortegn og størrelser for vægte og bidrag; sammenhæng mellem viste tal og klassifikationsresultat; samt holdout-resultater og håndtering af negative/tvetydige tegninger. Tilføj tests/browser/se-netvaerket-taenke.spec.mjs med funktionelle tests af tegning/viskning, eksempler, ryd, neuron-/forbindelsesvalg, modelresultat, mobil-touch og standalone-udgaven. Ingen tests må afhænge af en forventning om perfekt klassifikation af alle tænkelige håndtegninger. Rapportér konkrete præstationsgrænser ærligt.
+
+Implementeringspræcisering (AI, 1. november 2026): Brug seedet syntetisk rasterisering af roterede kvadrater og ligesidede trekanter, både kontur og udfyldning, samt tomme billeder, linjer, støj og cirkler som restklasse. Fjern labelkonflikter og hold holdout-rastere adskilt fra træning. Træn tanh/softmax med SGD, gem alle parametre og en urørt holdout-rapport. Vis én valgt neurons forbindelser ad gangen på en stabil stregskala og en tabel med samtlige indgående vægte og bidrag. Brug knapper til alle pixels og et tastaturbetjent neuronvalg. Ingen afvisningstærskel ud over den trænede restklasse.

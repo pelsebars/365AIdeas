@@ -1,0 +1,40 @@
+{
+  "architecture": [
+    100,
+    8,
+    3
+  ],
+  "classes": [
+    "Firkant",
+    "Trekant",
+    "Ved ikke"
+  ],
+  "seed": 4801,
+  "holdoutSeed": 4802,
+  "epochs": 100,
+  "learningRate": ".025 * (1-epoch/120)",
+  "trainCount": 9357,
+  "holdoutCount": 900,
+  "confusion": [
+    [
+      312,
+      16,
+      18
+    ],
+    [
+      22,
+      349,
+      2
+    ],
+    [
+      21,
+      2,
+      158
+    ]
+  ],
+  "accuracy": 0.91,
+  "pixelOrder": "y*10+x",
+  "normalization": "0/1",
+  "activation": "tanh / softmax",
+  "duplicates": "Entydige rastere; labelkonflikter fjernet; holdout udelukker alle træningsrastere."
+}
