@@ -435,13 +435,13 @@ Jeg tænker 100 input neuroner der repræsenterer selve billedet, et skjult lag 
 Forklar gerne oven over visualiseringen af netværket en tekst, med en illustration hvordan en simuleret neuron virker, og hvordan de, når de sættes sammen, kan bruges til mønster-genkendelse som f.eks. i LLM'er
 
 ### B · Status
-- Status: implementeret
+- Status: udgivet
 - Tilføjet: 2026-10-28
 - Startet: 2026-11-01
 - Implementeret: 2026-11-01
-- Udgivet: —
+- Udgivet: 2026-11-01
 - App: [Åbn app](apps/se-netvaerket-taenke/index.html)
-- Deployment: —
+- Deployment: https://365aideas.vercel.app/apps/se-netvaerket-taenke/
 - Noter: A bevaret ordret med menneskeligt ophav; C præciseret og gemt før implementering. Bygget 1. november 2026 med OpenAI Codex / GPT-6.1 Sol: faktisk trænet 100→8→3-netværk, lokal tegning, tal/forbindelser og selvstændig HTML. Træning gentaget med identiske parametre (SHA-256). 9.357 træningsrastere; separat holdout på 900 rastere: 91,0 % korrekt (firkant 312/346, trekant 349/373, restklasse 158/181). npm run build og npm run check bestået. npm run test:runner bestået med env -u GITHUB_OUTPUT, da den nedarvede Actions-outputfil er skrivebeskyttet i sandboxen; ingen infrastruktur ændret. npm run test:browser: 44/44 bestået i desktop- og mobilprojekt; tegning, viskning, tastatur, eksempler, neuron-/forbindelsesvalg og HTML med blokeret netværk afprøvet. Desktop/mobilskærmbilleder gennemset; ingen observerede JS-fejl eller vandret overløb i generelle kontroller. Mobil er Chromium-emulering, ikke fysisk telefon. Begrænsninger: syntetiske kvadrater/ligesidede trekanter; pixelantal ikke afbalanceret; delvise/tvetydige frie tegninger uden særskilt dækning; restklasse er ingen sikker ukendt-detektor, softmax er ikke kalibreret. Kilder: Google ML Crash Course og original transformerartikel. Ikke publiceret; workflowet håndterer Git og deployment.
 
 ### C · Fuld konceptprompt
